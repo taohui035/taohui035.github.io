@@ -2,10 +2,10 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8" />
-    <title>Taozhiruo.com | 创意空间</title>
+    <title>Taozhiruo.com | 数字之旅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Taozhiruo 的个人网站：创意、技术、数据可视化与生活灵感。" />
-    <meta property="og:title" content="Taozhiruo | 创意空间" />
+    <meta name="description" content="Taozhiruo 的个人网站：一个关于创意、技术与设计的沉浸式数字体验。" />
+    <meta property="og:title" content="Taozhiruo | 数字之旅" />
     <meta property="og:description" content="探索我的数字世界：项目、设计与AI应用作品集。" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="zh_CN" />
@@ -13,312 +13,104 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --primary-hex: #00bcd4; --primary-rgb: 0, 188, 212;
+            --primary-hex: #00e5ff; --primary-rgb: 0, 229, 255;
             --secondary-hex: #ff4081; --secondary-rgb: 255, 64, 129;
-            --text-color-light: #ecf0f1;
-            --bg-dark: #0f1b27;
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-color: #e0f7fa;
+            --bg-dark: #0a192f; /* 更深邃的午夜蓝 */
         }
+
+        * { cursor: none; }
 
         html { scroll-behavior: smooth; }
 
         body {
             margin: 0; padding: 0;
-            font-family: 'Noto Sans SC', 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-            color: var(--text-color-light);
+            font-family: 'Noto Sans SC', 'Montserrat', system-ui, sans-serif;
+            color: var(--text-color);
             background-color: var(--bg-dark);
             overflow-x: hidden;
+        }
+        
+        /* --- 创意光标 --- */
+        .cursor {
+            position: fixed; width: 40px; height: 40px;
+            border: 2px solid var(--primary-hex);
+            border-radius: 50%; left: 0; top: 0;
+            pointer-events: none; transform: translate(-50%, -50%);
+            transition: width 0.4s, height 0.4s, background-color 0.4s, transform 0.1s linear;
+            z-index: 9999;
+        }
+        .cursor-dot {
+            position: fixed; width: 8px; height: 8px;
+            background-color: var(--primary-hex);
+            border-radius: 50%; left: 0; top: 0;
+            pointer-events: none; transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+        .cursor.hovered {
+            width: 60px; height: 60px;
+            background-color: rgba(var(--primary-rgb), 0.1);
+            border-width: 3px;
         }
 
         /* --- 智能导航栏 --- */
         .navbar {
-            position: fixed; top: 0; left: 0; width: 100%; padding: 15px 5%;
-            background: rgba(15, 27, 39, 0.7);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            position: fixed; top: 0; left: 0; width: 100%; padding: 20px 5%;
+            background: transparent;
             display: flex; justify-content: space-between; align-items: center;
             z-index: 1000;
             transition: transform 0.4s ease-in-out, background-color 0.4s ease;
-            transform: translateY(0); /* 默认显示 */
         }
-        .navbar.nav-hidden {
-            transform: translateY(-100%); /* 向下滚动时隐藏 */
-        }
-        .navbar.nav-scrolled {
-            background: rgba(15, 27, 39, 0.85); /* 滚动后背景变深 */
-        }
+        .navbar.nav-hidden { transform: translateY(-100%); }
+        .navbar.nav-scrolled { background: rgba(10, 25, 47, 0.85); backdrop-filter: blur(10px); }
         .nav-logo { font-size: 1.5em; font-weight: 700; color: #fff; text-decoration: none; }
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a { color: var(--text-color-light); text-decoration: none; font-size: 1em; position: relative; transition: color 0.3s; }
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a { color: var(--text-color); text-decoration: none; position: relative; }
         .nav-links a:hover { color: var(--primary-hex); }
         .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 50%; transform: translateX(-50%); background-color: var(--primary-hex); transition: width 0.3s; }
         .nav-links a:hover::after { width: 100%; }
 
-        .video-background { position: fixed; inset: 0; overflow: hidden; z-index: -1; }
-        .video-background video { min-width: 100%; min-height: 100%; width: auto; height: auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); object-fit: cover; filter: brightness(0.6); }
-        .video-overlay { position: fixed; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%); z-index: -1; }
+        .video-background { position: fixed; inset: 0; overflow: hidden; z-index: -2; }
+        .video-background video { min-width: 100%; min-height: 100%; width: auto; height: auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); object-fit: cover; filter: brightness(0.5); }
+        .video-overlay { position: fixed; inset: 0; background: radial-gradient(ellipse at center, rgba(10,25,47,0.4) 0%, rgba(10,25,47,0.8) 100%); z-index: -1; }
 
-        .hero-section, .content-section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 80px 20px; text-align: center; position: relative; }
-        .hero-section h1 { font-family: 'Montserrat', sans-serif; font-size: clamp(2.4rem, 6vw, 4.5rem); margin: 0 0 20px; background: linear-gradient(45deg, var(--primary-hex), var(--secondary-hex)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
-        .hero-section p { font-size: clamp(1rem, 2.5vw, 1.5rem); max-width: 800px; margin: 0 0 40px; font-weight: 300; }
+        main { position: relative; z-index: 1; }
+        section { padding: 100px 5%; }
 
+        .hero-section {
+            min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+        }
+        .hero-title { font-family: 'Montserrat', sans-serif; font-size: clamp(3rem, 7vw, 6rem); margin: 0; color: #fff; text-shadow: 0 0 20px rgba(var(--primary-rgb), 0.5); }
+        .hero-subtitle { font-size: clamp(1rem, 2.5vw, 1.5rem); max-width: 800px; margin: 20px 0 0; font-weight: 300; line-height: 1.7; }
+        
+        /* --- 沉浸式图片过渡 --- */
+        .parallax-section {
+            height: 300vh; /* 提供足够的滚动空间来驱动动画 */
+            position: relative;
+        }
+        .parallax-container {
+            height: 100vh;
+            width: 100%;
+            position: sticky; /* 关键：粘性定位 */
+            top: 0;
+            overflow: hidden;
+        }
+        .parallax-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .projects-section {
+            position: relative;
+            background: var(--bg-dark); /* 确保项目区有坚实背景 */
+            padding-top: 15vh;
+        }
         .glass-card {
-            background: var(--glass-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border); border-radius: 16px; padding: 40px; margin: 20px auto;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); max-width: 1000px; width: min(1000px, 92%);
-            opacity: 0; transform: translateY(50px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .glass-card.fade-in { opacity: 1; transform: translateY(0); }
-        .glass-card h2 { color: var(--primary-hex); font-size: clamp(1.6rem, 3.5vw, 2.5rem); margin: 0 0 20px; text-align: center; }
-        .glass-card p { font-size: 1.1em; line-height: 1.7; margin: 0 0 15px; }
-
-        /* --- 全新精修图片轮播 --- */
-        .carousel { position: relative; width: 100%; max-width: 920px; margin: 30px auto 0; overflow: hidden; border-radius: 12px; }
-        .carousel-track-container { overflow: hidden; border-radius: 12px; }
-        .carousel-track { display: flex; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
-        .carousel-slide { min-width: 100%; position: relative; transition: opacity 0.6s ease; }
-        .carousel-slide:not(.is-selected) { opacity: 0.7; }
-        .carousel-slide img { width: 100%; display: block; height: 52vh; max-height: 560px; min-height: 280px; object-fit: cover; }
-        .carousel-caption { position: absolute; inset: auto 0 0 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); padding: 40px 20px 20px; color: #fff; text-align: left; }
-        .carousel-caption h3 { margin: 0 0 5px; font-size: clamp(1.1rem, 2.5vw, 1.5rem); }
-        .carousel-caption p { margin: 0; font-size: 1em; color: rgba(255,255,255,0.85); }
-        .carousel-button {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            width: 44px; height: 44px; border-radius: 50%;
-            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.3s ease;
-        }
-        .carousel-button:hover { background: rgba(255,255,255,0.2); transform: translateY(-50%) scale(1.1); }
-        .carousel-button-prev { left: 20px; }
-        .carousel-button-next { right: 20px; }
-        .carousel-button svg { width: 24px; height: 24px; stroke: #fff; stroke-width: 2; }
-        .carousel-dots { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; }
-        .carousel-dot { width: 10px; height: 10px; border-radius: 50%; background-color: rgba(255,255,255,0.45); border: 0; padding: 0; cursor: pointer; transition: all 0.3s ease; }
-        .carousel-dot.is-selected { background-color: #fff; transform: scale(1.2); }
-
-        .social-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 20px; }
-        .social-btn { width: 52px; height: 52px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--glass-bg); border: 1px solid var(--glass-border); text-decoration: none; color: #fff; transition: all .25s ease; }
-        .social-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(0,0,0,.35); background: linear-gradient(135deg, rgba(var(--primary-rgb),.25), rgba(var(--secondary-rgb),.25)); }
-        .social-btn svg { width: 22px; height: 22px; }
-
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-        }
-    </style>
-</head>
-<body>
-    <header role="banner">
-        <nav class="navbar" aria-label="主导航">
-            <a href="#" class="nav-logo">Taozhiruo.com</a>
-            <div class="nav-links">
-                <a href="#about">关于我</a>
-                <a href="#projects">我的项目</a>
-                <a href="#contact">联系我</a>
-            </div>
-        </nav>
-        <div class="video-background" aria-hidden="true">
-            <video autoplay muted loop playsinline poster="background_poster.jpg"><source src="background_video.mp4" type="video/mp4" /></video>
-        </div>
-        <div class="video-overlay" aria-hidden="true"></div>
-    </header>
-
-    <main id="main">
-        <section class="hero-section">
-            <h1>探索我的数字世界</h1>
-            <p>欢迎来到我的个人网站，这里是我分享创意、技术和生活感悟的专属空间。</p>
-            <a href="#about" class="interactive-button">开始探索</a>
-        </section>
-
-        <section id="about" class="content-section" aria-labelledby="about-title">
-            <div class="glass-card">
-                <h2 id="about-title">关于我</h2>
-                <p>你好！我是 Taozhiruo，一位充满好奇心的探索者。我热爱技术创新，喜欢将想法付诸实践...</p>
-            </div>
-        </section>
-
-        <section id="projects" class="content-section" aria-labelledby="projects-title">
-            <div class="glass-card">
-                <h2 id="projects-title">我的项目</h2>
-                <p>从网页开发到数据分析，每一个项目都凝聚了我的热情与思考。以下是我部分作品概念展示：</p>
-
-                <div class="carousel" role="region" aria-roledescription="carousel" aria-label="作品集轮播">
-                    <div class="carousel-track-container">
-                        <ul class="carousel-track">
-                            <li class="carousel-slide is-selected">
-                                <img loading="lazy" decoding="async" src="https://images.pexels.com/photos/356079/pexels-photo-356079.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="交互体验设计">
-                                <div class="carousel-caption"><h3>交互体验设计</h3><p>创造无缝且富有情感连接的数字产品界面。</p></div>
-                            </li>
-                            <li class="carousel-slide">
-                                <img loading="lazy" decoding="async" src="https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="商业数据分析">
-                                <div class="carousel-caption"><h3>商业数据分析</h3><p>从海量数据中挖掘价值，驱动商业决策。</p></div>
-                            </li>
-                            <li class="carousel-slide">
-                                <img loading="lazy" decoding="async" src="https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="全栈Web开发">
-                                <div class="carousel-caption"><h3>全栈Web开发</h3><p>构建稳定、高效且可扩展的现代化网络应用。</p></div>
-                            </li>
-                            <li class="carousel-slide">
-                                <img loading="lazy" decoding="async" src="https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="金融科技解决方案">
-                                <div class="carousel-caption"><h3>金融科技解决方案</h3><p>探索技术如何重塑未来的金融服务生态。</p></div>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="carousel-nav">
-                        <button class="carousel-button carousel-button-prev" aria-label="上一张" type="button">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-                        </button>
-                        <button class="carousel-button carousel-button-next" aria-label="下一张" type="button">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-                        </button>
-                    </div>
-
-                    <div class="carousel-dots" role="tablist" aria-label="轮播分页点"></div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="content-section" aria-labelledby="contact-title">
-            <div class="glass-card">
-                <h2 id="contact-title">联系我</h2>
-                <p>如果你对我的项目感兴趣，或者想进行技术交流，欢迎随时与我联系。</p>
-                <div class="social-icons" aria-label="社交链接">
-                    <a class="social-btn" href="#" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
-                    <a class="social-btn" href="#" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="content-section" aria-label="页脚">
-        <div class="glass-card" role="contentinfo">
-            <p>© <span id="year"></span> Taozhiruo. 保留所有权利。</p>
-        </div>
-    </footer>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // --- 动态年份 ---
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        // --- 智能导航栏 ---
-        const navbar = document.querySelector('.navbar');
-        if (navbar) {
-            let lastScrollY = window.scrollY;
-            window.addEventListener('scroll', () => {
-                const currentScrollY = window.scrollY;
-                if (currentScrollY > 100) {
-                    navbar.classList.add('nav-scrolled');
-                    if (currentScrollY > lastScrollY) {
-                        navbar.classList.add('nav-hidden');
-                    } else {
-                        navbar.classList.remove('nav-hidden');
-                    }
-                } else {
-                    navbar.classList.remove('nav-scrolled');
-                    navbar.classList.remove('nav-hidden');
-                }
-                lastScrollY = currentScrollY;
-            });
-        }
-
-        // --- 精修图片轮播 ---
-        const carousel = document.querySelector('.carousel');
-        if (carousel) {
-            const track = carousel.querySelector('.carousel-track');
-            const slides = Array.from(track.children);
-            const nextButton = carousel.querySelector('.carousel-button-next');
-            const prevButton = carousel.querySelector('.carousel-button-prev');
-            const dotsNav = carousel.querySelector('.carousel-dots');
-            
-            if (slides.length > 0) {
-                const slideWidth = slides[0].getBoundingClientRect().width;
-                const setSlidePosition = (slide, index) => {
-                    slide.style.left = slideWidth * index + 'px';
-                };
-                slides.forEach(setSlidePosition);
-
-                // 创建导航点
-                slides.forEach((slide, index) => {
-                    const dot = document.createElement('button');
-                    dot.classList.add('carousel-dot');
-                    if (index === 0) dot.classList.add('is-selected');
-                    dot.setAttribute('aria-label', `跳转到第 ${index + 1} 张`);
-                    dotsNav.appendChild(dot);
-                });
-
-                const dots = Array.from(dotsNav.children);
-
-                let currentIndex = 0;
-                let autoPlayInterval;
-
-                const moveToSlide = (targetIndex) => {
-                    track.style.transform = 'translateX(-' + slides[targetIndex].style.left + ')';
-                    slides[currentIndex].classList.remove('is-selected');
-                    slides[targetIndex].classList.add('is-selected');
-                    dots[currentIndex].classList.remove('is-selected');
-                    dots[targetIndex].classList.add('is-selected');
-                    currentIndex = targetIndex;
-                };
-
-                dots.forEach((dot, index) => {
-                    dot.addEventListener('click', () => {
-                        moveToSlide(index);
-                        resetInterval();
-                    });
-                });
-                
-                nextButton.addEventListener('click', () => {
-                    const nextIndex = (currentIndex + 1) % slides.length;
-                    moveToSlide(nextIndex);
-                    resetInterval();
-                });
-                
-                prevButton.addEventListener('click', () => {
-                    const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
-                    moveToSlide(prevIndex);
-                    resetInterval();
-                });
-
-                const startInterval = () => {
-                    autoPlayInterval = setInterval(() => {
-                        const nextIndex = (currentIndex + 1) % slides.length;
-                        moveToSlide(nextIndex);
-                    }, 4000);
-                };
-                
-                const resetInterval = () => {
-                    clearInterval(autoPlayInterval);
-                    startInterval();
-                };
-
-                carousel.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
-                carousel.addEventListener('mouseleave', startInterval);
-                
-                startInterval();
-            }
-        }
-
-        // --- 滚动渐入动画 ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                } else {
-                    entry.target.classList.remove('fade-in');
-                }
-            });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.glass-card').forEach(card => {
-            observer.observe(card);
-        });
-    });
-    </script>
-</body>
-</html>
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); -
