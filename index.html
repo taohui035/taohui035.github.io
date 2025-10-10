@@ -67,8 +67,8 @@
       background:linear-gradient(45deg,var(--primary-hex),var(--secondary-hex));
       -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
       font-weight:800;
-      background-size:250% 250%; /* 增强渐变范围 */
-      animation:grad 8s ease infinite; /* 加快动画速度 */
+      background-size:250% 250%;
+      animation:grad 8s ease infinite;
     }
     .hero-section p{font-size:clamp(1rem,2.3vw,1.35rem); max-width:820px; margin:0 0 28px; font-weight:300; opacity:.95}
     .interactive-button{display:inline-block; background:var(--primary-hex); color:#fff; padding:12px 28px; border-radius:999px; border:0; cursor:pointer; font-weight:800; letter-spacing:.3px; box-shadow:0 6px 18px rgba(var(--primary-rgb),.35); transition:transform .22s ease, box-shadow .22s ease, background .22s ease}
@@ -221,43 +221,66 @@
     // 智能导航
     const navbar=document.querySelector('.navbar'); if(navbar){ let lastY=window.scrollY; window.addEventListener('scroll',()=>{ const y=window.scrollY; if(y>100){ navbar.classList.add('nav-scrolled'); y>lastY? navbar.classList.add('nav-hidden'): navbar.classList.remove('nav-hidden'); }else{ navbar.classList.remove('nav-scrolled','nav-hidden'); } lastY=y; }); }
 
-    // --- 图片过渡桥：动态加载 ---
-    // 通过 Unsplash API 动态获取图片，模拟每日更新效果。
-    // 注意：因版权原因，不直接使用特定明星照片，而是采用符合风格的模特照片。
+    // --- (已修复) 图片过渡桥：从内置精选库随机加载 ---
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const portraitKeywords = ['asian fashion', 'korean model', 'tokyo street style', 'cool portrait'];
-    const sceneryKeywords = ['tokyo', 'kyoto', 'shanghai skyline', 'seoul', 'vietnam landscape', 'thai temple'];
-    const imageCount = 8; // 总共需要的图片数量
+    
+    // 内置一个包含30张精选图片的URL库，确保稳定性和速度
+    const imageLibrary = [
+        // 人像
+        'https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/3760917/pexels-photo-3760917.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/935969/pexels-photo-935969.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/3775087/pexels-photo-3775087.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1587009/pexels-photo-1587009.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2613260/pexels-photo-2613260.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/3855622/pexels-photo-3855622.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/5925438/pexels-photo-5925438.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/4009599/pexels-photo-4009599.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/4158225/pexels-photo-4158225.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/10697787/pexels-photo-10697787.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/8103362/pexels-photo-8103362.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/845457/pexels-photo-845457.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2080383/pexels-photo-2080383.jpeg?auto=compress&cs=tinysrgb&w=800',
+        // 风景
+        'https://images.pexels.com/photos/167699/pexels-photo-167699.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/3244513/pexels-photo-3244513.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/531321/pexels-photo-531321.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/210186/pexels-photo-210186.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2444403/pexels-photo-2444403.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2085831/pexels-photo-2085831.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2356045/pexels-photo-2356045.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/462162/pexels-photo-462162.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1424246/pexels-photo-1424246.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/356829/pexels-photo-356829.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2627945/pexels-photo-2627945.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1797161/pexels-photo-1797161.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2165922/pexels-photo-2165922.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/358457/pexels-photo-358457.jpeg?auto=compress&cs=tinysrgb&w=800',
+    ];
 
-    function getRandomKeyword(keywords) {
-      return keywords[Math.floor(Math.random() * keywords.length)];
+    // 洗牌算法，用于打乱图片数组顺序，确保每次刷新都不同
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
     }
 
-    function fillMarquee(el){
+    function fillMarquee(el, shuffledImages){
       const frag = document.createDocumentFragment();
-      for (let r = 0; r < 2; r++) { // 循环两次以实现无缝滚动
-        for (let i = 0; i < imageCount; i++) {
+      // 循环两次以实现无缝滚动
+      for (let r = 0; r < 2; r++) { 
+        shuffledImages.forEach((src, i) => {
           const img = new Image();
           img.loading = 'lazy';
           img.decoding = 'async';
           img.className = 'bridge-img';
-
-          // 随机选择人像或风景主题
-          let topic, altText;
-          if (Math.random() > 0.5) {
-            topic = getRandomKeyword(portraitKeywords);
-            altText = '动态加载的时尚人像';
-          } else {
-            topic = getRandomKeyword(sceneryKeywords);
-            altText = '动态加载的亚洲风景';
-          }
-          
-          // 使用 Unsplash Source API 并添加随机参数防止缓存
-          img.src = `https://source.unsplash.com/600x400/?${topic}&sig=${Math.random()}`;
-          img.alt = altText + ' ' + (i + 1);
-          
+          img.src = src;
+          img.alt = '精选过渡图像 ' + (i + 1);
           frag.appendChild(img);
-        }
+        });
       }
       el.innerHTML = ''; // 清空旧内容
       el.appendChild(frag);
@@ -266,8 +289,13 @@
     const m1 = document.getElementById('marquee1');
     const m2 = document.getElementById('marquee2');
     if (m1 && m2) {
-      fillMarquee(m1);
-      fillMarquee(m2);
+      shuffleArray(imageLibrary); // 打乱整个库
+      const half = Math.ceil(imageLibrary.length / 2);
+      const firstHalf = imageLibrary.slice(0, half);
+      const secondHalf = imageLibrary.slice(half);
+      
+      fillMarquee(m1, firstHalf);
+      fillMarquee(m2, secondHalf);
     }
 
     if(prefersReduced){ document.querySelector('.bridge-section')?.classList.add('paused'); }
@@ -327,9 +355,9 @@
       prevBtn.addEventListener('click',()=>{ prev(); resetAuto(); });
 
       let dragging=false, sx=0, stx=0, dx=0;
-      track.addEventListener('pointerdown',e=>{ dragging=true; track.setPointerCapture(e.pointerId); sx=e.clientX; stx=-(slideWidth*current); track.style.transition='none'; track.style.cursor='grabbing'; stopAuto(); });
+      track.addEventListener('pointerdown',e=>{ if(e.button !== 0) return; dragging=true; track.setPointerCapture(e.pointerId); sx=e.clientX; stx=-(slideWidth*current); track.style.transition='none'; track.style.cursor='grabbing'; stopAuto(); });
       window.addEventListener('pointermove',e=>{ if(!dragging) return; dx=e.clientX-sx; track.style.transform=`translateX(${stx+dx}px)`; });
-      window.addEventListener('pointerup',()=>{ if(!dragging) return; dragging=false; track.style.transition=''; track.style.cursor='grab';
+      window.addEventListener('pointerup',(e)=>{ if(!dragging) return; track.releasePointerCapture(e.pointerId); dragging=false; track.style.transition=''; track.style.cursor='grab';
         const threshold=Math.min(90, slideWidth*.2); if(Math.abs(dx)>threshold){ dx<0? next(): prev(); } else { moveTo(current); } resetAuto(); });
 
       function startProgress(){ if(!progress) return; progress.style.transition='none'; progress.style.width='0%'; requestAnimationFrame(()=>{ requestAnimationFrame(()=>{ progress.style.transition=`width ${AUTO_MS}ms linear`; progress.style.width='100%'; }); }); }
