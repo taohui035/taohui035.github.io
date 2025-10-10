@@ -7,14 +7,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
 
     <style>
-        /* 全局样式 */
         :root {
             --primary-color: #00bcd4; /* 青蓝色 */
             --secondary-color: #ff4081; /* 亮粉色 */
             --text-color-light: #ecf0f1;
             --text-color-dark: #2c3e50;
             --bg-dark: #1a2a3a; /* 深蓝灰色背景 */
-            --glass-bg: rgba(255, 255, 255, 0.08); /* 更透明的玻璃背景 */
+            --glass-bg: rgba(255, 255, 255, 0.08);
             --glass-border: rgba(255, 255, 255, 0.1);
         }
 
@@ -23,12 +22,11 @@
             padding: 0;
             font-family: 'Noto Sans SC', 'Montserrat', sans-serif;
             color: var(--text-color-light);
-            background-color: var(--bg-dark); /* 深色回退背景 */
-            overflow-x: hidden; /* 防止水平滚动条 */
-            scroll-behavior: smooth; /* 平滑滚动 */
+            background-color: var(--bg-dark);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        /* 视频背景 */
         .video-background {
             position: fixed;
             top: 0;
@@ -36,7 +34,7 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            z-index: -1; /* 确保在内容之下 */
+            z-index: -1;
         }
         .video-background video {
             min-width: 100%;
@@ -47,22 +45,20 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            object-fit: cover; /* 确保视频覆盖整个区域 */
-            filter: brightness(0.7); /* 调暗视频，让文字更突出 */
+            object-fit: cover;
+            filter: brightness(0.6); /* 略微调暗视频，让内容更突出 */
         }
 
-        /* 覆盖层，增加暗度，让文字更清晰 */
         .video-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 100%);
+            background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%); /* 覆盖层更暗 */
             z-index: -1;
         }
 
-        /* 内容容器 */
         .hero-section, .content-section {
             min-height: 100vh;
             display: flex;
@@ -71,17 +67,16 @@
             align-items: center;
             padding: 80px 20px;
             text-align: center;
-            position: relative; /* 确保内容在视频之上 */
+            position: relative;
         }
 
-        /* 英雄区 (第一屏大标题) */
         .hero-section {
             color: var(--text-color-light);
             text-shadow: 0 4px 10px rgba(0,0,0,0.4);
         }
         .hero-section h1 {
             font-family: 'Montserrat', sans-serif;
-            font-size: 4.5em; /* 巨大标题 */
+            font-size: 4.5em;
             margin-bottom: 20px;
             letter-spacing: 2px;
             background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
@@ -103,7 +98,7 @@
             transform: translateX(-50%);
             color: var(--text-color-light);
             font-size: 1.2em;
-            animation: bounce 2s infinite; /* 滚动提示动画 */
+            animation: bounce 2s infinite;
         }
         .scroll-down span {
             display: block;
@@ -111,7 +106,6 @@
             font-size: 0.8em;
         }
 
-        /* 内容卡片 (磨砂玻璃效果) */
         .glass-card {
             background: var(--glass-bg);
             backdrop-filter: blur(15px);
@@ -121,13 +115,13 @@
             padding: 40px;
             margin: 20px auto;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            max-width: 800px;
+            max-width: 1000px; /* 适当增加最大宽度以容纳图片画廊 */
             width: 90%;
-            color: var(--text-color-light); /* 卡片内文字颜色 */
+            color: var(--text-color-light);
             text-align: left;
-            opacity: 0; /* 初始隐藏 */
-            transform: translateY(50px); /* 初始位置下移 */
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* 滚动动画 */
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
         .glass-card.fade-in {
             opacity: 1;
@@ -146,14 +140,13 @@
             color: var(--text-color-light);
         }
 
-        /* 交互式按钮 */
         .interactive-button {
             display: inline-block;
             background-color: var(--primary-color);
             color: #ffffff;
             padding: 12px 30px;
             text-decoration: none;
-            border-radius: 50px; /* 圆角按钮 */
+            border-radius: 50px;
             transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
             border: none;
             cursor: pointer;
@@ -171,6 +164,50 @@
         .interactive-button:active {
             transform: translateY(0);
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* 图片画廊样式 */
+        .image-gallery {
+            display: grid; /* 使用CSS Grid布局 */
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 响应式列 */
+            gap: 20px; /* 图片间距 */
+            margin-top: 30px;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 200px; /* 固定图片高度 */
+            object-fit: cover; /* 裁剪图片以填充，保持比例 */
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .gallery-item:hover {
+            transform: translateY(-5px); /* 悬停时上浮 */
+            box-shadow: 0 8px 15px rgba(0,0,0,0.5);
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05); /* 悬停时图片轻微放大 */
+        }
+        .gallery-item-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: #fff;
+            padding: 15px 10px 10px;
+            font-size: 0.9em;
+            opacity: 0; /* 默认隐藏 */
+            transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover .gallery-item-caption {
+            opacity: 1; /* 悬停时显示标题 */
         }
 
         /* 动画 */
@@ -197,6 +234,9 @@
             .glass-card p {
                 font-size: 1em;
             }
+            .image-gallery {
+                grid-template-columns: 1fr; /* 小屏幕下图片单列显示 */
+            }
         }
     </style>
 </head>
@@ -221,6 +261,25 @@
         <div class="glass-card">
             <h2>关于我</h2>
             <p>你好！我是 Taozhiruo，一位充满好奇心的探索者。我热爱技术创新，喜欢将想法付诸实践。这个网站是我最新的尝试，我将在这里分享我的学习笔记、项目成果和个人思考。期待与你一同成长！</p>
+            
+            <div class="image-gallery">
+                <div class="gallery-item">
+                    <img src="img1.jpg" alt="科技创意">
+                    <div class="gallery-item-caption">科技创意</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="img2.jpg" alt="未来设计">
+                    <div class="gallery-item-caption">未来设计</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="img3.jpg" alt="数字艺术">
+                    <div class="gallery-item-caption">数字艺术</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="img4.jpg" alt="编程世界">
+                    <div class="gallery-item-caption">编程世界</div>
+                </div>
+                </div>
             <button id="magicButton" class="interactive-button">与我互动</button>
             <p id="magicText" style="color: var(--primary-color); min-height: 25px; margin-top: 20px; font-weight: 700; transition: all 0.5s ease;"></p>
         </div>
@@ -250,7 +309,7 @@
             let interactionCount = 0;
             const interactionMessages = [
                 '很高兴你对我的网站感兴趣！',
-                '这个网站使用 HTML, CSS 和 JavaScript 构建。',
+                '这些图片展示了我的审美和创意方向。',
                 '我正在不断学习和完善它。',
                 '希望你在这里有愉快的体验！',
                 '期待与你分享更多内容。',
@@ -267,10 +326,12 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('fade-in');
-                        observer.unobserve(entry.target); // 一旦进入，就不再观察
+                        // observer.unobserve(entry.target); // 如果希望每次滚动到都触发，则注释掉这行
+                    } else {
+                        // entry.target.classList.remove('fade-in'); // 如果希望滚动出视图后隐藏，则取消注释
                     }
                 });
-            }, { threshold: 0.1 }); // 当元素10%可见时触发
+            }, { threshold: 0.1 });
 
             document.querySelectorAll('.glass-card').forEach(card => {
                 observer.observe(card);
