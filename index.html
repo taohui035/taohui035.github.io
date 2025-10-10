@@ -8,11 +8,10 @@
 
     <style>
         :root {
-            --primary-color: #00bcd4; /* 青蓝色 */
-            --secondary-color: #ff4081; /* 亮粉色 */
+            --primary-color: #00bcd4;
+            --secondary-color: #ff4081;
             --text-color-light: #ecf0f1;
-            --text-color-dark: #2c3e50;
-            --bg-dark: #1a2a3a; /* 深蓝灰色背景 */
+            --bg-dark: #1a2a3a;
             --glass-bg: rgba(255, 255, 255, 0.08);
             --glass-border: rgba(255, 255, 255, 0.1);
         }
@@ -70,15 +69,10 @@
             position: relative;
         }
 
-        .hero-section {
-            color: var(--text-color-light);
-            text-shadow: 0 4px 10px rgba(0,0,0,0.4);
-        }
         .hero-section h1 {
             font-family: 'Montserrat', sans-serif;
             font-size: 4.5em;
             margin-bottom: 20px;
-            letter-spacing: 2px;
             background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -87,7 +81,6 @@
         .hero-section p {
             font-size: 1.5em;
             max-width: 800px;
-            line-height: 1.5;
             margin-bottom: 40px;
             font-weight: 300;
         }
@@ -96,16 +89,9 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            color: var(--text-color-light);
-            font-size: 1.2em;
             animation: bounce 2s infinite;
         }
-        .scroll-down span {
-            display: block;
-            margin-top: 10px;
-            font-size: 0.8em;
-        }
-
+        
         .glass-card {
             background: var(--glass-bg);
             backdrop-filter: blur(15px);
@@ -117,8 +103,6 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             max-width: 1000px;
             width: 90%;
-            color: var(--text-color-light);
-            text-align: left;
             opacity: 0;
             transform: translateY(50px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
@@ -137,7 +121,6 @@
             font-size: 1.1em;
             line-height: 1.7;
             margin-bottom: 15px;
-            color: var(--text-color-light);
         }
 
         .interactive-button {
@@ -152,7 +135,6 @@
             cursor: pointer;
             font-size: 1.1em;
             font-weight: 700;
-            letter-spacing: 1px;
             margin-top: 20px;
             box-shadow: 0 4px 15px rgba(var(--primary-color), 0.4);
         }
@@ -160,10 +142,6 @@
             background-color: var(--secondary-color);
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(var(--secondary-color), 0.6);
-        }
-        .interactive-button:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .image-gallery {
@@ -176,8 +154,6 @@
             position: relative;
             overflow: hidden;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .gallery-item img {
             width: 100%;
@@ -186,27 +162,96 @@
             display: block;
             transition: transform 0.5s ease;
         }
-        .gallery-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.5);
-        }
         .gallery-item:hover img {
             transform: scale(1.05);
         }
-        .gallery-item-caption {
+        
+        /* --- 作品集轮播 (Carousel) 新增样式 --- */
+        .carousel {
+            position: relative;
+            width: 100%;
+            max-width: 800px; /* 轮播最大宽度 */
+            margin: 30px auto 0; /* 顶部外边距 */
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out; /* 滑动动画 */
+        }
+        .carousel-slide {
+            min-width: 100%;
+            position: relative; /* 为文字层定位 */
+        }
+        .carousel-slide img {
+            width: 100%;
+            display: block;
+            height: 450px; /* 固定高度 */
+            object-fit: cover;
+        }
+        .carousel-caption {
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 100%;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 40px 20px 20px;
             color: #fff;
-            padding: 15px 10px 10px;
-            font-size: 0.9em;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            text-align: left;
         }
-        .gallery-item:hover .gallery-item-caption {
-            opacity: 1;
+        .carousel-caption h3 {
+            margin: 0 0 5px;
+            font-size: 1.5em;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .carousel-caption p {
+            margin: 0;
+            font-size: 1em;
+            color: rgba(255,255,255,0.8);
+        }
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none; /* 让导航本身不响应鼠标，只让按钮响应 */
+        }
+        .carousel-button {
+            pointer-events: all; /* 恢复按钮的鼠标事件 */
+            background-color: rgba(0,0,0,0.3);
+            border: none;
+            color: #fff;
+            font-size: 2em;
+            cursor: pointer;
+            padding: 10px 15px;
+            border-radius: 50%;
+            margin: 0 20px;
+            transition: background-color 0.3s;
+        }
+        .carousel-button:hover {
+            background-color: rgba(0,0,0,0.6);
+        }
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+        }
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.4);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .carousel-dot.active {
+            background-color: #fff;
         }
 
         @keyframes bounce {
@@ -217,21 +262,17 @@
 
         @media (max-width: 768px) {
             .hero-section h1 { font-size: 3em; }
-            .hero-section p { font-size: 1.2em; }
-            .glass-card { padding: 25px; }
             .glass-card h2 { font-size: 2em; }
-            .glass-card p { font-size: 1em; }
-            .image-gallery { grid-template-columns: 1fr; }
+            .carousel-slide img { height: 300px; } /* 移动端轮播高度减小 */
+            .carousel-caption h3 { font-size: 1.2em; }
+            .carousel-caption p { font-size: 0.9em; }
         }
     </style>
 </head>
 <body>
 
     <div class="video-background">
-        <video autoplay muted loop playsinline>
-            <source src="background_video.mp4" type="video/mp4">
-            您的浏览器不支持视频背景。
-        </video>
+        <video autoplay muted loop playsinline><source src="background_video.mp4" type="video/mp4"></video>
     </div>
     <div class="video-overlay"></div>
 
@@ -245,70 +286,153 @@
     <section id="about" class="content-section">
         <div class="glass-card">
             <h2>关于我</h2>
-            <p>你好！我是 Taozhiruo，一位充满好奇心的探索者。我热爱技术创新，喜欢将想法付诸实践。这个网站是我最新的尝试，我将在这里分享我的学习笔记、项目成果和个人思考。期待与你一同成长！</p>
-            
+            <p>你好！我是 Taozhiruo，一位充满好奇心的探索者。我热爱技术创新，喜欢将想法付诸实践...</p>
             <div class="image-gallery">
-                <div class="gallery-item">
-                    <img src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="科技创意">
-                    <div class="gallery-item-caption">科技创意</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="未来设计">
-                    <div class="gallery-item-caption">未来设计</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="编程世界">
-                    <div class="gallery-item-caption">编程世界</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.pexels.com/photos/347141/pexels-photo-347141.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="数字艺术">
-                    <div class="gallery-item-caption">数字艺术</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.pexels.com/photos/5474028/pexels-photo-5474028.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="数据之美">
-                    <div class="gallery-item-caption">数据之美</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.pexels.com/photos/572897/pexels-photo-572897.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="无垠想象">
-                    <div class="gallery-item-caption">无垠想象</div>
-                </div>
+                <div class="gallery-item"><img src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="科技创意"></div>
+                <div class="gallery-item"><img src="https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="未来设计"></div>
+                <div class="gallery-item"><img src="https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="编程世界"></div>
+                <div class="gallery-item"><img src="https://images.pexels.com/photos/347141/pexels-photo-347141.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="数字艺术"></div>
             </div>
-            
-            <button id="magicButton" class="interactive-button">与我互动</button>
-            <p id="magicText" style="color: var(--primary-color); min-height: 25px; margin-top: 20px; font-weight: 700; transition: all 0.5s ease;"></p>
         </div>
     </section>
 
     <section id="projects" class="content-section">
         <div class="glass-card">
             <h2>我的项目</h2>
-            <p>我正在积极投身于多个创新项目中。从网页开发到数据分析，每一个项目都凝聚了我的热情与思考。未来，这里将成为我展示作品集、分享项目进展的平台。敬请期待更多精彩内容！</p>
-            <a href="mailto:taohui029@gmail.com" class="interactive-button">查看作品集 (建设中)</a>
+            <p>从网页开发到数据分析，每一个项目都凝聚了我的热情与思考。以下是我部分作品概念展示：</p>
+            
+            <div class="carousel">
+                <div class="carousel-track">
+                    <div class="carousel-slide">
+                        <img src="https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="UI/UX 设计">
+                        <div class="carousel-caption">
+                            <h3>UI/UX 设计</h3>
+                            <p>专注于创造美观、直观且用户友好的数字体验。</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="数据可视化">
+                        <div class="carousel-caption">
+                            <h3>数据可视化</h3>
+                            <p>将复杂数据转化为富有洞察力的交互式图表。</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="人工智能">
+                        <div class="carousel-caption">
+                            <h3>人工智能应用</h3>
+                            <p>探索机器学习与AI在现实世界中的创新应用。</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="移动应用开发">
+                        <div class="carousel-caption">
+                            <h3>移动应用开发</h3>
+                            <p>构建流畅、高性能的iOS与Android原生应用。</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://images.pexels.com/photos/21014/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="未来建筑概念">
+                        <div class="carousel-caption">
+                            <h3>未来建筑概念</h3>
+                            <p>融合科技与艺术，探索可持续的未来生活空间。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-nav">
+                    <button class="carousel-button carousel-button-prev">&lt;</button>
+                    <button class="carousel-button carousel-button-next">&gt;</button>
+                </div>
+                <div class="carousel-dots"></div>
+            </div>
+            
         </div>
     </section>
 
     <section id="contact" class="content-section">
         <div class="glass-card">
             <h2>联系我</h2>
-            <p>如果你对我的项目感兴趣，或者想进行技术交流，欢迎随时与我联系。期待与各界朋友建立联系，共同探讨未来！</p>
+            <p>如果你对我的项目感兴趣，或者想进行技术交流，欢迎随时与我联系。</p>
             <a href="mailto:taohui029@gmail.com" class="interactive-button">发送邮件</a>
         </div>
     </section>
 
     <script>
+        // --- 全新轮播 JavaScript 功能 ---
         document.addEventListener('DOMContentLoaded', function() {
-            const magicButton = document.getElementById('magicButton');
-            const magicText = document.getElementById('magicText');
-            let interactionCount = 0;
-            const interactionMessages = [
-                '很高兴你对我的网站感兴趣！', '这些图片展示了我的审美和创意方向。', '我正在不断学习和完善它。', '希望你在这里有愉快的体验！', '期待与你分享更多内容。', '点击可以持续互动哦！'
-            ];
+            const track = document.querySelector('.carousel-track');
+            const slides = Array.from(track.children);
+            const nextButton = document.querySelector('.carousel-button-next');
+            const prevButton = document.querySelector('.carousel-button-prev');
+            const dotsNav = document.querySelector('.carousel-dots');
+            const slideWidth = slides[0].getBoundingClientRect().width;
 
-            magicButton.addEventListener('click', function() {
-                magicText.textContent = interactionMessages[interactionCount % interactionMessages.length];
-                interactionCount++;
+            // 创建导航点
+            slides.forEach((slide, index) => {
+                const dot = document.createElement('button');
+                dot.classList.add('carousel-dot');
+                if (index === 0) dot.classList.add('active');
+                dotsNav.appendChild(dot);
+                dot.addEventListener('click', () => {
+                    moveToSlide(index);
+                    resetInterval();
+                });
+            });
+            const dots = Array.from(dotsNav.children);
+
+            // 设置每个slide的位置
+            const setSlidePosition = (slide, index) => {
+                slide.style.left = slideWidth * index + 'px';
+            };
+            slides.forEach(setSlidePosition);
+
+            let currentIndex = 0;
+            let autoPlayInterval;
+
+            const moveToSlide = (targetIndex) => {
+                track.style.transform = 'translateX(-' + (slideWidth * targetIndex) + 'px)';
+                dots[currentIndex].classList.remove('active');
+                dots[targetIndex].classList.add('active');
+                currentIndex = targetIndex;
+            };
+
+            // 左右按钮事件
+            nextButton.addEventListener('click', () => {
+                let nextIndex = currentIndex + 1;
+                if (nextIndex >= slides.length) nextIndex = 0;
+                moveToSlide(nextIndex);
+                resetInterval();
             });
 
+            prevButton.addEventListener('click', () => {
+                let prevIndex = currentIndex - 1;
+                if (prevIndex < 0) prevIndex = slides.length - 1;
+                moveToSlide(prevIndex);
+                resetInterval();
+            });
+            
+            // 自动播放
+            const startInterval = () => {
+                autoPlayInterval = setInterval(() => {
+                    let nextIndex = currentIndex + 1;
+                    if (nextIndex >= slides.length) nextIndex = 0;
+                    moveToSlide(nextIndex);
+                }, 4000); // 每4秒切换一次
+            };
+            
+            const resetInterval = () => {
+                clearInterval(autoPlayInterval);
+                startInterval();
+            };
+
+            // 鼠标悬停时暂停
+            const carousel = document.querySelector('.carousel');
+            carousel.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
+            carousel.addEventListener('mouseleave', () => startInterval());
+
+            startInterval(); // 页面加载后开始自动播放
+
+            // --- 滚动渐入动画 ---
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
