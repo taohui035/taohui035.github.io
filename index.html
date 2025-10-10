@@ -13,15 +13,15 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;800&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
       --primary-hex:#00bcd4; --primary-rgb:0,188,212;
       --secondary-hex:#ff4081; --secondary-rgb:255,64,129;
       --text-color:#ecf0f1; --bg-dark:#0f1b27;
-      --glass-bg:rgba(255,255,255,.08); --glass-border:rgba(255,255,255,.1);
-      --radius:16px; --blur:15px;
+      --glass-bg:rgba(255,255,255,.07); --glass-border:rgba(255,255,255,.12);
+      --radius:16px; --blur:18px; /* 优化了模糊效果 */
     }
     /* —— 随系统时间自动换色 —— */
     body.palette-morning{--primary-hex:#ffb86b;--primary-rgb:255,184,107;--secondary-hex:#ff79c6;--secondary-rgb:255,121,198;--bg-dark:#0f1b27;}
@@ -104,7 +104,8 @@
     .carousel-progress{position:absolute; left:14px; right:14px; bottom:10px; height:3px; background:rgba(255,255,255,.18); border-radius:2px; overflow:hidden; pointer-events:none; z-index:1}
     .carousel-progress .bar{width:0%; height:100%; background:linear-gradient(90deg, var(--primary-hex), var(--secondary-hex)); transition:none}
 
-    .glass-card{background:var(--glass-bg); backdrop-filter:blur(var(--blur)); -webkit-backdrop-filter:blur(var(--blur)); border:1px solid var(--glass-border); border-radius:var(--radius); padding:36px; margin:18px auto; box-shadow:0 8px 32px rgba(0,0,0,.37); max-width:1000px; width:min(1000px,92%); opacity:0; transform:translateY(50px); transition:opacity .8s ease-out, transform .8s ease-out}
+    /* 卡片效果 */
+    .glass-card{background:var(--glass-bg); backdrop-filter:blur(var(--blur)); -webkit-backdrop-filter:blur(var(--blur)); border:1px solid var(--glass-border); border-radius:var(--radius); padding:36px; margin:18px auto; box-shadow:0 10px 40px rgba(0,0,0,.3); max-width:1000px; width:min(1000px,92%); opacity:0; transform:translateY(50px); transition:opacity .8s ease-out, transform .8s ease-out}
     .glass-card.fade-in{opacity:1; transform:translateY(0)}
 
     .social-icons{display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:18px}
@@ -138,7 +139,6 @@
       <a href="#projects" class="interactive-button">开始探索</a>
     </section>
 
-    <!-- 图片过渡桥：自然衔接到项目区 -->
     <section id="bridge" class="bridge-section" aria-label="图像过渡">
       <div class="bridge-mask">
         <div class="marquee row1"><div class="marquee-track" id="marquee1"></div></div>
@@ -150,25 +150,25 @@
     <section id="projects" class="content-section" aria-labelledby="projects-title">
       <div class="glass-card">
         <h2 id="projects-title">我的项目</h2>
-        <p>从网页开发到数据分析，每一个项目都凝聚了我的热情与思考。以下是我部分作品概念展示：</p>
+        <p>从数据可视化到人工智能，每一个项目都凝聚了我的热情与思考。以下是我部分作品概念展示：</p>
 
         <div class="carousel" role="region" aria-roledescription="carousel" aria-label="作品集轮播" tabindex="0" data-interval="4000">
           <ul class="carousel-track" aria-live="polite">
             <li class="carousel-slide is-selected">
-              <img loading="lazy" decoding="async" src="https://images.pexels.com/photos/356079/pexels-photo-356079.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="交互体验设计">
-              <div class="carousel-caption"><h3>交互体验设计</h3><p>创造无缝且富有情感连接的数字产品界面。</p></div>
+              <img loading="lazy" decoding="async" src="https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="AI 驱动的应用">
+              <div class="carousel-caption"><h3>AI 驱动的应用</h3><p>探索人工智能如何赋能下一代智能产品。</p></div>
             </li>
             <li class="carousel-slide">
-              <img loading="lazy" decoding="async" src="https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="商业数据分析">
-              <div class="carousel-caption"><h3>商业数据分析</h3><p>从海量数据中挖掘价值，驱动商业决策。</p></div>
+              <img loading="lazy" decoding="async" src="https://images.pexels.com/photos/5775854/pexels-photo-5775854.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="沉浸式数据可视化">
+              <div class="carousel-caption"><h3>沉浸式数据可视化</h3><p>将复杂数据转化为直观、可交互的视觉故事。</p></div>
             </li>
             <li class="carousel-slide">
-              <img loading="lazy" decoding="async" src="https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="全栈 Web 开发">
-              <div class="carousel-caption"><h3>全栈 Web 开发</h3><p>构建稳定、高效且可扩展的现代化网络应用。</p></div>
+              <img loading="lazy" decoding="async" src="https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="前沿Web技术栈">
+              <div class="carousel-caption"><h3>前沿Web技术栈</h3><p>利用尖端框架构建高性能、可扩展的现代网络应用。</p></div>
             </li>
             <li class="carousel-slide">
-              <img loading="lazy" decoding="async" src="https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="金融科技解决方案">
-              <div class="carousel-caption"><h3>金融科技解决方案</h3><p>探索技术如何重塑未来的金融服务生态。</p></div>
+              <img loading="lazy" decoding="async" src="https://images.pexels.com/photos/7988079/pexels-photo-7988079.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="未来金融科技">
+              <div class="carousel-caption"><h3>未来金融科技</h3><p>设计与开发重塑金融服务生态的安全、高效解决方案。</p></div>
             </li>
           </ul>
 
@@ -216,16 +216,16 @@
     // 智能导航
     const navbar=document.querySelector('.navbar'); if(navbar){ let lastY=window.scrollY; window.addEventListener('scroll',()=>{ const y=window.scrollY; if(y>100){ navbar.classList.add('nav-scrolled'); y>lastY? navbar.classList.add('nav-hidden'): navbar.classList.remove('nav-hidden'); }else{ navbar.classList.remove('nav-scrolled','nav-hidden'); } lastY=y; }); }
 
-    // 图片过渡桥（双向 Marquee）
+    // 图片过渡桥（双向 Marquee）- 已更新图片素材
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const bridgeImgs=[
-      'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&dpr=1',
-      'https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&dpr=1',
-      'https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&dpr=1',
-      'https://images.pexels.com/photos/347141/pexels-photo-347141.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&dpr=1',
-      'https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&dpr=1',
-      'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&dpr=1',
-      'https://images.pexels.com/photos/21014/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1200&h=800&dpr=1'
+      'https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', // 人像
+      'https://images.pexels.com/photos/167699/pexels-photo-167699.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', // 风景
+      'https://images.pexels.com/photos/3760917/pexels-photo-3760917.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', // 人像
+      'https://images.pexels.com/photos/3244513/pexels-photo-3244513.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', // 风景
+      'https://images.pexels.com/photos/935969/pexels-photo-935969.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',  // 人像
+      'https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', // 风景
+      'https://images.pexels.com/photos/3775087/pexels-photo-3775087.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'  // 人像
     ];
     function fillMarquee(el){
       const frag=document.createDocumentFragment();
@@ -259,21 +259,19 @@
       const dotsNav=carousel.querySelector('.carousel-dots');
       const progress=carousel.querySelector('.carousel-progress .bar');
 
-      // 布局
       let slideWidth=slides[0].getBoundingClientRect().width;
       slides.forEach((s,i)=> s.style.left=(slideWidth*i)+'px');
       function relayout(){ slideWidth=slides[0].getBoundingClientRect().width; slides.forEach((s,i)=> s.style.left=(slideWidth*i)+'px'); moveTo(current,{instant:true}); }
       window.addEventListener('resize', relayout); window.addEventListener('orientationchange', relayout);
       slides.forEach(s=>{ const img=s.querySelector('img'); if(img && !img.complete){ img.addEventListener('load', relayout, {once:true}); } });
 
-      // dots
       slides.forEach((_,i)=>{ const b=document.createElement('button'); b.className='carousel-dot'+(i===0?' is-selected':''); b.setAttribute('aria-label','跳转到第 '+(i+1)+' 张'); b.addEventListener('click',()=>{ moveTo(i); resetAuto(); }); dotsNav.appendChild(b); });
       const dots=Array.from(dotsNav.children);
 
-      // 状态
       let current=0; let auto=null; const AUTO_MS=Number(carousel.dataset.interval||4000);
 
       function updateUI(i){
+        if(!slides[current] || !dots[current]) return;
         slides[current].classList.remove('is-selected'); slides[i].classList.add('is-selected');
         dots[current].classList.remove('is-selected');   dots[i].classList.add('is-selected');
         current=i;
@@ -291,14 +289,12 @@
       nextBtn.addEventListener('click',()=>{ next(); resetAuto(); });
       prevBtn.addEventListener('click',()=>{ prev(); resetAuto(); });
 
-      // 拖拽
       let dragging=false, sx=0, stx=0, dx=0;
       track.addEventListener('pointerdown',e=>{ dragging=true; track.setPointerCapture(e.pointerId); sx=e.clientX; stx=-(slideWidth*current); track.style.transition='none'; track.style.cursor='grabbing'; stopAuto(); });
       window.addEventListener('pointermove',e=>{ if(!dragging) return; dx=e.clientX-sx; track.style.transform=`translateX(${stx+dx}px)`; });
       window.addEventListener('pointerup',()=>{ if(!dragging) return; dragging=false; track.style.transition=''; track.style.cursor='grab';
         const threshold=Math.min(90, slideWidth*.2); if(Math.abs(dx)>threshold){ dx<0? next(): prev(); } else { moveTo(current); } resetAuto(); });
 
-      // 进度条 & 自动播放
       function startProgress(){ if(!progress) return; progress.style.transition='none'; progress.style.width='0%'; requestAnimationFrame(()=>{ progress.style.transition=`width ${AUTO_MS}ms linear`; progress.style.width='100%'; }); }
       function resetProgress(){ if(!progress) return; progress.style.transition='none'; progress.style.width='0%'; }
 
