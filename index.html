@@ -17,29 +17,15 @@
 
     <style>
         :root {
-            /* 颜色变量（提供 RGB 以便 rgba 使用） */
-            --primary-hex: #00bcd4;
-            --primary-rgb: 0, 188, 212;
-            --secondary-hex: #ff4081;
-            --secondary-rgb: 255, 64, 129;
+            --primary-hex: #00bcd4; --primary-rgb: 0, 188, 212;
+            --secondary-hex: #ff4081; --secondary-rgb: 255, 64, 129;
             --text-color-light: #ecf0f1;
-            --bg-dark: #0f1b27; /* 略深提升对比度 */
+            --bg-dark: #0f1b27;
             --glass-bg: rgba(255, 255, 255, 0.08);
             --glass-border: rgba(255, 255, 255, 0.1);
         }
 
-        /* 可访问性：跳转到主要内容 */
-        .skip-link {
-            position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden;
-        }
-        .skip-link:focus {
-            left: 16px; top: 16px; width: auto; height: auto; background: #000; color: #fff;
-            padding: 8px 12px; border-radius: 8px; z-index: 9999;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             margin: 0; padding: 0;
@@ -49,142 +35,111 @@
             overflow-x: hidden;
         }
 
-        header, main, footer { display: block; }
+        /* --- 智能导航栏 --- */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; padding: 15px 5%;
+            background: rgba(15, 27, 39, 0.7);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000;
+            transition: transform 0.4s ease-in-out, background-color 0.4s ease;
+            transform: translateY(0); /* 默认显示 */
+        }
+        .navbar.nav-hidden {
+            transform: translateY(-100%); /* 向下滚动时隐藏 */
+        }
+        .navbar.nav-scrolled {
+            background: rgba(15, 27, 39, 0.85); /* 滚动后背景变深 */
+        }
+        .nav-logo { font-size: 1.5em; font-weight: 700; color: #fff; text-decoration: none; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { color: var(--text-color-light); text-decoration: none; font-size: 1em; position: relative; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--primary-hex); }
+        .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 50%; transform: translateX(-50%); background-color: var(--primary-hex); transition: width 0.3s; }
+        .nav-links a:hover::after { width: 100%; }
 
-        .video-background {
-            position: fixed; inset: 0; overflow: hidden; z-index: -1;
-        }
-        .video-background video {
-            min-width: 100%; min-height: 100%; width: auto; height: auto; position: absolute;
-            top: 50%; left: 50%; transform: translate(-50%, -50%);
-            object-fit: cover; filter: brightness(0.6);
-        }
+        .video-background { position: fixed; inset: 0; overflow: hidden; z-index: -1; }
+        .video-background video { min-width: 100%; min-height: 100%; width: auto; height: auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); object-fit: cover; filter: brightness(0.6); }
+        .video-overlay { position: fixed; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%); z-index: -1; }
 
-        .video-overlay {
-            position: fixed; inset: 0;
-            background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%);
-            z-index: -1;
-        }
-
-        .hero-section, .content-section {
-            min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            padding: 80px 20px; text-align: center; position: relative;
-        }
-
-        .hero-section h1 {
-            font-family: 'Montserrat', sans-serif; font-size: clamp(2.4rem, 6vw, 4.5rem); margin: 0 0 20px;
-            background: linear-gradient(45deg, var(--primary-hex), var(--secondary-hex));
-            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;
-        }
-        .hero-section p {
-            font-size: clamp(1rem, 2.5vw, 1.5rem); max-width: 800px; margin: 0 0 40px; font-weight: 300;
-        }
-
-        .scroll-down { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); animation: bounce 2s infinite; }
+        .hero-section, .content-section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 80px 20px; text-align: center; position: relative; }
+        .hero-section h1 { font-family: 'Montserrat', sans-serif; font-size: clamp(2.4rem, 6vw, 4.5rem); margin: 0 0 20px; background: linear-gradient(45deg, var(--primary-hex), var(--secondary-hex)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
+        .hero-section p { font-size: clamp(1rem, 2.5vw, 1.5rem); max-width: 800px; margin: 0 0 40px; font-weight: 300; }
 
         .glass-card {
             background: var(--glass-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border); border-radius: 16px; padding: 40px; margin: 20px auto;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); max-width: 1000px; width: min(1000px, 92%);
-            opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            opacity: 0; transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
         .glass-card.fade-in { opacity: 1; transform: translateY(0); }
         .glass-card h2 { color: var(--primary-hex); font-size: clamp(1.6rem, 3.5vw, 2.5rem); margin: 0 0 20px; text-align: center; }
         .glass-card p { font-size: 1.1em; line-height: 1.7; margin: 0 0 15px; }
 
-        .interactive-button {
-            display: inline-block; background-color: var(--primary-hex); color: #ffffff; padding: 12px 30px; text-decoration: none; border-radius: 50px;
-            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; border: none; cursor: pointer; font-size: 1.05em; font-weight: 700; margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.35);
-        }
-        .interactive-button:hover { background-color: var(--secondary-hex); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(var(--secondary-rgb), 0.5); }
-
-        .image-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px; }
-        .gallery-item { position: relative; overflow: hidden; border-radius: 10px; }
-        .gallery-item img { width: 100%; height: 200px; object-fit: cover; display: block; transition: transform 0.5s ease; }
-        .gallery-item:hover img { transform: scale(1.05); }
-
-        .carousel { position: relative; width: 100%; max-width: 920px; margin: 30px auto 0; overflow: hidden; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .carousel-track { display: flex; transition: transform 0.5s ease-in-out; will-change: transform; }
-        .carousel-slide { min-width: 100%; position: relative; }
-        
+        /* --- 全新精修图片轮播 --- */
+        .carousel { position: relative; width: 100%; max-width: 920px; margin: 30px auto 0; overflow: hidden; border-radius: 12px; }
+        .carousel-track-container { overflow: hidden; border-radius: 12px; }
+        .carousel-track { display: flex; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+        .carousel-slide { min-width: 100%; position: relative; transition: opacity 0.6s ease; }
+        .carousel-slide:not(.is-selected) { opacity: 0.7; }
+        .carousel-slide img { width: 100%; display: block; height: 52vh; max-height: 560px; min-height: 280px; object-fit: cover; }
         .carousel-caption { position: absolute; inset: auto 0 0 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); padding: 40px 20px 20px; color: #fff; text-align: left; }
-        .carousel-caption h3 { margin: 0 0 5px; font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-family: 'Montserrat', sans-serif; }
+        .carousel-caption h3 { margin: 0 0 5px; font-size: clamp(1.1rem, 2.5vw, 1.5rem); }
         .carousel-caption p { margin: 0; font-size: 1em; color: rgba(255,255,255,0.85); }
-        .carousel-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 100%; display: flex; justify-content: space-between; pointer-events: none; }
-        .carousel-button { pointer-events: all; background-color: rgba(0,0,0,0.35); border: none; color: #fff; font-size: 2em; cursor: pointer; padding: 10px 15px; border-radius: 50%; margin: 0 20px; transition: background-color 0.3s; }
-        .carousel-button:hover { background-color: rgba(0,0,0,0.6); }
-        .carousel-dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; }
-        .carousel-dot { width: 12px; height: 12px; border-radius: 50%; background-color: rgba(255,255,255,0.45); border: 0; padding: 0; cursor: pointer; }
-        .carousel-dot[aria-selected="true"], .carousel-dot.active { background-color: #fff; }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
-            40% { transform: translateY(-10px) translateX(-50%); }
-            60% { transform: translateY(-5px) translateX(-50%); }
+        .carousel-button {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 44px; height: 44px; border-radius: 50%;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s ease;
         }
-        
-        /* 减少首屏留白并与下方更连贯 */
-        .hero-section { min-height: 72vh; padding-bottom: 0; }
-        /* 英雄区和项目区之间的波浪过渡 */
-        .section-bridge { position: absolute; bottom: -1px; left: 0; width: 100%; height: 120px; pointer-events: none; }
-        .section-bridge svg { display: block; width: 100%; height: 100%; }
+        .carousel-button:hover { background: rgba(255,255,255,0.2); transform: translateY(-50%) scale(1.1); }
+        .carousel-button-prev { left: 20px; }
+        .carousel-button-next { right: 20px; }
+        .carousel-button svg { width: 24px; height: 24px; stroke: #fff; stroke-width: 2; }
+        .carousel-dots { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; }
+        .carousel-dot { width: 10px; height: 10px; border-radius: 50%; background-color: rgba(255,255,255,0.45); border: 0; padding: 0; cursor: pointer; transition: all 0.3s ease; }
+        .carousel-dot.is-selected { background-color: #fff; transform: scale(1.2); }
 
-        /* Lottie 动画容器 */
-        .carousel-ani { width: 100%; height: 52vh; max-height: 560px; min-height: 280px; }
-
-        /* 社交图标按钮 */
-        .social-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 10px; }
-        .social-btn { width: 52px; height: 52px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; 
-            background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            text-decoration: none; color: #fff; transition: transform .25s ease, box-shadow .25s ease, background .25s ease; }
+        .social-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 20px; }
+        .social-btn { width: 52px; height: 52px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--glass-bg); border: 1px solid var(--glass-border); text-decoration: none; color: #fff; transition: all .25s ease; }
         .social-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(0,0,0,.35); background: linear-gradient(135deg, rgba(var(--primary-rgb),.25), rgba(var(--secondary-rgb),.25)); }
-        .social-btn svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-        
-        @media (max-width: 768px) { .carousel-ani, .carousel-slide img { height: 42vh; } }
+        .social-btn svg { width: 22px; height: 22px; }
 
-        /* 尊重用户减少动态偏好 */
-        @media (prefers-reduced-motion: reduce) {
-            * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
-            .scroll-down { animation: none; }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
         }
     </style>
 </head>
 <body>
-    <a class="skip-link" href="#main">跳到主要内容</a>
-
-    <div class="video-background" aria-hidden="true">
-        <video autoplay muted loop playsinline poster="background_poster.jpg">
-            <source src="background_video.mp4" type="video/mp4" />
-            您的浏览器不支持视频背景。
-        </video>
-    </div>
-    <div class="video-overlay" aria-hidden="true"></div>
-
-    <header class="hero-section" role="banner">
-        <h1>探索我的数字世界</h1>
-        <p>欢迎来到我的个人网站，这里是我分享创意、技术和生活感悟的专属空间。</p>
-        <a href="#about" class="interactive-button">了解更多</a>
-        <div class="scroll-down" aria-hidden="true">↓ <span>滚动查看内容</span></div>
-        <div class="section-bridge" aria-hidden="true">
-        <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0,24 C180,72 360,72 540,48 C720,24 900,-8 1080,8 C1260,24 1440,72 1440,72 L1440,120 L0,120 Z" fill="rgba(255,255,255,0.06)"/>
-            <path d="M0,48 C200,88 400,92 600,68 C820,42 980,10 1200,36 C1320,50 1440,72 1440,72 L1440,120 L0,120 Z" fill="rgba(255,255,255,0.04)"/>
-        </svg>
-    </div>
-</header>
+    <header role="banner">
+        <nav class="navbar" aria-label="主导航">
+            <a href="#" class="nav-logo">Taozhiruo.com</a>
+            <div class="nav-links">
+                <a href="#about">关于我</a>
+                <a href="#projects">我的项目</a>
+                <a href="#contact">联系我</a>
+            </div>
+        </nav>
+        <div class="video-background" aria-hidden="true">
+            <video autoplay muted loop playsinline poster="background_poster.jpg"><source src="background_video.mp4" type="video/mp4" /></video>
+        </div>
+        <div class="video-overlay" aria-hidden="true"></div>
+    </header>
 
     <main id="main">
+        <section class="hero-section">
+            <h1>探索我的数字世界</h1>
+            <p>欢迎来到我的个人网站，这里是我分享创意、技术和生活感悟的专属空间。</p>
+            <a href="#about" class="interactive-button">开始探索</a>
+        </section>
+
         <section id="about" class="content-section" aria-labelledby="about-title">
             <div class="glass-card">
                 <h2 id="about-title">关于我</h2>
                 <p>你好！我是 Taozhiruo，一位充满好奇心的探索者。我热爱技术创新，喜欢将想法付诸实践...</p>
-                <div class="image-gallery">
-                    <div class="gallery-item"><img loading="lazy" decoding="async" src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="科技创意" /></div>
-                    <div class="gallery-item"><img loading="lazy" decoding="async" src="https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="未来设计" /></div>
-                    <div class="gallery-item"><img loading="lazy" decoding="async" src="https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="编程世界" /></div>
-                    <div class="gallery-item"><img loading="lazy" decoding="async" src="https://images.pexels.com/photos/347141/pexels-photo-347141.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="数字艺术" /></div>
-                </div>
             </div>
         </section>
 
@@ -194,14 +149,38 @@
                 <p>从网页开发到数据分析，每一个项目都凝聚了我的热情与思考。以下是我部分作品概念展示：</p>
 
                 <div class="carousel" role="region" aria-roledescription="carousel" aria-label="作品集轮播">
-                    <div class="carousel-track" role="group" aria-live="polite"></div>
-                    <div class="carousel-nav" aria-hidden="false">
-                        <button class="carousel-button carousel-button-prev" aria-label="上一张" type="button" title="上一张">&lt;</button>
-                        <button class="carousel-button carousel-button-next" aria-label="下一张" type="button" title="下一张">&gt;</button>
+                    <div class="carousel-track-container">
+                        <ul class="carousel-track">
+                            <li class="carousel-slide is-selected">
+                                <img loading="lazy" decoding="async" src="https://images.pexels.com/photos/356079/pexels-photo-356079.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="交互体验设计">
+                                <div class="carousel-caption"><h3>交互体验设计</h3><p>创造无缝且富有情感连接的数字产品界面。</p></div>
+                            </li>
+                            <li class="carousel-slide">
+                                <img loading="lazy" decoding="async" src="https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="商业数据分析">
+                                <div class="carousel-caption"><h3>商业数据分析</h3><p>从海量数据中挖掘价值，驱动商业决策。</p></div>
+                            </li>
+                            <li class="carousel-slide">
+                                <img loading="lazy" decoding="async" src="https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="全栈Web开发">
+                                <div class="carousel-caption"><h3>全栈Web开发</h3><p>构建稳定、高效且可扩展的现代化网络应用。</p></div>
+                            </li>
+                            <li class="carousel-slide">
+                                <img loading="lazy" decoding="async" src="https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="金融科技解决方案">
+                                <div class="carousel-caption"><h3>金融科技解决方案</h3><p>探索技术如何重塑未来的金融服务生态。</p></div>
+                            </li>
+                        </ul>
                     </div>
+                    
+                    <div class="carousel-nav">
+                        <button class="carousel-button carousel-button-prev" aria-label="上一张" type="button">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                        </button>
+                        <button class="carousel-button carousel-button-next" aria-label="下一张" type="button">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                        </button>
+                    </div>
+
                     <div class="carousel-dots" role="tablist" aria-label="轮播分页点"></div>
                 </div>
-
             </div>
         </section>
 
@@ -210,22 +189,9 @@
                 <h2 id="contact-title">联系我</h2>
                 <p>如果你对我的项目感兴趣，或者想进行技术交流，欢迎随时与我联系。</p>
                 <div class="social-icons" aria-label="社交链接">
-    <a class="social-btn" href="#" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
-        <svg viewBox="0 0 24 24"><path d="M9 19c-4 1.5-4-2.5-6-3m12 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 18 3.77 5.07 5.07 0 0 0 17.91 1S16.73.65 14 2.48a13.38 13.38 0 0 0-10 0C1.27.65.09 1 .09 1A5.07 5.07 0 0 0 0 3.77 5.44 5.44 0 0 0 1.5 8.5c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 7 19.13V23"/></svg>
-    </a>
-    <a class="social-btn" href="#" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
-        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-    </a>
-    <a class="social-btn" href="#" target="_blank" rel="noopener" title="X / Twitter" aria-label="X / Twitter">
-        <svg viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
-    </a>
-    <a class="social-btn" href="#" target="_blank" rel="noopener" title="Dribbble" aria-label="Dribbble">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M8.56 2.75c4.37 6.03 6.02 12.42 5.02 17.52"></path><path d="M2.75 8.56c12.42.02 17.52 5.02 17.52 6.03"></path><path d="M12.44 21.25c-6.02-4.37-12.42-6.02-17.52-5.02"></path></svg>
-    </a>
-    <a class="social-btn" href="mailto:taohui029@gmail.com" title="Email" aria-label="Email">
-        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-    </a>
-</div>
+                    <a class="social-btn" href="#" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+                    <a class="social-btn" href="#" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+                </div>
             </div>
         </section>
     </main>
@@ -236,138 +202,123 @@
         </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" referrerpolicy="no-referrer"></script>
     <script>
-        // 年份自动更新
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- 动态年份 ---
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // ========== 轮播升级为 Lottie 动画 (CDN 版本) ==========
-        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        const slidesData = [
-            { src: 'https://assets4.lottiefiles.com/packages/lf20_JkY10k.json', title: 'UI/UX 设计', desc: '专注于创造美观、直观且用户友好的数字体验。' },
-            { src: 'https://assets8.lottiefiles.com/packages/lf20_z9b maad.json', title: '数据可视化', desc: '将复杂数据转化为富有洞察力的交互式图表。' },
-            { src: 'https://assets8.lottiefiles.com/packages/lf20_3aGza6.json', title: '人工智能应用', desc: '探索机器学习与 AI 在现实世界中的创新应用。' },
-            { src: 'https://assets10.lottiefiles.com/packages/lf20_s72lGf.json', title: '移动应用开发', desc: '构建流畅、高性能的 iOS 与 Android 原生应用。' },
-            { src: 'https://assets5.lottiefiles.com/packages/lf20_Smywz8.json', title: '未来建筑概念', desc: '融合科技与艺术，探索可持续的未来生活空间。' }
-        ];
-
-        // 渲染轮播 DOM
-        const track = document.querySelector('.carousel-track');
-        const dotsNav = document.querySelector('.carousel-dots');
-        const prevButton = document.querySelector('.carousel-button-prev');
-        const nextButton = document.querySelector('.carousel-button-next');
-
-        slidesData.forEach((s, idx) => {
-            const slide = document.createElement('div');
-            slide.className = 'carousel-slide';
-            slide.setAttribute('role', 'group');
-            slide.setAttribute('aria-roledescription', 'slide');
-            slide.setAttribute('aria-label', `${idx + 1} / ${slidesData.length}`);
-            slide.innerHTML = `
-                <div class="carousel-ani" data-src="${s.src}"></div>
-                <div class="carousel-caption"><h3>${s.title}</h3><p>${s.desc}</p></div>
-            `;
-            track.appendChild(slide);
-
-            const dot = document.createElement('button');
-            dot.className = 'carousel-dot';
-            dot.setAttribute('role', 'tab');
-            dot.setAttribute('aria-label', `第 ${idx + 1} 张`);
-            dot.setAttribute('aria-selected', idx === 0 ? 'true' : 'false');
-            dot.addEventListener('click', () => moveToSlide(idx, { user: true }));
-            dotsNav.appendChild(dot);
-        });
-
-        const slides = Array.from(track.children);
-        const dots = Array.from(dotsNav.children);
-
-        // 初始化 Lottie 播放器
-        const players = slides.map((slide, i) => {
-            const container = slide.querySelector('.carousel-ani');
-            return lottie.loadAnimation({
-                container,
-                renderer: 'svg',
-                loop: true,
-                autoplay: !prefersReduced && i === 0,
-                path: container.dataset.src
+        // --- 智能导航栏 ---
+        const navbar = document.querySelector('.navbar');
+        if (navbar) {
+            let lastScrollY = window.scrollY;
+            window.addEventListener('scroll', () => {
+                const currentScrollY = window.scrollY;
+                if (currentScrollY > 100) {
+                    navbar.classList.add('nav-scrolled');
+                    if (currentScrollY > lastScrollY) {
+                        navbar.classList.add('nav-hidden');
+                    } else {
+                        navbar.classList.remove('nav-hidden');
+                    }
+                } else {
+                    navbar.classList.remove('nav-scrolled');
+                    navbar.classList.remove('nav-hidden');
+                }
+                lastScrollY = currentScrollY;
             });
-        });
-
-        let slideWidth = slides.length > 0 ? slides[0].getBoundingClientRect().width : 0;
-        function layout() {
-            slideWidth = slides[0].getBoundingClientRect().width;
-            slides.forEach((slide, i) => { slide.style.left = (slideWidth * i) + 'px'; });
-            moveToSlide(currentIndex, { instant: true, skipAnim: true });
         }
 
-        const resizeObserver = new ResizeObserver(() => layout());
-        resizeObserver.observe(document.querySelector('.carousel'));
-        window.addEventListener('orientationchange', layout);
-        window.addEventListener('resize', layout);
+        // --- 精修图片轮播 ---
+        const carousel = document.querySelector('.carousel');
+        if (carousel) {
+            const track = carousel.querySelector('.carousel-track');
+            const slides = Array.from(track.children);
+            const nextButton = carousel.querySelector('.carousel-button-next');
+            const prevButton = carousel.querySelector('.carousel-button-prev');
+            const dotsNav = carousel.querySelector('.carousel-dots');
+            
+            if (slides.length > 0) {
+                const slideWidth = slides[0].getBoundingClientRect().width;
+                const setSlidePosition = (slide, index) => {
+                    slide.style.left = slideWidth * index + 'px';
+                };
+                slides.forEach(setSlidePosition);
 
-        let currentIndex = 0;
-        let autoPlayInterval = null;
-        const AUTO_MS = 5000; // 动画时间稍长
+                // 创建导航点
+                slides.forEach((slide, index) => {
+                    const dot = document.createElement('button');
+                    dot.classList.add('carousel-dot');
+                    if (index === 0) dot.classList.add('is-selected');
+                    dot.setAttribute('aria-label', `跳转到第 ${index + 1} 张`);
+                    dotsNav.appendChild(dot);
+                });
 
-        function updateDots(nextIdx) {
-            dots.forEach((d, i) => d.setAttribute('aria-selected', i === nextIdx ? 'true' : 'false'));
-            dots.forEach((d, i) => d.classList.toggle('active', i === nextIdx));
-        }
+                const dots = Array.from(dotsNav.children);
 
-        function moveToSlide(targetIndex, opts = {}) {
-            const { instant = false, skipAnim = false } = opts;
-            const tx = -(slideWidth * targetIndex);
-            if (instant) {
-                track.style.transition = 'none';
-                track.style.transform = `translateX(${tx}px)`;
-                track.offsetHeight;
-                track.style.transition = '';
-            } else {
-                track.style.transform = `translateX(${tx}px)`;
+                let currentIndex = 0;
+                let autoPlayInterval;
+
+                const moveToSlide = (targetIndex) => {
+                    track.style.transform = 'translateX(-' + slides[targetIndex].style.left + ')';
+                    slides[currentIndex].classList.remove('is-selected');
+                    slides[targetIndex].classList.add('is-selected');
+                    dots[currentIndex].classList.remove('is-selected');
+                    dots[targetIndex].classList.add('is-selected');
+                    currentIndex = targetIndex;
+                };
+
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        moveToSlide(index);
+                        resetInterval();
+                    });
+                });
+                
+                nextButton.addEventListener('click', () => {
+                    const nextIndex = (currentIndex + 1) % slides.length;
+                    moveToSlide(nextIndex);
+                    resetInterval();
+                });
+                
+                prevButton.addEventListener('click', () => {
+                    const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+                    moveToSlide(prevIndex);
+                    resetInterval();
+                });
+
+                const startInterval = () => {
+                    autoPlayInterval = setInterval(() => {
+                        const nextIndex = (currentIndex + 1) % slides.length;
+                        moveToSlide(nextIndex);
+                    }, 4000);
+                };
+                
+                const resetInterval = () => {
+                    clearInterval(autoPlayInterval);
+                    startInterval();
+                };
+
+                carousel.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
+                carousel.addEventListener('mouseleave', startInterval);
+                
+                startInterval();
             }
-            if (!prefersReduced && !skipAnim) {
-                players[currentIndex]?.pause?.();
-                players[targetIndex]?.play?.();
-            }
-            updateDots(targetIndex);
-            currentIndex = targetIndex;
         }
 
-        function next() { moveToSlide((currentIndex + 1) % slides.length); }
-        function prev() { moveToSlide((currentIndex - 1 + slides.length) % slides.length); }
-
-        nextButton.addEventListener('click', () => { next(); resetInterval(); });
-        prevButton.addEventListener('click', () => { prev(); resetInterval(); });
-
-        document.querySelector('.carousel').addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') { next(); resetInterval(); }
-            if (e.key === 'ArrowLeft') { prev(); resetInterval(); }
-        });
-
-        function startInterval() {
-            if (prefersReduced) return;
-            stopInterval();
-            autoPlayInterval = setInterval(() => next(), AUTO_MS);
-        }
-        function stopInterval() { if (autoPlayInterval) { clearInterval(autoPlayInterval); autoPlayInterval = null; } }
-        function resetInterval() { stopInterval(); startInterval(); }
-
-        document.addEventListener('visibilitychange', () => { document.hidden ? stopInterval() : startInterval(); });
-        const carouselEl = document.querySelector('.carousel');
-        carouselEl.addEventListener('mouseenter', stopInterval);
-        carouselEl.addEventListener('mouseleave', startInterval);
-
-        layout();
-        startInterval();
-
+        // --- 滚动渐入动画 ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('fade-in');
-                else entry.target.classList.remove('fade-in');
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                } else {
+                    entry.target.classList.remove('fade-in');
+                }
             });
         }, { threshold: 0.1 });
-        document.querySelectorAll('.glass-card').forEach(card => observer.observe(card));
+        document.querySelectorAll('.glass-card').forEach(card => {
+            observer.observe(card);
+        });
+    });
     </script>
 </body>
 </html>
