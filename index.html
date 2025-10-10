@@ -2,101 +2,278 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>我的个人网站</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <title>Taozhiruo.com | 创意空间</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
 
     <style>
-        body {
-            font-family: 'Noto Sans SC', sans-serif; /* 应用新字体 */
-            line-height: 1.8;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        header {
-            background: #2c3e50; /* 深蓝色页头 */
-            color: #ecf0f1; /* 浅灰色文字 */
-            padding: 2rem 0;
-            text-align: center;
-            border-bottom: 5px solid #3498db; /* 蓝色底边框 */
-        }
-        h1, h2 {
-            color: #2c3e50;
-        }
-        header h1, header p {
-            color: #ecf0f1;
-        }
-        main {
-            padding: 20px;
-            width: 80%;
-            max-width: 900px; /* 设置最大宽度 */
-            margin: 40px auto; /* 上下边距40px, 左右自动居中 */
-            background-color: #ffffff; /* 主要内容区域为白色背景 */
-            border-radius: 8px; /* 圆角 */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 添加阴影，更有立体感 */
-        }
-        footer {
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-            background: #2c3e50;
-            color: #ecf0f1;
+        /* 全局样式 */
+        :root {
+            --primary-color: #00bcd4; /* 青蓝色 */
+            --secondary-color: #ff4081; /* 亮粉色 */
+            --text-color-light: #ecf0f1;
+            --text-color-dark: #2c3e50;
+            --bg-dark: #1a2a3a; /* 深蓝灰色背景 */
+            --glass-bg: rgba(255, 255, 255, 0.08); /* 更透明的玻璃背景 */
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
-        /* 交互式按钮的样式 */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans SC', 'Montserrat', sans-serif;
+            color: var(--text-color-light);
+            background-color: var(--bg-dark); /* 深色回退背景 */
+            overflow-x: hidden; /* 防止水平滚动条 */
+            scroll-behavior: smooth; /* 平滑滚动 */
+        }
+
+        /* 视频背景 */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1; /* 确保在内容之下 */
+        }
+        .video-background video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover; /* 确保视频覆盖整个区域 */
+            filter: brightness(0.7); /* 调暗视频，让文字更突出 */
+        }
+
+        /* 覆盖层，增加暗度，让文字更清晰 */
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 100%);
+            z-index: -1;
+        }
+
+        /* 内容容器 */
+        .hero-section, .content-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative; /* 确保内容在视频之上 */
+        }
+
+        /* 英雄区 (第一屏大标题) */
+        .hero-section {
+            color: var(--text-color-light);
+            text-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+        .hero-section h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 4.5em; /* 巨大标题 */
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        .hero-section p {
+            font-size: 1.5em;
+            max-width: 800px;
+            line-height: 1.5;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-color-light);
+            font-size: 1.2em;
+            animation: bounce 2s infinite; /* 滚动提示动画 */
+        }
+        .scroll-down span {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.8em;
+        }
+
+        /* 内容卡片 (磨砂玻璃效果) */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 20px auto;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            max-width: 800px;
+            width: 90%;
+            color: var(--text-color-light); /* 卡片内文字颜色 */
+            text-align: left;
+            opacity: 0; /* 初始隐藏 */
+            transform: translateY(50px); /* 初始位置下移 */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* 滚动动画 */
+        }
+        .glass-card.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .glass-card h2 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .glass-card p {
+            font-size: 1.1em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            color: var(--text-color-light);
+        }
+
+        /* 交互式按钮 */
         .interactive-button {
             display: inline-block;
-            background-color: #3498db; /* 蓝色背景 */
+            background-color: var(--primary-color);
             color: #ffffff;
-            padding: 12px 25px;
+            padding: 12px 30px;
             text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s, transform 0.3s; /* 添加过渡动画 */
+            border-radius: 50px; /* 圆角按钮 */
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
             border: none;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 1.1em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0, var(--primary-color), 0.4);
         }
         .interactive-button:hover {
-            background-color: #2980b9; /* 鼠标悬停时颜色变深 */
-            transform: translateY(-2px); /* 鼠标悬停时按钮轻微上浮 */
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, var(--secondary-color), 0.6);
+        }
+        .interactive-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* 动画 */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-10px) translateX(-50%); }
+            60% { transform: translateY(-5px) translateX(-50%); }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 3em;
+            }
+            .hero-section p {
+                font-size: 1.2em;
+            }
+            .glass-card {
+                padding: 25px;
+            }
+            .glass-card h2 {
+                font-size: 2em;
+            }
+            .glass-card p {
+                font-size: 1em;
+            }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>欢迎来到我的网站</h1>
-        <p>一个全新的开始，打造属于自己的网络空间。</p>
-    </header>
+    <div class="video-background">
+        <video autoplay muted loop playsinline>
+            <source src="background_video.mp4" type="video/mp4">
+            您的浏览器不支持视频背景。
+        </video>
+    </div>
+    <div class="video-overlay"></div>
 
-    <main>
-        <h2>关于我</h2>
-        <p>这里是一些关于我的介绍。我热衷于学习新知识，并在这里分享我的心得。</p>
-        
-        <button id="magicButton" class="interactive-button">点我看看！</button>
-        <p id="magicText" style="color: #555; min-height: 20px; transition: all 0.5s;"></p> 
+    <section class="hero-section">
+        <h1>探索我的数字世界</h1>
+        <p>欢迎来到我的个人网站，这里是我分享创意、技术和生活感悟的专属空间。</p>
+        <a href="#about" class="interactive-button">了解更多</a>
+        <div class="scroll-down">↓ <span>滚动查看内容</span></div>
+    </section>
 
-        <h2>我的项目</h2>
-        <p>我正在进行一些有趣的项目，敬请期待！</p>
+    <section id="about" class="content-section">
+        <div class="glass-card">
+            <h2>关于我</h2>
+            <p>你好！我是 Taozhiruo，一位充满好奇心的探索者。我热爱技术创新，喜欢将想法付诸实践。这个网站是我最新的尝试，我将在这里分享我的学习笔记、项目成果和个人思考。期待与你一同成长！</p>
+            <button id="magicButton" class="interactive-button">与我互动</button>
+            <p id="magicText" style="color: var(--primary-color); min-height: 25px; margin-top: 20px; font-weight: 700; transition: all 0.5s ease;"></p>
+        </div>
+    </section>
 
-        <h2>联系我</h2>
-        <p>如果你想联系我，可以给我发送邮件：</p>
-        <a href="mailto:taohui029@gmail.com" class="interactive-button">发送邮件</a>
-    </main>
+    <section id="projects" class="content-section">
+        <div class="glass-card">
+            <h2>我的项目</h2>
+            <p>我正在积极投身于多个创新项目中。从网页开发到数据分析，每一个项目都凝聚了我的热情与思考。未来，这里将成为我展示作品集、分享项目进展的平台。敬请期待更多精彩内容！</p>
+            <a href="mailto:taohui029@gmail.com" class="interactive-button">查看作品集 (建设中)</a>
+        </div>
+    </section>
 
-    <footer>
-        <p>&copy; 2025 Taozhiruo.com</p>
-    </footer>
+    <section id="contact" class="content-section">
+        <div class="glass-card">
+            <h2>联系我</h2>
+            <p>如果你对我的项目感兴趣，或者想进行技术交流，欢迎随时与我联系。期待与各界朋友建立联系，共同探讨未来！</p>
+            <a href="mailto:taohui029@gmail.com" class="interactive-button">发送邮件</a>
+        </div>
+    </section>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const button = document.getElementById('magicButton');
-            const text = document.getElementById('magicText');
+            // 互动按钮功能
+            const magicButton = document.getElementById('magicButton');
+            const magicText = document.getElementById('magicText');
+            let interactionCount = 0;
+            const interactionMessages = [
+                '很高兴你对我的网站感兴趣！',
+                '这个网站使用 HTML, CSS 和 JavaScript 构建。',
+                '我正在不断学习和完善它。',
+                '希望你在这里有愉快的体验！',
+                '期待与你分享更多内容。',
+                '点击可以持续互动哦！'
+            ];
 
-            button.addEventListener('click', function() {
-                text.textContent = '你好！感谢你的点击，这是一个由 JavaScript 实现的互动功能。';
+            magicButton.addEventListener('click', function() {
+                magicText.textContent = interactionMessages[interactionCount % interactionMessages.length];
+                interactionCount++;
+            });
+
+            // 滚动时内容卡片渐入动画
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                        observer.unobserve(entry.target); // 一旦进入，就不再观察
+                    }
+                });
+            }, { threshold: 0.1 }); // 当元素10%可见时触发
+
+            document.querySelectorAll('.glass-card').forEach(card => {
+                observer.observe(card);
             });
         });
     </script>
