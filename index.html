@@ -23,7 +23,6 @@
       --glass-bg:rgba(255,255,255,.07); --glass-border:rgba(255,255,255,.12);
       --radius:16px; --blur:18px;
     }
-    /* —— 随系统时间自动换色 —— */
     body.palette-morning{--primary-hex:#ffb86b;--primary-rgb:255,184,107;--secondary-hex:#ff79c6;--secondary-rgb:255,121,198;--bg-dark:#0f1b27;}
     body.palette-noon   {--primary-hex:#00bcd4;--primary-rgb:0,188,212;--secondary-hex:#7c4dff;--secondary-rgb:124,77,255;--bg-dark:#0e1e2c;}
     body.palette-evening{--primary-hex:#ff8a65;--primary-rgb:255,138,101;--secondary-hex:#ffd54f;--secondary-rgb:255,213,79;--bg-dark:#0d1a28;}
@@ -40,13 +39,8 @@
         var(--bg-dark);
       overflow-x:hidden;
     }
-
-    /* 顶部导航 */
-    .navbar{position:fixed; inset:0 0 auto 0; padding:14px 5%;
-      background:rgba(15,27,39,.70); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
-      display:flex; justify-content:space-between; align-items:center; z-index:1000;
-      transition:transform .4s ease, background-color .4s ease;
-    }
+    
+    .navbar{position:fixed; inset:0 0 auto 0; padding:14px 5%; background:rgba(15,27,39,.70); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); display:flex; justify-content:space-between; align-items:center; z-index:1000; transition:transform .4s ease, background-color .4s ease; }
     .navbar.nav-hidden{transform:translateY(-100%)} .navbar.nav-scrolled{background:rgba(15,27,39,.85)}
     .nav-logo{font-size:1.35rem; font-weight:800; color:#fff; text-decoration:none; letter-spacing:.3px}
     .nav-links{display:flex; gap:28px}
@@ -55,26 +49,17 @@
     .nav-links a:hover::after{width:100%}
     @media (max-width:768px){ .nav-links{display:none} }
 
-    /* 背景视频 */
     .video-background{position:fixed; inset:0; overflow:hidden; z-index:-2}
     .video-background video{min-width:100%; min-height:100%; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); object-fit:cover; filter:brightness(.62) saturate(1.02)}
     .video-overlay{position:fixed; inset:0; z-index:-1; background:linear-gradient(135deg, rgba(0,0,0,.68), rgba(0,0,0,.48))}
 
     .hero-section,.content-section{min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:96px 20px 80px; text-align:center; position:relative}
     .hero-section{min-height:72vh; padding-bottom:24px}
-    .hero-section h1{
-      font-family:'Montserrat',sans-serif; font-size:clamp(2.6rem,6vw,4.6rem); margin:0 0 16px;
-      background:linear-gradient(45deg,var(--primary-hex),var(--secondary-hex));
-      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
-      font-weight:800;
-      background-size:250% 250%;
-      animation:grad 8s ease infinite;
-    }
+    .hero-section h1{ font-family:'Montserrat',sans-serif; font-size:clamp(2.6rem,6vw,4.6rem); margin:0 0 16px; background:linear-gradient(45deg,var(--primary-hex),var(--secondary-hex)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; font-weight:800; background-size:250% 250%; animation:grad 8s ease infinite; }
     .hero-section p{font-size:clamp(1rem,2.3vw,1.35rem); max-width:820px; margin:0 0 28px; font-weight:300; opacity:.95}
     .interactive-button{display:inline-block; background:var(--primary-hex); color:#fff; padding:12px 28px; border-radius:999px; border:0; cursor:pointer; font-weight:800; letter-spacing:.3px; box-shadow:0 6px 18px rgba(var(--primary-rgb),.35); transition:transform .22s ease, box-shadow .22s ease, background .22s ease; text-decoration: none;}
     .interactive-button:hover{transform:translateY(-2px); background:var(--secondary-hex); box-shadow:0 10px 24px rgba(var(--secondary-rgb),.5)}
 
-    /* —— 图片过渡桥 —— */
     .bridge-section{position:relative; padding:8px 0 24px; min-height:48vh; display:flex; flex-direction:column; justify-content:flex-end; gap:16px}
     .bridge-mask{position:relative; width:100%; overflow:hidden; padding:24px 0}
     .bridge-mask::before,.bridge-mask::after{content:''; position:absolute; left:0; right:0; height:80px; z-index:2; pointer-events:none}
@@ -90,28 +75,10 @@
     .bridge-cta{align-self:center; background:transparent; border:1px solid rgba(255,255,255,.22); color:#fff; padding:10px 16px; border-radius:999px; cursor:pointer; opacity:.9}
     .bridge-cta:hover{opacity:1; border-color:rgba(255,255,255,.45)}
 
-    /* —— 新增：灵感画廊 —— */
-    .image-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-      margin-top: 24px;
-    }
-    .image-grid img {
-      width: 100%;
-      height: 280px;
-      object-fit: cover;
-      border-radius: calc(var(--radius) - 4px);
-      transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      box-shadow: 0 4px 12px rgba(0,0,0,.2);
-      cursor: pointer;
-    }
-    .image-grid img:hover {
-      transform: scale(1.04);
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-    }
-
-    /* 卡片效果 */
+    .image-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 24px; }
+    .image-grid .grid-img-container { width: 100%; height: 280px; background-color: rgba(255,255,255,0.05); border-radius: calc(var(--radius) - 4px); }
+    .image-grid img { width: 100%; height: 100%; object-fit: cover; border-radius: calc(var(--radius) - 4px); transition: transform 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,.2); cursor: pointer; }
+    .image-grid img:hover { transform: scale(1.04); box-shadow: 0 10px 30px rgba(0,0,0,.35); }
     .glass-card{background:var(--glass-bg); backdrop-filter:blur(var(--blur)); -webkit-backdrop-filter:blur(var(--blur)); border:1px solid var(--glass-border); border-radius:var(--radius); padding:36px; margin:18px auto; box-shadow:0 10px 40px rgba(0,0,0,.3); max-width:1000px; width:min(1000px,92%); opacity:0; transform:translateY(50px); transition:opacity .8s ease-out, transform .8s ease-out}
     .glass-card.fade-in{opacity:1; transform:translateY(0)}
 
@@ -119,7 +86,7 @@
     .social-btn{width:52px; height:52px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; background:var(--glass-bg); border:1px solid var(--glass-border); text-decoration:none; color:#fff; transition:all .22s ease}
     .social-btn:hover{transform:translateY(-3px); box-shadow:0 8px 22px rgba(0,0,0,.35); background:linear-gradient(135deg, rgba(var(--primary-rgb),.22), rgba(var(--secondary-rgb),.22))}
     .social-btn svg{width:22px; height:22px}
-
+    
     @keyframes grad{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
     @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
   </style>
@@ -158,15 +125,11 @@
         <div class="glass-card">
             <h2 id="gallery-title">灵感画廊</h2>
             <p>一些激发创意的视觉瞬间，捕捉光影与结构之美。</p>
-            <div class="image-grid">
-                <img src="https://images.unsplash.com/photo-1535924821433-868214931a0e?auto=format&fit=crop&q=80&w=800" alt="抽象的彩色波浪线条" loading="lazy">
-                <img src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&q=80&w=800" alt="流动的白色大理石纹理" loading="lazy">
-                <img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?auto=format&fit=crop&q=80&w=800" alt="抽象的柔和色块" loading="lazy">
-                <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=800" alt="多彩的颜料混合" loading="lazy">
-                <img src="https://images.unsplash.com/photo-1507525428034-b723a9ce6890?auto=format&fit=crop&q=80&w=800" alt="海浪拍打沙滩的航拍图" loading="lazy">
-                <img src="https://images.unsplash.com/photo-1487147264018-f937fba0c817?auto=format&fit=crop&q=80&w=800" alt="炫彩的全息质感背景" loading="lazy">
-                <img src="https://images.unsplash.com/photo-1557672172-298e090bd0f1?auto=format&fit=crop&q=80&w=800" alt="蓝色与紫色的渐变背景" loading="lazy">
-                <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&q=80&w=800" alt="柔和的彩色光斑背景" loading="lazy">
+            <div class="image-grid" id="gallery-grid">
+                <div class="grid-img-container"></div>
+                <div class="grid-img-container"></div>
+                <div class="grid-img-container"></div>
+                <div class="grid-img-container"></div>
             </div>
         </div>
     </section>
@@ -191,62 +154,109 @@
 
   <script>
   document.addEventListener('DOMContentLoaded', function(){
-    // 年份
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // 系统时间调色板
     function getPaletteByHour(h){ if(h>=5&&h<11) return 'morning'; if(h>=11&&h<16) return 'noon'; if(h>=16&&h<20) return 'evening'; return 'night'; }
     function applyPalette(name){ document.body.classList.remove('palette-morning','palette-noon','palette-evening','palette-night'); document.body.classList.add('palette-'+name); }
     (function schedulePalette(){ applyPalette(getPaletteByHour(new Date().getHours())); setInterval(()=>applyPalette(getPaletteByHour(new Date().getHours())), 5*60*1000); })();
 
-    // 智能导航
     const navbar=document.querySelector('.navbar'); if(navbar){ let lastY=window.scrollY; window.addEventListener('scroll',()=>{ const y=window.scrollY; if(y>100){ navbar.classList.add('nav-scrolled'); y>lastY? navbar.classList.add('nav-hidden'): navbar.classList.remove('nav-hidden'); }else{ navbar.classList.remove('nav-scrolled','nav-hidden'); } lastY=y; }); }
 
-    // 图片过渡桥
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const imageLibrary = [
-        'https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/3760917/pexels-photo-3760917.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/935969/pexels-photo-935969.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/3775087/pexels-photo-3775087.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/1587009/pexels-photo-1587009.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/2613260/pexels-photo-2613260.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/3855622/pexels-photo-3855622.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/5925438/pexels-photo-5925438.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/4009599/pexels-photo-4009599.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/4158225/pexels-photo-4158225.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/10697787/pexels-photo-10697787.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/8103362/pexels-photo-8103362.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/845457/pexels-photo-845457.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/2080383/pexels-photo-2080383.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/167699/pexels-photo-167699.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/3244513/pexels-photo-3244513.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/531321/pexels-photo-531321.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/210186/pexels-photo-210186.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/2444403/pexels-photo-2444403.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/2085831/pexels-photo-2085831.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/2356045/pexels-photo-2356045.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/462162/pexels-photo-462162.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/1424246/pexels-photo-1424246.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/356829/pexels-photo-356829.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/2627945/pexels-photo-2627945.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/1797161/pexels-photo-1797161.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/2165922/pexels-photo-2165922.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/358457/pexels-photo-358457.jpeg?auto=compress&cs=tinysrgb&w=800',
-    ];
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-    }
-    function fillMarquee(el, shuffledImages){
-      const frag = document.createDocumentFragment();
-      for (let r = 0; r < 2; r++) { 
-        shuffledImages.forEach((src, i) => {
-          const img = new Image();
-          img.loading = 'lazy'; img.decoding = 'async';
-          img.className = 'bridge-img'; img.src = src;
-          img.alt = '精选过渡图像 ' + (i + 1);
-          frag.appendChild(img);
-        });
-      }
-      el.innerHTML = ''; el.appendChild(frag);
-    }
-    const m1 = document.getElementById('marquee1');
-    const m2 = document.getElementById('marquee2');
-    if (m1 && m2) {
-      shuffleArray(imageLibrary);
-      const half = Math.ceil(imageLibrary.length / 2);
-      fillMarquee(m1, imageLibrary.slice(0, half));
-      fillMarquee(m2, imageLibrary.slice(half));
-    }
-    if(prefersReduced){ document.querySelector('.bridge-section')?.classList.add('paused'); }
     const bridgeSec=document.querySelector('.bridge-section'); if(bridgeSec){
       const io=new IntersectionObserver(es=>{ es.forEach(e=>{ e.isIntersecting? bridgeSec.classList.remove('paused'): bridgeSec.classList.add('paused'); }); },{threshold:.25});
       io.observe(bridgeSec);
-      bridgeSec.addEventListener('mouseenter',()=>bridgeSec.classList.add('paused'));
-      bridgeSec.addEventListener('mouseleave',()=>bridgeSec.classList.remove('paused'));
-      bridgeSec.addEventListener('touchstart',()=>bridgeSec.classList.add('paused'),{passive:true});
-      bridgeSec.addEventListener('touchend',()=>bridgeSec.classList.remove('paused'));
+      if(!prefersReduced){
+        bridgeSec.addEventListener('mouseenter',()=>bridgeSec.classList.add('paused'));
+        bridgeSec.addEventListener('mouseleave',()=>bridgeSec.classList.remove('paused'));
+        bridgeSec.addEventListener('touchstart',()=>bridgeSec.classList.add('paused'),{passive:true});
+        bridgeSec.addEventListener('touchend',()=>bridgeSec.classList.remove('paused'));
+      } else {
+        bridgeSec.classList.add('paused');
+      }
     }
 
-    // 渐入
     const io2=new IntersectionObserver(es=>{ es.forEach(e=>{ e.isIntersecting? e.target.classList.add('fade-in'): e.target.classList.remove('fade-in'); }); },{threshold:.1});
     document.querySelectorAll('.glass-card').forEach(c=>io2.observe(c));
+
+    // ===================================================================
+    // === 从您的 Synology Photos 相册加载图片 ===
+    // ===================================================================
+    
+    // --- 1. 已根据您的最新链接更新信息 ---
+    const synologyConfig = {
+      baseUrl: "http://taohui1108.com:5000", 
+      shareId: "aSieB9KXi"
+    };
+
+    // --- 2. 自动获取并填充图片 ---
+    async function loadSynologyPhotos() {
+        const apiUrl = `${synologyConfig.baseUrl}/webapi/entry.cgi?api=SYNO.Foto.Public.Sharing&version=1&method=list_item&share_id="${synologyConfig.shareId}"&limit=500&offset=0`;
+        
+        const galleryGrid = document.getElementById('gallery-grid');
+        const marquee1 = document.getElementById('marquee1');
+        const marquee2 = document.getElementById('marquee2');
+
+        if (!galleryGrid || !marquee1 || !marquee2) return;
+
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) throw new Error(`HTTP 错误! 状态: ${response.status}`);
+            const data = await response.json();
+
+            if (data.success && data.data.list.length > 0) {
+                const photoUrls = data.data.list.map(photo => {
+                    return `${synologyConfig.baseUrl}/webapi/entry.cgi?api=SYNO.Foto.Public.Sharing&version=1&method=get_thumb&id=${photo.id}&size=xl&share_id="${synologyConfig.shareId}"`;
+                });
+
+                photoUrls.sort(() => 0.5 - Math.random());
+
+                const galleryCount = Math.min(8, Math.floor(photoUrls.length / 2));
+                const galleryPhotos = photoUrls.slice(0, galleryCount);
+                
+                galleryGrid.innerHTML = ''; 
+                galleryPhotos.forEach(url => {
+                    const img = document.createElement('img');
+                    img.src = url;
+                    img.alt = "来自群晖相册的灵感图片";
+                    img.loading = "lazy";
+                    galleryGrid.appendChild(img);
+                });
+
+                const marqueePhotos = photoUrls.slice(galleryCount);
+                if (marqueePhotos.length > 0) {
+                    const half = Math.ceil(marqueePhotos.length / 2);
+                    fillMarquee(marquee1, marqueePhotos.slice(0, half));
+                    fillMarquee(marquee2, marqueePhotos.slice(half));
+                }
+            } else {
+                 throw new Error("未能成功从群晖获取照片列表。请确认分享ID来自 Synology Photos 且链接有效。");
+            }
+        } catch (error) {
+            console.error("加载群晖照片失败:", error);
+            galleryGrid.innerHTML = '<p style="opacity: 0.7;">图片加载失败。请按F12打开开发者工具，在“控制台(Console)”中查看具体错误信息。</p>';
+        }
+    }
+
+    function fillMarquee(el, photoUrls){
+      if (!el || photoUrls.length === 0) return;
+      const frag = document.createDocumentFragment();
+      for (let r = 0; r < 2; r++) { 
+        photoUrls.forEach(src => {
+          const img = new Image();
+          img.loading = 'lazy';
+          img.className = 'bridge-img';
+          img.src = src;
+          img.alt = '来自群晖的过渡图像';
+          frag.appendChild(img);
+        });
+      }
+      el.innerHTML = ''; 
+      el.appendChild(frag);
+    }
+
+    loadSynologyPhotos(); 
+
   });
   </script>
 </body>
