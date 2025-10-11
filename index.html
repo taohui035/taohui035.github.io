@@ -1,389 +1,385 @@
-@DOCTYPE html
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <title>Taozhiruo.com | 创意空间</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Taozhiruo 的个人网站：创意、技术与生活灵感。">
-  <meta property="og:title" content="Taozhiruo | 创意空间">
-  <meta property="og:description" content="探索我的数字世界：项目、设计与AI应用作品集。">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="zh_CN">
-  <meta name="twitter:card" content="summary_large_image">
+  <meta charset="UTF-8" />
+  <title>Taozhiruo.com | 创意空间</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Taozhiruo 的个人网站：创意、技术、数据可视化与生活灵感。" />
+  <meta property="og:title" content="Taozhiruo | 创意空间" />
+  <meta property="og:description" content="探索我的数字世界：项目、设计与AI应用作品集。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta name="twitter:card" content="summary_large_image" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;800;900&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;800&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      --primary-hex:#00bcd4; --primary-rgb:0,188,212;
-      --secondary-hex:#ff4081; --secondary-rgb:255,64,129;
-      --text-color:#ecf0f1; --bg-dark:#0f1b27;
-      --glass-bg:rgba(255,255,255,.08); --glass-border:rgba(255,255,255,.1);
-      --radius:16px; --blur:15px;
-    }
-    /* —— 随系统时间自动换色（早/午/晚/夜） —— */
-    body.palette-morning{--primary-hex:#ffb86b;--primary-rgb:255,184,107;--secondary-hex:#ff79c6;--secondary-rgb:255,121,198;--bg-dark:#0f1b27;}
-    body.palette-noon   {--primary-hex:#00bcd4;--primary-rgb:0,188,212;--secondary-hex:#7c4dff;--secondary-rgb:124,77,255;--bg-dark:#0e1e2c;}
-    body.palette-evening{--primary-hex:#ff8a65;--primary-rgb:255,138,101;--secondary-hex:#ffd54f;--secondary-rgb:255,213,79;--bg-dark:#0d1a28;}
-    body.palette-night  {--primary-hex:#64b5f6;--primary-rgb:100,181,246;--secondary-hex:#b39ddb;--secondary-rgb:179,157,219;--bg-dark:#0a1621;}
+  <style>
+    :root{
+      --primary-hex:#00bcd4; --primary-rgb:0,188,212;
+      --secondary-hex:#ff4081; --secondary-rgb:255,64,129;
+      --text-color:#ecf0f1; --bg-dark:#0f1b27;
+      --glass-bg:rgba(255,255,255,.07); --glass-border:rgba(255,255,255,.12);
+      --radius:16px; --blur:18px;
+    }
+    /* —— 随系统时间自动换色 —— */
+    body.palette-morning{--primary-hex:#ffb86b;--primary-rgb:255,184,107;--secondary-hex:#ff79c6;--secondary-rgb:255,121,198;--bg-dark:#0f1b27;}
+    body.palette-noon   {--primary-hex:#00bcd4;--primary-rgb:0,188,212;--secondary-hex:#7c4dff;--secondary-rgb:124,77,255;--bg-dark:#0e1e2c;}
+    body.palette-evening{--primary-hex:#ff8a65;--primary-rgb:255,138,101;--secondary-hex:#ffd54f;--secondary-rgb:255,213,79;--bg-dark:#0d1a28;}
+    body.palette-night  {--primary-hex:#64b5f6;--primary-rgb:100,181,246;--secondary-hex:#b39ddb;--secondary-rgb:179,157,219;--bg-dark:#0a1621;}
 
-    html{scroll-behavior:smooth}
-    body{
-      margin:0; padding:0;
-      font-family:'Noto Sans SC','Montserrat',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      color:var(--text-color);
-      background:
-        radial-gradient(1200px 800px at 20% -10%, rgba(var(--primary-rgb),.16), transparent 60%),
-        radial-gradient(1200px 800px at 80% 120%, rgba(var(--secondary-rgb),.12), transparent 60%),
-        var(--bg-dark);
-      overflow-x:hidden;
-    }
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; padding:0;
+      font-family:'Noto Sans SC','Montserrat',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text-color);
+      background:
+        radial-gradient(1200px 800px at 20% -10%, rgba(var(--primary-rgb),.16), transparent 60%),
+        radial-gradient(1200px 800px at 80% 120%, rgba(var(--secondary-rgb),.12), transparent 60%),
+        var(--bg-dark);
+      overflow-x:hidden;
+    }
 
-    /* 顶部导航 */
-    .navbar{position:fixed; inset:0 0 auto 0; padding:14px 5%;
-      background:rgba(15,27,39,.70); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
-      display:flex; justify-content:space-between; align-items:center; z-index:1000;
-      transition:transform .4s ease, background-color .4s ease;
-    }
-    .navbar.nav-hidden{transform:translateY(-100%)} .navbar.nav-scrolled{background:rgba(15,27,39,.85)}
-    .nav-logo{font-size:1.35rem; font-weight:800; color:#fff; text-decoration:none; letter-spacing:.3px}
-    .nav-links{display:flex; gap:28px}
-    .nav-links a{color:var(--text-color); text-decoration:none; font-weight:600; font-size:.98rem; position:relative}
-    .nav-links a::after{content:''; position:absolute; left:50%; bottom:-6px; width:0; height:2px; background:var(--primary-hex); transform:translateX(-50%); transition:width .25s ease}
-    .nav-links a:hover::after{width:100%}
-    @media (max-width:768px){ .nav-links{display:none} }
+    /* 顶部导航 */
+    .navbar{position:fixed; inset:0 0 auto 0; padding:14px 5%;
+      background:rgba(15,27,39,.70); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+      display:flex; justify-content:space-between; align-items:center; z-index:1000;
+      transition:transform .4s ease, background-color .4s ease;
+    }
+    .navbar.nav-hidden{transform:translateY(-100%)} .navbar.nav-scrolled{background:rgba(15,27,39,.85)}
+    .nav-logo{font-size:1.35rem; font-weight:800; color:#fff; text-decoration:none; letter-spacing:.3px}
+    .nav-links{display:flex; gap:28px}
+    .nav-links a{color:var(--text-color); text-decoration:none; font-weight:600; font-size:.98rem; position:relative}
+    .nav-links a::after{content:''; position:absolute; left:50%; bottom:-6px; width:0; height:2px; background:var(--primary-hex); transform:translateX(-50%); transition:width .25s ease}
+    .nav-links a:hover::after{width:100%}
+    @media (max-width:768px){ .nav-links{display:none} }
 
-    /* 背景视频 */
-    .video-background{position:fixed; inset:0; overflow:hidden; z-index:-2}
-    .video-background video{min-width:100%; min-height:100%; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); object-fit:cover; filter:brightness(.62) saturate(1.02)}
-    .video-overlay{position:fixed; inset:0; z-index:-1; background:linear-gradient(135deg, rgba(0,0,0,.68), rgba(0,0,0,.48))}
+    /* 背景视频 */
+    .video-background{position:fixed; inset:0; overflow:hidden; z-index:-2}
+    .video-background video{min-width:100%; min-height:100%; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); object-fit:cover; filter:brightness(.62) saturate(1.02)}
+    .video-overlay{position:fixed; inset:0; z-index:-1; background:linear-gradient(135deg, rgba(0,0,0,.68), rgba(0,0,0,.48))}
 
-    /* Hero */
-    .hero{min-height:72vh; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:120px 20px 24px; text-align:center}
-    .hero-title{
-      font-family:'Montserrat',sans-serif; font-size:clamp(2.6rem,6vw,4.8rem); margin:0 0 16px; font-weight:900; letter-spacing:.5px;
-      background:linear-gradient(90deg,var(--primary-hex),var(--secondary-hex),var(--primary-hex));
-      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
-      background-size:200% 100%; animation:gradMove 12s ease infinite;
-    }
-    .hero-desc{font-size:clamp(1rem,2.3vw,1.35rem); max-width:820px; margin:0 0 28px; font-weight:300; opacity:.95}
-    .cta{display:inline-block; background:var(--primary-hex); color:#fff; padding:12px 28px; border-radius:999px; border:0; cursor:pointer; font-weight:800; letter-spacing:.3px; box-shadow:0 6px 18px rgba(var(--primary-rgb),.35); transition:transform .22s ease, box-shadow .22s ease, background .22s ease}
-    .cta:hover{transform:translateY(-2px); background:var(--secondary-hex); box-shadow:0 10px 24px rgba(var(--secondary-rgb),.5)}
-    @keyframes gradMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    .hero-section,.content-section{min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:96px 20px 80px; text-align:center; position:relative}
+    .hero-section{min-height:72vh; padding-bottom:24px}
+    .hero-section h1{
+      font-family:'Montserrat',sans-serif; font-size:clamp(2.6rem,6vw,4.6rem); margin:0 0 16px;
+      background:linear-gradient(45deg,var(--primary-hex),var(--secondary-hex));
+      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+      font-weight:800;
+      background-size:250% 250%;
+      animation:grad 8s ease infinite;
+    }
+    .hero-section p{font-size:clamp(1rem,2.3vw,1.35rem); max-width:820px; margin:0 0 28px; font-weight:300; opacity:.95}
+    .interactive-button{display:inline-block; background:var(--primary-hex); color:#fff; padding:12px 28px; border-radius:999px; border:0; cursor:pointer; font-weight:800; letter-spacing:.3px; box-shadow:0 6px 18px rgba(var(--primary-rgb),.35); transition:transform .22s ease, box-shadow .22s ease, background .22s ease}
+    .interactive-button:hover{transform:translateY(-2px); background:var(--secondary-hex); box-shadow:0 10px 24px rgba(var(--secondary-rgb),.5)}
 
-    /* —— 图片过渡桥（亚洲女明星风格 + 亚洲风景） —— */
-    .bridge{position:relative; padding:8px 0 24px; min-height:48vh; display:flex; flex-direction:column; justify-content:flex-end; gap:16px}
-    .bridge-mask{position:relative; width:100%; overflow:hidden; padding:24px 0}
-    .bridge-mask::before,.bridge-mask::after{content:''; position:absolute; left:0; right:0; height:80px; z-index:2; pointer-events:none}
-    .bridge-mask::before{top:0; background:linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,0))}
-    .bridge-mask::after{bottom:0; background:linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,0))}
-    .marquee{overflow:hidden}
-    .marquee-track{display:flex; gap:16px; will-change:transform; animation:marquee var(--dur,46s) linear infinite}
-    .row1 .marquee-track{--dur:46s}
-    .row2 .marquee-track{--dur:58s; animation-direction:reverse}
-    .bridge.paused .marquee-track{animation-play-state:paused}
-    .bridge:hover .marquee-track{animation-play-state:paused}
-    .bridge-img{width:28vw; max-width:520px; min-width:240px; height:22vh; min-height:160px; max-height:320px; object-fit:cover; border-radius:14px; filter:saturate(1.03) contrast(1.03); box-shadow:0 8px 22px rgba(0,0,0,.35)}
-    .bridge-cta{align-self:center; background:transparent; border:1px solid rgba(255,255,255,.22); color:#fff; padding:10px 16px; border-radius:999px; cursor:pointer; opacity:.9}
-    .bridge-cta:hover{opacity:1; border-color:rgba(255,255,255,.45)}
-    @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    /* —— 图片过渡桥 —— */
+    .bridge-section{position:relative; padding:8px 0 24px; min-height:48vh; display:flex; flex-direction:column; justify-content:flex-end; gap:16px}
+    .bridge-mask{position:relative; width:100%; overflow:hidden; padding:24px 0}
+    .bridge-mask::before,.bridge-mask::after{content:''; position:absolute; left:0; right:0; height:80px; z-index:2; pointer-events:none}
+    .bridge-mask::before{top:0; background:linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,0))}
+    .bridge-mask::after{bottom:0; background:linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,0))}
+    .marquee{overflow:hidden}
+    .marquee-track{display:flex; gap:16px; will-change:transform; animation:marquee var(--dur,46s) linear infinite}
+    .row1 .marquee-track{--dur:50s}
+    .row2 .marquee-track{--dur:62s; animation-direction:reverse}
+    .bridge-section.paused .marquee-track{animation-play-state:paused}
+    .bridge-section:hover .marquee-track{animation-play-state:paused}
+    .bridge-img{width:28vw; max-width:520px; min-width:240px; height:22vh; min-height:160px; max-height:320px; object-fit:cover; border-radius:14px; filter:saturate(1.02) contrast(1.02); box-shadow:0 8px 22px rgba(0,0,0,.35); background-color:rgba(255,255,255,0.05);}
+    .bridge-cta{align-self:center; background:transparent; border:1px solid rgba(255,255,255,.22); color:#fff; padding:10px 16px; border-radius:999px; cursor:pointer; opacity:.9}
+    .bridge-cta:hover{opacity:1; border-color:rgba(255,255,255,.45)}
 
-    /* —— 项目轮播（时尚科技风） —— */
-    .section{min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:96px 20px 80px; text-align:center}
-    .glass-card{background:var(--glass-bg); backdrop-filter:blur(var(--blur)); -webkit-backdrop-filter:blur(var(--blur)); border:1px solid var(--glass-border); border-radius:var(--radius); padding:36px; margin:18px auto; box-shadow:0 8px 32px rgba(0,0,0,.37); max-width:1000px; width:min(1000px,92%); opacity:0; transform:translateY(50px); transition:opacity .8s ease-out, transform .8s ease-out}
-    .glass-card.fade-in{opacity:1; transform:translateY(0)}
-    .glass-card h2{color:var(--primary-hex); font-size:clamp(1.6rem,3.5vw,2.4rem); margin:0 0 12px}
+    /* —— 项目轮播 —— */
+    .carousel{position:relative; width:100%; max-width:960px; margin:28px auto 0; overflow:hidden; border-radius:14px}
+    .carousel-track{display:flex; transition:transform .6s cubic-bezier(.23,1,.32,1); will-change:transform; cursor:grab; touch-action:pan-y}
+    .carousel-slide{min-width:100%; position:relative; transition:opacity .4s ease}
+    .carousel-slide:not(.is-selected){opacity:.82}
+    .carousel-slide img{width:100%; height:52vh; max-height:560px; min-height:280px; object-fit:cover; display:block}
+    .carousel-caption{position:absolute; inset:auto 0 0 0; background:linear-gradient(to top, rgba(0,0,0,.75), transparent); padding:34px 20px 18px; color:#fff; text-align:left}
+    .carousel-caption h3{margin:0 0 4px; font-size:clamp(1.1rem,2.3vw,1.5rem); font-family:'Montserrat',sans-serif}
+    .carousel-caption p{margin:0; font-size:.98em; color:rgba(255,255,255,.86)}
+    .carousel-button{position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.22); backdrop-filter:blur(5px); -webkit-backdrop-filter:blur(5px); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .25s ease}
+    .carousel-button:hover{background:rgba(255,255,255,.2); transform:translateY(-50%) scale(1.08)}
+    .carousel-button-prev{left:16px} .carousel-button-next{right:16px}
+    .carousel-button svg{width:24px; height:24px; stroke:#fff; stroke-width:2}
+    .carousel-dots{position:absolute; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:10px; z-index:2}
+    .carousel-dot{width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.45); border:0; padding:0; cursor:pointer; transition:all .25s ease}
+    .carousel-dot.is-selected{background:#fff; transform:scale(1.18)}
+    .carousel-progress{position:absolute; left:14px; right:14px; bottom:10px; height:3px; background:rgba(255,255,255,.18); border-radius:2px; overflow:hidden; pointer-events:none; z-index:1}
+    .carousel-progress .bar{width:0%; height:100%; background:linear-gradient(90deg, var(--primary-hex), var(--secondary-hex)); transition:none}
 
-    .carousel{position:relative; width:100%; max-width:980px; margin:28px auto 0; overflow:hidden; border-radius:14px}
-    .carousel-track{display:flex; transition:transform .6s cubic-bezier(.23,1,.32,1); will-change:transform; cursor:grab; touch-action:pan-y}
-    .carousel-slide{min-width:100%; position:relative; transition:opacity .4s ease}
-    .carousel-slide:not(.is-selected){opacity:.85}
-    .carousel-slide picture, .carousel-slide img{display:block; width:100%}
-    .carousel-slide img{height:52vh; max-height:560px; min-height:280px; object-fit:cover; filter:saturate(1.08) contrast(1.08)}
-    .carousel-slide::after{content:""; position:absolute; inset:0; pointer-events:none; background:
-      radial-gradient(1100px 600px at 15% 100%, rgba(var(--primary-rgb),.14), transparent 60%),
-      radial-gradient(1100px 600px at 85% 0%,   rgba(var(--secondary-rgb),.12), transparent 60%);
-    }
-    .carousel-caption{position:absolute; inset:auto 0 0 0; background:linear-gradient(to top, rgba(0,0,0,.75), transparent); padding:34px 20px 18px; color:#fff; text-align:left}
-    .carousel-caption h3{margin:0 0 4px; font-size:clamp(1.1rem,2.3vw,1.5rem); font-family:'Montserrat',sans-serif}
-    .carousel-caption p{margin:0; font-size:.98em; color:rgba(255,255,255,.86)}
-    .carousel-button{position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.22); backdrop-filter:blur(5px); -webkit-backdrop-filter:blur(5px); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .25s ease}
-    .carousel-button:hover{background:rgba(255,255,255,.2); transform:translateY(-50%) scale(1.08)}
-    .carousel-button-prev{left:16px} .carousel-button-next{right:16px}
-    .carousel-button svg{width:24px; height:24px; stroke:#fff; stroke-width:2}
-    .carousel-dots{position:absolute; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:10px; z-index:2}
-    .carousel-dot{width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.45); border:0; padding:0; cursor:pointer; transition:all .25s ease}
-    .carousel-dot.is-selected{background:#fff; transform:scale(1.18)}
-    .carousel-progress{position:absolute; left:14px; right:14px; bottom:10px; height:3px; background:rgba(255,255,255,.18); border-radius:2px; overflow:hidden; pointer-events:none; z-index:1}
-    .carousel-progress .bar{width:0%; height:100%; background:linear-gradient(90deg, var(--primary-hex), var(--secondary-hex)); transition:none}
+    /* 卡片效果 */
+    .glass-card{background:var(--glass-bg); backdrop-filter:blur(var(--blur)); -webkit-backdrop-filter:blur(var(--blur)); border:1px solid var(--glass-border); border-radius:var(--radius); padding:36px; margin:18px auto; box-shadow:0 10px 40px rgba(0,0,0,.3); max-width:1000px; width:min(1000px,92%); opacity:0; transform:translateY(50px); transition:opacity .8s ease-out, transform .8s ease-out}
+    .glass-card.fade-in{opacity:1; transform:translateY(0)}
 
-    .social-icons{display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:18px}
-    .social-btn{width:52px; height:52px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; background:var(--glass-bg); border:1px solid var(--glass-border); text-decoration:none; color:#fff; transition:all .22s ease}
-    .social-btn:hover{transform:translateY(-3px); box-shadow:0 8px 22px rgba(0,0,0,.35); background:linear-gradient(135deg, rgba(var(--primary-rgb),.22), rgba(var(--secondary-rgb),.22))}
-    .social-btn svg{width:22px; height:22px}
+    .social-icons{display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:18px}
+    .social-btn{width:52px; height:52px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; background:var(--glass-bg); border:1px solid var(--glass-border); text-decoration:none; color:#fff; transition:all .22s ease}
+    .social-btn:hover{transform:translateY(-3px); box-shadow:0 8px 22px rgba(0,0,0,.35); background:linear-gradient(135deg, rgba(var(--primary-rgb),.22), rgba(var(--secondary-rgb),.22))}
+    .social-btn svg{width:22px; height:22px}
 
-    @media (prefers-reduced-motion: reduce){
-      *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important}
-      .marquee-track{animation:none}
-    }
-    @media (max-width:768px){ .bridge-img{width:60vw} }
-  </style>
+    @keyframes grad{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  </style>
 </head>
 <body>
-  <header role="banner">
-    <nav class="navbar" aria-label="主导航">
-      <a href="#" class="nav-logo">Taozhiruo.com</a>
-      <div class="nav-links">
-        <a href="#projects">我的项目</a>
-        <a href="#contact">联系我</a>
-      </div>
-    </nav>
-    <div class="video-background" aria-hidden="true">
-      <video autoplay muted loop playsinline poster="background_poster.jpg"><source src="background_video.mp4" type="video/mp4" /></video>
-    </div>
-    <div class="video-overlay" aria-hidden="true"></div>
-  </header>
+  <header role="banner">
+    <nav class="navbar" aria-label="主导航">
+      <a href="#" class="nav-logo">Taozhiruo.com</a>
+      <div class="nav-links">
+        <a href="#projects">我的项目</a>
+        <a href="#contact">联系我</a>
+      </div>
+    </nav>
+    <div class="video-background" aria-hidden="true">
+      <video autoplay muted loop playsinline poster="background_poster.jpg"><source src="background_video.mp4" type="video/mp4" /></video>
+    </div>
+    <div class="video-overlay" aria-hidden="true"></div>
+  </header>
 
-  <main id="main">
-    <section class="hero">
-      <h1 class="hero-title">探索我的数字世界</h1>
-      <p class="hero-desc">欢迎来到我的个人网站，这里是我分享创意、技术与生活灵感的专属空间。</p>
-      <a href="#projects" class="cta">开始探索</a>
-    </section>
+  <main id="main">
+    <section class="hero-section">
+      <h1>探索我的数字世界</h1>
+      <p>欢迎来到我的个人网站，这里是我分享创意、技术和生活感悟的专属空间。</p>
+      <a href="#projects" class="interactive-button">开始探索</a>
+    </section>
 
-        <section id="bridge" class="bridge" aria-label="图像过渡">
-      <div class="bridge-mask">
-        <div class="marquee row1"><div class="marquee-track" id="marquee1"></div></div>
-        <div class="marquee row2"><div class="marquee-track" id="marquee2"></div></div>
-      </div>
-      <button class="bridge-cta" type="button" aria-label="继续向下，查看项目" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">↓ 继续向下</button>
-    </section>
+    <section id="bridge" class="bridge-section" aria-label="图像过渡">
+      <div class="bridge-mask">
+        <div class="marquee row1"><div class="marquee-track" id="marquee1"></div></div>
+        <div class="marquee row2"><div class="marquee-track" id="marquee2"></div></div>
+      </div>
+      <button class="bridge-cta" type="button" aria-label="继续向下，查看项目" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">↓ 继续向下</button>
+    </section>
 
-    <section id="projects" class="section" aria-labelledby="projects-title">
-      <div class="glass-card">
-        <h2 id="projects-title">我的项目</h2>
-        <p>精选时尚科技风作品概念，聚焦界面、数据、AI 与未来体验。</p>
+    <section id="projects" class="content-section" aria-labelledby="projects-title">
+      <div class="glass-card">
+        <h2 id="projects-title">我的项目</h2>
+        <p>融合前沿科技与现代美学，探索数字体验的无限可能。以下为我的部分作品概念：</p>
 
-        <div class="carousel" role="region" aria-roledescription="carousel" aria-label="作品集轮播" tabindex="0" data-interval="4000">
-          <ul class="carousel-track" aria-live="polite" id="projectTrack">
-                      </ul>
+        <div class="carousel" role="region" aria-roledescription="carousel" aria-label="作品集轮播" tabindex="0" data-interval="4500">
+          <ul class="carousel-track" aria-live="polite">
+            <li class="carousel-slide is-selected">
+              <img loading="lazy" decoding="async" src="https://images.pexels.com/photos/7174404/pexels-photo-7174404.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="数字时尚革新">
+              <div class="carousel-caption"><h3>数字时尚革新</h3><p>将算法与高定设计结合，创造虚拟与现实交织的时尚体验。</p></div>
+            </li>
+            <li class="carousel-slide">
+              <img loading="lazy" decoding="async" src="https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="未来交互美学">
+              <div class="carousel-caption"><h3>未来交互美学</h3><p>设计超越屏幕的沉浸式界面，探索人机交互的艺术形态。</p></div>
+            </li>
+            <li class="carousel-slide">
+              <img loading="lazy" decoding="async" src="https://images.pexels.com/photos/5076516/pexels-photo-5076516.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="品牌视觉智能生成">
+              <div class="carousel-caption"><h3>品牌视觉智能生成</h3><p>利用AIGC技术，为品牌构建独特且富有情感共鸣的视觉识别系统。</p></div>
+            </li>
+            <li class="carousel-slide">
+              <img loading="lazy" decoding="async" src="https://images.pexels.com/photos/8721342/pexels-photo-8721342.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="元宇宙空间叙事">
+              <div class="carousel-caption"><h3>元宇宙空间叙事</h3><p>在虚拟空间中构建引人入胜的世界观和多线性的故事体验。</p></div>
+            </li>
+          </ul>
 
-          <button class="carousel-button carousel-button-prev" aria-label="上一张" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-          <button class="carousel-button carousel-button-next" aria-label="下一张" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
+          <button class="carousel-button carousel-button-prev" aria-label="上一张" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button class="carousel-button carousel-button-next" aria-label="下一张" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
 
-          <div class="carousel-dots" role="tablist" aria-label="轮播分页点"></div>
-          <div class="carousel-progress" aria-hidden="true"><div class="bar"></div></div>
-        </div>
-      </div>
-    </section>
+          <div class="carousel-dots" role="tablist" aria-label="轮播分页点"></div>
+          <div class="carousel-progress" aria-hidden="true"><div class="bar"></div></div>
+        </div>
+      </div>
+    </section>
 
-    <section id="contact" class="section" aria-labelledby="contact-title">
-      <div class="glass-card">
-        <h2 id="contact-title">联系我</h2>
-        <p>如果你对我的项目感兴趣，或者想进行技术交流，欢迎随时与我联系。</p>
-        <div class="social-icons" aria-label="社交链接">
-          <a class="social-btn" href="https://x.com/home" target="_blank" rel="noopener" title="X / Twitter" aria-label="X / Twitter">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></svg>
-          </a>
-          <a class="social-btn" href="https://github.com/" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
+    <section id="contact" class="content-section" aria-labelledby="contact-title">
+      <div class="glass-card">
+        <h2 id="contact-title">联系我</h2>
+        <p>如果你对我的项目感兴趣，或者想进行技术交流，欢迎随时与我联系。</p>
+        <div class="social-icons" aria-label="社交链接">
+          <a class="social-btn" href="#" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+          <a class="social-btn" href="#" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+        </div>
+      </div>
+    </section>
+  </main>
 
-  <footer class="section" aria-label="页脚">
-    <div class="glass-card" role="contentinfo">
-      <p>© <span id="year"></span> Taozhiruo. 保留所有权利。</p>
-    </div>
-  </footer>
+  <footer class="content-section" aria-label="页脚">
+    <div class="glass-card" role="contentinfo">
+      <p>© <span id="year"></span> Taozhiruo. 保留所有权利。</p>
+    </div>
+  </footer>
 
-  <script>
-  // ====== 工具：按“天”稳定随机（每天自动换新）
-  function daySeed(){
-    const d=new Date();
-    return parseInt(String(d.getFullYear())+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0'));
-  }
-  function mulberry32(a){return function(){let t=a+=0x6D2B79F5;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296;}}
-  function pickN(arr,n,rand){ const used=new Set(), out=[]; while(out.length<Math.min(n,arr.length)){ const i=Math.floor(rand()*arr.length); if(!used.has(i)){used.add(i); out.push(arr[i]);} } return out; }
-  
-  // [MODIFIED] 生成 Unsplash 随机图（按关键词 & 尺寸）-> 替换为 Picsum Photos
-  function us(w,h,query){ return `https://picsum.photos/${w}/${h}` }
+  <script>
+  document.addEventListener('DOMContentLoaded', function(){
+    // 年份
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-  document.addEventListener('DOMContentLoaded', function(){
-    // 年份
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // 系统时间调色板
+    function getPaletteByHour(h){ if(h>=5&&h<11) return 'morning'; if(h>=11&&h<16) return 'noon'; if(h>=16&&h<20) return 'evening'; return 'night'; }
+    function applyPalette(name){ document.body.classList.remove('palette-morning','palette-noon','palette-evening','palette-night'); document.body.classList.add('palette-'+name); }
+    (function schedulePalette(){ applyPalette(getPaletteByHour(new Date().getHours())); setInterval(()=>applyPalette(getPaletteByHour(new Date().getHours())), 5*60*1000); })();
 
-    // 系统时间调色板
-    function getPaletteByHour(h){ if(h>=5&&h<11) return 'morning'; if(h>=11&&h<16) return 'noon'; if(h>=16&&h<20) return 'evening'; return 'night'; }
-    function applyPalette(name){ document.body.classList.remove('palette-morning','palette-noon','palette-evening','palette-night'); document.body.classList.add('palette-'+name); }
-    (function schedulePalette(){ applyPalette(getPaletteByHour(new Date().getHours())); setInterval(()=>applyPalette(getPaletteByHour(new Date().getHours())), 5*60*1000); })();
+    // 智能导航
+    const navbar=document.querySelector('.navbar'); if(navbar){ let lastY=window.scrollY; window.addEventListener('scroll',()=>{ const y=window.scrollY; if(y>100){ navbar.classList.add('nav-scrolled'); y>lastY? navbar.classList.add('nav-hidden'): navbar.classList.remove('nav-hidden'); }else{ navbar.classList.remove('nav-scrolled','nav-hidden'); } lastY=y; }); }
 
-    // 智能导航
-    const navbar=document.querySelector('.navbar');
-    if(navbar){ let lastY=window.scrollY; window.addEventListener('scroll',()=>{ const y=window.scrollY; if(y>100){ navbar.classList.add('nav-scrolled'); y>lastY? navbar.classList.add('nav-hidden'): navbar.classList.remove('nav-hidden'); }else{ navbar.classList.remove('nav-scrolled','nav-hidden'); } lastY=y; }); }
+    // --- (已修复) 图片过渡桥：从内置精选库随机加载 ---
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    // 内置一个包含30张精选图片的URL库，确保稳定性和速度
+    const imageLibrary = [
+        // 人像
+        'https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/3760917/pexels-photo-3760917.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/935969/pexels-photo-935969.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/3775087/pexels-photo-3775087.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1587009/pexels-photo-1587009.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2613260/pexels-photo-2613260.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/3855622/pexels-photo-3855622.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/5925438/pexels-photo-5925438.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/4009599/pexels-photo-4009599.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/4158225/pexels-photo-4158225.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/10697787/pexels-photo-10697787.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/8103362/pexels-photo-8103362.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/845457/pexels-photo-845457.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2080383/pexels-photo-2080383.jpeg?auto=compress&cs=tinysrgb&w=800',
+        // 风景
+        'https://images.pexels.com/photos/167699/pexels-photo-167699.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/3244513/pexels-photo-3244513.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/531321/pexels-photo-531321.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/210186/pexels-photo-210186.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2444403/pexels-photo-2444403.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2085831/pexels-photo-2085831.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2356045/pexels-photo-2356045.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/462162/pexels-photo-462162.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1424246/pexels-photo-1424246.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/356829/pexels-photo-356829.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2627945/pexels-photo-2627945.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1797161/pexels-photo-1797161.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2165922/pexels-photo-2165922.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/358457/pexels-photo-358457.jpeg?auto=compress&cs=tinysrgb&w=800',
+    ];
 
-    // ===== 过渡桥：亚洲女明星风格 + 亚洲风景（自动池 + 按天轮换） =====
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const rand = mulberry32(daySeed());
+    // 洗牌算法，用于打乱图片数组顺序，确保每次刷新都不同
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
 
-    const CELEB_QUERIES = [
-      'asian actress portrait glamour', 'korean actress portrait', 'japanese actress portrait', 'chinese actress portrait',
-      'hong kong actress portrait', 'taiwan actress portrait', 'thai actress portrait', 'indian actress portrait',
-      'asian model portrait neon', 'asian celebrity portrait studio'
-    ];
-    const LAND_QUERIES = [
-      'asia landscape', 'tokyo cityscape night', 'seoul skyline night', 'shanghai skyline night',
-      'kyoto temple', 'mount fuji', 'huangshan mountain', 'jiuzhaigou lake', 'halong bay', 'bali beach night'
-    ];
+    function fillMarquee(el, shuffledImages){
+      const frag = document.createDocumentFragment();
+      // 循环两次以实现无缝滚动
+      for (let r = 0; r < 2; r++) { 
+        shuffledImages.forEach((src, i) => {
+          const img = new Image();
+          img.loading = 'lazy';
+          img.decoding = 'async';
+          img.className = 'bridge-img';
+          img.src = src;
+          img.alt = '精选过渡图像 ' + (i + 1);
+          frag.appendChild(img);
+        });
+      }
+      el.innerHTML = ''; // 清空旧内容
+      el.appendChild(frag);
+    }
 
-    function fillMarquee(el, queries, count){
-      const chosen = pickN(queries, count, rand);
-      const frag=document.createDocumentFragment();
-      for(let r=0;r<2;r++){ // 两轮实现无缝循环
-        chosen.forEach((q,i)=>{
-          const pic = document.createElement('picture');
-          const src800  = us(800,500,q);
-          const src1200 = us(1200,750,q);
-          const src1600 = us(1600,1000,q);
-          pic.innerHTML = `
-            <source media="(max-width: 768px)" srcset="${src800}">
-            <source media="(max-width: 1200px)" srcset="${src1200}">
-            <img loading="lazy" decoding="async" src="${src1600}" alt="过渡图像：${q}" class="bridge-img">
-          `;
-          frag.appendChild(pic);
-        });
-      }
-      el.appendChild(frag);
-    }
-    const m1=document.getElementById('marquee1'); const m2=document.getElementById('marquee2');
-    if(m1&&m2){ fillMarquee(m1, CELEB_QUERIES, 7); fillMarquee(m2, LAND_QUERIES, 9); }
+    const m1 = document.getElementById('marquee1');
+    const m2 = document.getElementById('marquee2');
+    if (m1 && m2) {
+      shuffleArray(imageLibrary); // 打乱整个库
+      const half = Math.ceil(imageLibrary.length / 2);
+      const firstHalf = imageLibrary.slice(0, half);
+      const secondHalf = imageLibrary.slice(half);
+      
+      fillMarquee(m1, firstHalf);
+      fillMarquee(m2, secondHalf);
+    }
 
-    const bridgeSec=document.querySelector('.bridge');
-    if(prefersReduced){ bridgeSec?.classList.add('paused'); }
-    if(bridgeSec){
-      const io=new IntersectionObserver(es=>{ es.forEach(e=>{ e.isIntersecting? bridgeSec.classList.remove('paused'): bridgeSec.classList.add('paused'); }); },{threshold:.25});
-      io.observe(bridgeSec);
-      bridgeSec.addEventListener('mouseenter',()=>bridgeSec.classList.add('paused'));
-      bridgeSec.addEventListener('mouseleave',()=>bridgeSec.classList.remove('paused'));
-      bridgeSec.addEventListener('touchstart',()=>bridgeSec.classList.add('paused'),{passive:true});
-      bridgeSec.addEventListener('touchend',()=>bridgeSec.classList.remove('paused'));
-    }
+    if(prefersReduced){ document.querySelector('.bridge-section')?.classList.add('paused'); }
+    const bridgeSec=document.querySelector('.bridge-section'); if(bridgeSec){
+      const io=new IntersectionObserver(es=>{ es.forEach(e=>{ e.isIntersecting? bridgeSec.classList.remove('paused'): bridgeSec.classList.add('paused'); }); },{threshold:.25});
+      io.observe(bridgeSec);
+      bridgeSec.addEventListener('mouseenter',()=>bridgeSec.classList.add('paused'));
+      bridgeSec.addEventListener('mouseleave',()=>bridgeSec.classList.remove('paused'));
+      bridgeSec.addEventListener('touchstart',()=>bridgeSec.classList.add('paused'),{passive:true});
+      bridgeSec.addEventListener('touchend',()=>bridgeSec.classList.remove('paused'));
+    }
 
-    // ===== 项目轮播：科技风自动池 =====
-    const TECH_QUERIES = [
-      'futuristic ui neon', 'cyberpunk city neon', 'ai abstract data', 'robotics technology',
-      'circuit macro technology', 'hud interface', 'quantum computing', 'server room lights',
-      'neon gradient tech', 'hologram interface', 'chip micro technology', 'abstract code grid'
-    ];
-    const track = document.getElementById('projectTrack');
-    const techChosen = pickN(TECH_QUERIES, 5, rand); // 5 张
-    techChosen.forEach((q,idx)=>{
-      const src800  = us(800,500,q);
-      const src1200 = us(1200,750,q);
-      const src1600 = us(1600,1000,q);
-      const li = document.createElement('li');
-      li.className = 'carousel-slide' + (idx===0?' is-selected':'');
-      li.innerHTML = `
-        <picture>
-          <source media="(max-width: 768px)" srcset="${src800}">
-          <source media="(max-width: 1200px)" srcset="${src1200}">
-          <img loading="lazy" decoding="async" src="${src1600}" alt="时尚科技风：${q}">
-        </picture>
-        <div class="carousel-caption">
-          <h3>${['未来界面','赛博城市','AI 视觉','智能硬件','科技纹理','量子计算','全息交互'][idx%7]}</h3>
-          <p>${['霓虹质感的 UI 面板与微交互。','高饱和夜景与信息流捕捉。','抽象数据流的美学表达。','软硬整合的交互场景。','电路纹理与光栅细节之美。','前沿算力与新范式。','信息维度的可视化实验。'][idx%7]}</p>
-        </div>
-      `;
-      track.appendChild(li);
-    });
+    // 轮播（支持拖拽 + 自动播放 + 进度条）
+    const carousel=document.querySelector('.carousel'); if(carousel){
+      const track=carousel.querySelector('.carousel-track');
+      const slides=Array.from(track.children);
+      const nextBtn=carousel.querySelector('.carousel-button-next');
+      const prevBtn=carousel.querySelector('.carousel-button-prev');
+      const dotsNav=carousel.querySelector('.carousel-dots');
+      const progress=carousel.querySelector('.carousel-progress .bar');
 
-    // 轮播交互（4s 自动播放 + 拖拽 + 键盘 + 进度条）
-    const carousel=document.querySelector('.carousel'); 
-    if(carousel){
-      const slides=Array.from(track.children);
-      const nextBtn=carousel.querySelector('.carousel-button-next');
-      const prevBtn=carousel.querySelector('.carousel-button-prev');
-      const dotsNav=carousel.querySelector('.carousel-dots');
-      const progress=carousel.querySelector('.carousel-progress .bar');
+      let slideWidth = slides.length > 0 ? slides[0].getBoundingClientRect().width : 0;
+      const setSlidePositions = () => { slides.forEach((s,i)=> s.style.left=(slideWidth*i)+'px'); };
+      setSlidePositions();
+      
+      function relayout(){ 
+        slideWidth = slides.length > 0 ? slides[0].getBoundingClientRect().width : 0; 
+        setSlidePositions();
+        moveTo(current,{instant:true}); 
+      }
+      window.addEventListener('resize', relayout);
+      slides.forEach(s=>{ const img=s.querySelector('img'); if(img && !img.complete){ img.addEventListener('load', relayout, {once:true}); } });
 
-      // 布局
-      let slideWidth=slides[0].getBoundingClientRect().width;
-      slides.forEach((s,i)=> s.style.left=(slideWidth*i)+'px');
-      function relayout(){ slideWidth=slides[0].getBoundingClientRect().width; slides.forEach((s,i)=> s.style.left=(slideWidth*i)+'px'); moveTo(current,{instant:true}); }
-      window.addEventListener('resize', relayout); window.addEventListener('orientationchange', relayout);
-      slides.forEach(s=>{ const img=s.querySelector('img'); if(img && !img.complete){ img.addEventListener('load', relayout, {once:true}); } });
+      slides.forEach((_,i)=>{ const b=document.createElement('button'); b.className='carousel-dot'+(i===0?' is-selected':''); b.setAttribute('aria-label','跳转到第 '+(i+1)+' 张'); b.addEventListener('click',()=>{ moveTo(i); resetAuto(); }); dotsNav.appendChild(b); });
+      const dots=Array.from(dotsNav.children);
 
-      // dots
-      slides.forEach((_,i)=>{ const b=document.createElement('button'); b.className='carousel-dot'+(i===0?' is-selected':''); b.setAttribute('aria-label','跳转到第 '+(i+1)+' 张'); b.addEventListener('click',()=>{ moveTo(i); resetAuto(); }); dotsNav.appendChild(b); });
-      const dots=Array.from(dotsNav.children);
+      let current=0; let auto=null; const AUTO_MS=Number(carousel.dataset.interval||4500);
 
-      // 状态
-      let current=0; let auto=null; const AUTO_MS=Number(carousel.dataset.interval||4000);
+      function updateUI(i){
+        if(!slides[current] || !dots[current] || !slides[i] || !dots[i]) return;
+        slides[current].classList.remove('is-selected'); slides[i].classList.add('is-selected');
+        dots[current].classList.remove('is-selected');   dots[i].classList.add('is-selected');
+        current=i;
+      }
+      function moveTo(i,opts={}){
+        if (!slides.length) return;
+        const {instant=false}=opts; const tx=-(slideWidth*i);
+        if(instant){ const old=track.style.transition; track.style.transition='none'; track.style.transform=`translateX(${tx}px)`; track.offsetHeight; track.style.transition=old||''; }
+        else{ track.style.transform=`translateX(${tx}px)`; }
+        updateUI(i);
+        if(!document.hidden){ resetProgress(); startProgress(); }
+      }
+      function next(){ moveTo((current+1)%slides.length); }
+      function prev(){ moveTo((current-1+slides.length)%slides.length); }
 
-      function updateUI(i){
-        slides[current].classList.remove('is-selected'); slides[i].classList.add('is-selected');
-        dots[current].classList.remove('is-selected');   dots[i].classList.add('is-selected');
-        current=i;
-      }
-      function moveTo(i,opts={}){
-        const {instant=false}=opts; const tx=-(slideWidth*i);
-        const trackEl = document.querySelector('.carousel-track');
-        if(instant){ const old=trackEl.style.transition; trackEl.style.transition='none'; trackEl.style.transform=`translateX(${tx}px)`; trackEl.offsetHeight; trackEl.style.transition=old||''; }
-        else{ trackEl.style.transform=`translateX(${tx}px)`; }
-        updateUI(i);
-        if(!document.hidden){ resetProgress(); startProgress(); }
-      }
-      function next(){ moveTo((current+1)%slides.length); }
-      function prev(){ moveTo((current-1+slides.length)%slides.length); }
+      nextBtn.addEventListener('click',()=>{ next(); resetAuto(); });
+      prevBtn.addEventListener('click',()=>{ prev(); resetAuto(); });
 
-      nextBtn.addEventListener('click',()=>{ next(); resetAuto(); });
-      prevBtn.addEventListener('click',()=>{ prev(); resetAuto(); });
+      let dragging=false, sx=0, stx=0, dx=0;
+      track.addEventListener('pointerdown',e=>{ if(e.button !== 0) return; dragging=true; track.setPointerCapture(e.pointerId); sx=e.clientX; stx=-(slideWidth*current); track.style.transition='none'; track.style.cursor='grabbing'; stopAuto(); });
+      window.addEventListener('pointermove',e=>{ if(!dragging) return; dx=e.clientX-sx; track.style.transform=`translateX(${stx+dx}px)`; });
+      window.addEventListener('pointerup',(e)=>{ if(!dragging) return; track.releasePointerCapture(e.pointerId); dragging=false; track.style.transition=''; track.style.cursor='grab';
+        const threshold=Math.min(90, slideWidth*.2); if(Math.abs(dx)>threshold){ dx<0? next(): prev(); } else { moveTo(current); } resetAuto(); });
 
-      // 拖拽
-      const trackEl=document.querySelector('.carousel-track');
-      let dragging=false, sx=0, stx=0, dx=0;
-      trackEl.addEventListener('pointerdown',e=>{ dragging=true; trackEl.setPointerCapture(e.pointerId); sx=e.clientX; stx=-(slideWidth*current); trackEl.style.transition='none'; trackEl.style.cursor='grabbing'; stopAuto(); });
-      window.addEventListener('pointermove',e=>{ if(!dragging) return; dx=e.clientX-sx; trackEl.style.transform=`translateX(${stx+dx}px)`; });
-      window.addEventListener('pointerup',()=>{ if(!dragging) return; dragging=false; trackEl.style.transition=''; trackEl.style.cursor='grab';
-        const threshold=Math.min(90, slideWidth*.2); if(Math.abs(dx)>threshold){ dx<0? next(): prev(); } else { moveTo(current); } resetAuto(); });
+      function startProgress(){ if(!progress) return; progress.style.transition='none'; progress.style.width='0%'; requestAnimationFrame(()=>{ requestAnimationFrame(()=>{ progress.style.transition=`width ${AUTO_MS}ms linear`; progress.style.width='100%'; }); }); }
+      function resetProgress(){ if(!progress) return; progress.style.transition='none'; progress.style.width='0%'; }
 
-      // 进度条 & 自动播放
-      function startProgress(){ if(!progress) return; progress.style.transition='none'; progress.style.width='0%'; requestAnimationFrame(()=>{ progress.style.transition=`width ${AUTO_MS}ms linear`; progress.style.width='100%'; }); }
-      function resetProgress(){ if(!progress) return; progress.style.transition='none'; progress.style.width='0%'; }
+      function startAuto(){ if(prefersReduced || slides.length <= 1) return; stopAuto(); startProgress(); auto=setInterval(next, AUTO_MS); }
+      function stopAuto(){ if(auto) clearInterval(auto); auto=null; resetProgress(); }
+      function resetAuto(){ stopAuto(); startAuto(); }
 
-      function startAuto(){ if(prefersReduced) return; stopAuto(); startProgress(); auto=setInterval(next, AUTO_MS); }
-      function stopAuto(){ if(auto) clearInterval(auto); auto=null; resetProgress(); }
-      function resetAuto(){ stopAuto(); startAuto(); }
+      carousel.addEventListener('mouseenter', stopAuto);
+      carousel.addEventListener('mouseleave', startAuto);
+      document.addEventListener('visibilitychange',()=>{ document.hidden? stopAuto(): startAuto(); });
+      carousel.addEventListener('keydown', (e)=>{ if(e.key==='ArrowRight'){ next(); resetAuto(); } if(e.key==='ArrowLeft'){ prev(); resetAuto(); } });
+      
+      moveTo(0,{instant:true});
+      startAuto();
+    }
 
-      carousel.addEventListener('mouseenter', stopAuto);
-      carousel.addEventListener('mouseleave', startAuto);
-      document.addEventListener('visibilitychange',()=>{ document.hidden? stopAuto(): startAuto(); });
-      carousel.addEventListener('keydown', (e)=>{ if(e.key==='ArrowRight'){ next(); resetAuto(); } if(e.key==='ArrowLeft'){ prev(); resetAuto(); } });
-      window.addEventListener('beforeunload', stopAuto);
-
-      moveTo(0,{instant:true});
-      startAuto();
-
-      // 自检
-      console.groupCollapsed('%cSelf-Tests','color:#00bcd4');
-      console.assert(String(carousel.dataset.interval)==='4000','data-interval 应为 4000');
-      console.assert(dots.length===slides.length,'Dots 与 Slides 数量一致');
-      console.groupEnd();
-    }
-
-    // 卡片渐入
-    const io2=new IntersectionObserver(es=>{ es.forEach(e=>{ e.isIntersecting? e.target.classList.add('fade-in'): e.target.classList.remove('fade-in'); }); },{threshold:.1});
-    document.querySelectorAll('.glass-card').forEach(c=>io2.observe(c));
-  });
-  </script>
+    // 渐入
+    const io2=new IntersectionObserver(es=>{ es.forEach(e=>{ e.isIntersecting? e.target.classList.add('fade-in'): e.target.classList.remove('fade-in'); }); },{threshold:.1});
+    document.querySelectorAll('.glass-card').forEach(c=>io2.observe(c));
+  });
+  </script>
 </body>
 </html>
-继续优化网站轮播图片，壁纸内容是高清亚洲美女图片，风景，24小时自动更新。
