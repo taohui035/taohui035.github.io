@@ -1,243 +1,478 @@
-<!doctype html>
-<html lang="zh-CN" class="scroll-smooth">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>柳若汐的小窝 — 清爽极简主题</title>
-  <meta name="description" content="柳若汐的小窝：一个清爽、极简、Halo/WordPress/Hexo皆可复用的博客主题。" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Noto Sans SC', 'ui-sans-serif', 'system-ui'] },
-          colors: {
-            brand: {
-              50:'#f7f7fb',100:'#eeeef7',200:'#dfdff0',300:'#c7c7e4',400:'#a7a7d5',500:'#7e7ec0',600:'#5b5ba2',700:'#4a4884',800:'#403f6b',900:'#37365a',
-            }
-          },
-          boxShadow: {
-            soft: '0 6px 24px rgba(0,0,0,0.06)'
-          }
-        }
-      }
+// =========================
+// 项目结构（拷贝到新仓库根目录）
+// =========================
+// .
+// ├─ app/
+// │  ├─ layout.tsx
+// │  ├─ page.tsx
+// │  ├─ posts/[slug]/page.tsx
+// │  ├─ archive/page.tsx
+// │  ├─ albums/page.tsx
+// │  ├─ moments/page.tsx
+// │  ├─ links/page.tsx
+// │  └─ about/page.tsx
+// ├─ components/
+// │  ├─ NavBar.tsx
+// │  ├─ Footer.tsx
+// │  ├─ PostCard.tsx
+// │  └─ ThemeToggle.tsx
+// ├─ lib/
+// │  └─ posts.ts
+// ├─ content/
+// │  └─ posts/*.md
+// ├─ public/
+// │  └─ admin/{index.html, config.yml}
+// ├─ styles/globals.css
+// ├─ tailwind.config.ts
+// ├─ postcss.config.js
+// ├─ next.config.ts
+// ├─ package.json
+// ├─ tsconfig.json
+// └─ README.md
+
+// =========================
+// package.json
+// =========================
+export default {
+  "name": "liuruoxi-blog",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "14.2.5",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "gray-matter": "4.0.3",
+    "remark": "15.0.1",
+    "remark-html": "16.0.1",
+    "remark-gfm": "4.0.0",
+    "clsx": "2.1.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "10.4.19",
+    "postcss": "8.4.38",
+    "tailwindcss": "3.4.10",
+    "typescript": "5.4.5",
+    "@types/node": "20.11.30",
+    "@types/react": "18.2.66",
+    "@types/react-dom": "18.2.22"
+  }
+}
+
+// =========================
+// next.config.ts
+// =========================
+export const experimental = { mdxRs: true } as const
+const nextConfig = { reactStrictMode: true }
+export default nextConfig
+
+// =========================
+// tailwind.config.ts
+// =========================
+import type { Config } from 'tailwindcss'
+const config: Config = {
+  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./styles/**/*.{css}", "./content/**/*.{md,mdx}"],
+  theme: {
+    extend: {
+      colors: {
+        brand: { 50:'#f7f7fb',100:'#eeeef7',200:'#dfdff0',300:'#c7c7e4',400:'#a7a7d5',500:'#7e7ec0',600:'#5b5ba2',700:'#4a4884',800:'#403f6b',900:'#37365a' }
+      },
+      boxShadow: { soft: '0 6px 24px rgba(0,0,0,0.06)' },
+      fontFamily: { sans: ['ui-sans-serif','system-ui','-apple-system','Segoe UI','Noto Sans SC','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Helvetica Neue','Helvetica','Arial'] }
     }
-  </script>
-  <style>
-    :root { color-scheme: light dark; }
-    .container-narrow { max-width: 1024px; }
-    .prose-custom p { margin: .4rem 0; line-height: 1.8; }
-  </style>
-  <link rel="canonical" href="https://taozhiruo.com" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="柳若汐的小窝" />
-  <meta property="og:description" content="柳若汐的小窝：一个清爽、极简、Halo/WordPress/Hexo皆可复用的博客主题。" />
-  <meta property="og:url" content="https://taozhiruo.com" />
-  <meta property="og:site_name" content="柳若汐的小窝" />
-</head>
-<body class="bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-200">
-  <!-- 顶部公告条（可选） -->
-  <div class="bg-gradient-to-r from-brand-800 to-brand-600 text-white text-sm">
-    <div class="mx-auto container container-narrow px-4 py-2 flex items-center justify-between">
-      <div class="truncate">上班多摸鱼，老板骑电驴 · 把平凡的日常写成不凡的记录</div>
-      <button id="themeToggle" class="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 transition">🌗 夜间</button>
-    </div>
-  </div>
+  },
+  darkMode: 'class'
+}
+export default config
 
-  <!-- 站点头部 -->
-  <header class="border-b border-zinc-200/70 dark:border-zinc-800/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 supports-[backdrop-filter]:dark:bg-zinc-950/40 sticky top-0 z-40">
-    <div class="mx-auto container container-narrow px-4">
-      <div class="flex items-center justify-between py-4">
-        <a href="https://taozhiruo.com" class="flex items-center gap-3 group">
-          <div class="size-10 rounded-2xl bg-brand-700 text-white grid place-content-center shadow-soft group-hover:rotate-6 transition">汐</div>
-          <div class="leading-tight">
-            <div class="text-xl font-semibold bg-gradient-to-r from-fuchsia-500 to-sky-500 bg-clip-text text-transparent">柳若汐的小窝</div>
-            <div class="text-xs text-zinc-500 dark:text-zinc-400">taozhiruo.com</div>
-          </div>
-        </a>
-        <nav class="hidden md:flex items-center gap-6 text-sm">
-          <a class="hover:text-brand-700 dark:hover:text-brand-400" href="#home">首页</a>
-          <a class="hover:text-brand-700 dark:hover:text-brand-400" href="#archive">归档</a>
-          <a class="hover:text-brand-700 dark:hover:text-brand-400" href="#albums">相册</a>
-          <a class="hover:text-brand-700 dark:hover:text-brand-400" href="#moments">瞬间</a>
-          <a class="hover:text-brand-700 dark:hover:text-brand-400" href="#links">友链</a>
-          <a class="hover:text-brand-700 dark:hover:text-brand-400" href="#about">关于</a>
-        </nav>
-        <button class="md:hidden p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-900" id="openMenu" aria-label="菜单">☰</button>
-      </div>
-    </div>
-  </header>
+// =========================
+// postcss.config.js
+// =========================
+module.exports = { plugins: { tailwindcss: {}, autoprefixer: {} } }
 
-  <!-- 移动端抽屉菜单 -->
-  <div id="drawer" class="fixed inset-0 hidden z-50">
-    <div class="absolute inset-0 bg-black/30" id="drawerMask"></div>
-    <div class="absolute right-0 top-0 h-full w-72 bg-white dark:bg-zinc-900 shadow-xl p-6 space-y-4">
-      <div class="flex items-center justify-between">
-        <div class="text-lg font-semibold">导航</div>
-        <button id="closeMenu" class="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800">✕</button>
-      </div>
-      <a class="block py-2" href="#home">首页</a>
-      <a class="block py-2" href="#archive">归档</a>
-      <a class="block py-2" href="#albums">相册</a>
-      <a class="block py-2" href="#moments">瞬间</a>
-      <a class="block py-2" href="#links">友链</a>
-      <a class="block py-2" href="#about">关于</a>
-    </div>
-  </div>
+// =========================
+// tsconfig.json
+// =========================
+export default {
+  "compilerOptions": {
+    "target": "es2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "types": ["node"]
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}
 
-  <!-- 主体 -->
-  <main id="home" class="mx-auto container container-narrow px-4">
-    <!-- 列表头 -->
-    <section class="py-8 md:py-10">
-      <h2 class="text-2xl font-bold">最新文章</h2>
-      <p class="text-zinc-500 dark:text-zinc-400 mt-1 text-sm">支持置顶、标签、阅读数与发布日期样式。</p>
-    </section>
+// =========================
+// styles/globals.css
+// =========================
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root { color-scheme: light dark; }
+.prose p { @apply my-3 leading-8; }
 
-    <!-- 文章卡片列表 -->
-    <section class="grid gap-6">
-      <!-- 置顶文章示例 -->
-      <article class="relative rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden hover:shadow-soft transition">
-        <div class="absolute left-4 top-4 text-xs px-2 py-1 rounded-full bg-amber-100 text-amber-800 dark:bg-amber-300/20 dark:text-amber-300">置顶</div>
-        <a href="#" class="block p-6">
-          <h3 class="text-lg font-semibold">Linux 常用命令与镜像合集（持续更新）</h3>
-          <p class="prose-custom text-zinc-600 dark:text-zinc-300 mt-2">收录 Docker、Caddy 安装、Swap 配置、镜像源设置，以及 screen 会话管理等速查清单，帮助你快速配置服务器环境。</p>
-          <div class="mt-3 flex items-center gap-3 text-xs text-zinc-500 dark:text-zinc-400">
-            <span class="inline-flex items-center gap-1">📅 <time datetime="2025-10-18">2025-10-18</time></span>
-            <span class="inline-flex items-center gap-1">🔥 55</span>
-            <span class="inline-flex items-center gap-1">💬 1</span>
-            <span class="inline-flex items-center gap-1">🏷️ <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800">运维</span></span>
-          </div>
-        </a>
-      </article>
+// =========================
+// components/ThemeToggle.tsx
+// =========================
+'use client'
+import { useEffect, useState } from 'react'
+export default function ThemeToggle(){
+  const [mounted, setMounted] = useState(false)
+  useEffect(()=>{ setMounted(true); if(localStorage.getItem('prefers-dark')==='true'){ document.documentElement.classList.add('dark') } },[])
+  if(!mounted) return null
+  return (
+    <button onClick={()=>{ document.documentElement.classList.toggle('dark'); const v=document.documentElement.classList.contains('dark'); localStorage.setItem('prefers-dark', String(v)) }} className="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 transition text-white">
+      🌗 夜间
+    </button>
+  )
+}
 
-      <!-- 普通文章卡片 -->
-      <article class="rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden hover:shadow-soft transition">
-        <a href="#" class="block p-6">
-          <h3 class="text-lg font-semibold">告别非标端口：用 EdgeOne 安全访问家庭云</h3>
-          <p class="prose-custom text-zinc-600 dark:text-zinc-300 mt-2">通过 DNS + CDN + WAF 一体化平台隐藏源站与反代加速，示例演示 Docker 部署 DDNS、Nginx 反代、域名验证与回源配置。</p>
-          <div class="mt-3 flex items-center gap-3 text-xs text-zinc-500 dark:text-zinc-400">
-            <span>📅 2025-10-16</span>
-            <span>🔥 14</span>
-            <span>💬 0</span>
-          </div>
-        </a>
-      </article>
-
-      <article class="rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden hover:shadow-soft transition">
-        <a href="#" class="block p-6">
-          <h3 class="text-lg font-semibold">使用 Shadowsocks 组建家庭私有网络</h3>
-          <p class="prose-custom text-zinc-600 dark:text-zinc-300 mt-2">涵盖 OPENWRT 环境、Passwall 插件安装、端口转发与 DDNS / FRP 方案，按步骤完成稳固可控的远程访问。</p>
-          <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
-            <span>📅 2025-10-11</span>
-            <span>🔥 54</span>
-            <span>💬 0</span>
-            <span class="inline-flex items-center gap-1">🏷️ <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800">内网穿透</span></span>
-            <span class="inline-flex items-center gap-1">🏷️ <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800">端口转发</span></span>
-            <span class="inline-flex items-center gap-1">🏷️ <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800">OpenWrt</span></span>
-          </div>
-        </a>
-      </article>
-
-      <article class="rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden hover:shadow-soft transition">
-        <a href="#" class="block p-6">
-          <h3 class="text-lg font-semibold">〖NAS 系列 1〗安装学习版 unRAID（老毛子）</h3>
-          <p class="prose-custom text-zinc-600 dark:text-zinc-300 mt-2">从硬件清单、镜像制作、U 盘启动到系统首启的完整流程，细节与注意事项一应俱全。</p>
-          <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
-            <span>📅 2025-10-11</span>
-            <span>🔥 42</span>
-            <span>💬 0</span>
-            <span class="inline-flex items-center gap-1">🏷️ <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800">NAS</span></span>
-            <span class="inline-flex items-center gap-1">🏷️ <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800">安装教程</span></span>
-          </div>
-        </a>
-      </article>
-
-      <!-- 分页（示意） -->
-      <div class="flex items-center justify-center gap-2 py-6">
-        <a href="#" class="px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900">« 上一页</a>
-        <a href="#" class="px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900">1</a>
-        <a href="#" class="px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900">2</a>
-        <a href="#" class="px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900">3</a>
-        <a href="#" class="px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900">下一页 »</a>
-      </div>
-    </section>
-
-    <!-- 归档（锚点区块示意） -->
-    <section id="archive" class="pt-10">
-      <h2 class="text-2xl font-bold">归档</h2>
-      <div class="mt-4 grid gap-2 text-sm text-zinc-600 dark:text-zinc-300">
-        <a href="#" class="hover:underline">2025 / 10（3）</a>
-        <a href="#" class="hover:underline">2025 / 09（6）</a>
-        <a href="#" class="hover:underline">2025 / 08（4）</a>
-      </div>
-    </section>
-
-    <!-- 友链（锚点区块示意） -->
-    <section id="links" class="pt-10">
-      <h2 class="text-2xl font-bold">友链</h2>
-      <ul class="mt-4 grid sm:grid-cols-2 gap-4">
-        <li class="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:shadow-soft transition">
-          <a href="https://example.com" target="_blank" class="font-medium hover:underline">示例友链 A</a>
-          <p class="text-sm text-zinc-500 dark:text-zinc-400">专注前端与可视化</p>
-        </li>
-        <li class="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:shadow-soft transition">
-          <a href="https://example.com" target="_blank" class="font-medium hover:underline">示例友链 B</a>
-          <p class="text-sm text-zinc-500 dark:text-zinc-400">Linux 运维与自动化</p>
-        </li>
-      </ul>
-    </section>
-
-    <!-- 关于（锚点区块示意） -->
-    <section id="about" class="pt-10 pb-12">
-      <h2 class="text-2xl font-bold">关于</h2>
-      <div class="mt-4 text-zinc-600 dark:text-zinc-300 leading-relaxed">
-        <p>这里是你的个人博客。热爱记录、分享与创造，希望每一次发布都带来一点小小的价值。</p>
-        <p>本主题力求“克制、清晰、顺手”。如需后台系统（Halo/WordPress/Hexo/Next.js），均能无缝适配。</p>
-      </div>
-    </section>
-  </main>
-
-  <!-- 页脚 -->
-  <footer class="border-t border-zinc-200/70 dark:border-zinc-800/80">
-    <div class="mx-auto container container-narrow px-4 py-8 text-sm text-zinc-500 dark:text-zinc-400">
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-        <div>© <span id="year"></span> 柳若汐的小窝 · 使用自研主题（支持 Halo Walker 风格）</div>
-        <div class="flex items-center gap-3">
-          <a class="hover:underline" href="https://beian.miit.gov.cn/" target="_blank">备案号：示例ICP备 xxxxxx 号</a>
-          <span class="hidden sm:inline">|</span>
-          <span class="inline-flex items-center gap-1" title="CDN/保护">腾讯云 EdgeOne</span>
+// =========================
+// components/NavBar.tsx
+// =========================
+import Link from 'next/link'
+import ThemeToggle from './ThemeToggle'
+export default function NavBar(){
+  return (
+    <header className="border-b border-zinc-200/70 dark:border-zinc-800/80 sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/60 supports-[backdrop-filter]:dark:bg-zinc-950/40">
+      <div className="mx-auto max-w-5xl px-4">
+        <div className="flex items-center justify-between py-4">
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="size-10 rounded-2xl bg-brand-700 text-white grid place-content-center shadow-soft group-hover:rotate-6 transition">汐</div>
+            <div className="leading-tight">
+              <div className="text-xl font-semibold bg-gradient-to-r from-fuchsia-500 to-sky-500 bg-clip-text text-transparent">柳若汐的小窝</div>
+              <div className="text-xs text-zinc-500 dark:text-zinc-400">taozhiruo.com</div>
+            </div>
+          </Link>
+          <nav className="hidden md:flex items-center gap-6 text-sm">
+            <Link className="hover:text-brand-700 dark:hover:text-brand-400" href="/">首页</Link>
+            <Link className="hover:text-brand-700 dark:hover:text-brand-400" href="/archive">归档</Link>
+            <Link className="hover:text-brand-700 dark:hover:text-brand-400" href="/albums">相册</Link>
+            <Link className="hover:text-brand-700 dark:hover:text-brand-400" href="/moments">瞬间</Link>
+            <Link className="hover:text-brand-700 dark:hover:text-brand-400" href="/links">友链</Link>
+            <Link className="hover:text-brand-700 dark:hover:text-brand-400" href="/about">关于</Link>
+          </nav>
+          <div className="md:hidden"></div>
+          <ThemeToggle />
         </div>
       </div>
-      <div class="mt-2 text-xs">为防范电信网络诈骗，如接到 96110 来电请及时接听。</div>
-    </div>
-  </footer>
+    </header>
+  )
+}
 
-  <script>
-    // 年份 & 夜间模式
-    document.getElementById('year').textContent = new Date().getFullYear();
-    const themeToggle = document.getElementById('themeToggle');
-    themeToggle?.addEventListener('click', () => {
-      document.documentElement.classList.toggle('dark');
-      localStorage.setItem('prefers-dark', document.documentElement.classList.contains('dark'));
-    });
-    if (localStorage.getItem('prefers-dark') === 'true') {
-      document.documentElement.classList.add('dark');
-    }
+// =========================
+// components/Footer.tsx
+// =========================
+export default function Footer(){
+  return (
+    <footer className="border-t border-zinc-200/70 dark:border-zinc-800/80">
+      <div className="mx-auto max-w-5xl px-4 py-8 text-sm text-zinc-500 dark:text-zinc-400">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+          <div>© {new Date().getFullYear()} 柳若汐的小窝 · taozhiruo.com</div>
+          <div className="flex items-center gap-3">
+            <a className="hover:underline" href="https://beian.miit.gov.cn/" target="_blank">备案号：示例ICP备 xxxxxx 号</a>
+            <span className="hidden sm:inline">|</span>
+            <span className="inline-flex items-center gap-1" title="CDN/保护">腾讯云 EdgeOne</span>
+          </div>
+        </div>
+        <div className="mt-2 text-xs">为防范电信网络诈骗，如接到 96110 来电请及时接听。</div>
+      </div>
+    </footer>
+  )
+}
 
-    // 移动端抽屉
-    const drawer = document.getElementById('drawer');
-    const openMenu = document.getElementById('openMenu');
-    const closeMenu = document.getElementById('closeMenu');
-    const drawerMask = document.getElementById('drawerMask');
-    const toggleDrawer = (show) => {
-      drawer.classList.toggle('hidden', !show);
+// =========================
+// components/PostCard.tsx
+// =========================
+import Link from 'next/link'
+export default function PostCard({ post }:{ post: any }){
+  return (
+    <article className="rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden hover:shadow-soft transition">
+      <Link href={`/posts/${post.slug}`} className="block p-6">
+        <h3 className="text-lg font-semibold">{post.title}</h3>
+        <p className="text-zinc-600 dark:text-zinc-300 mt-2 line-clamp-2">{post.excerpt}</p>
+        <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-zinc-500 dark:text-zinc-400">
+          <span>📅 {post.date}</span>
+          {post.views ? <span>🔥 {post.views}</span> : null}
+          {post.comments ? <span>💬 {post.comments}</span> : null}
+          {post.tags?.map((t:string)=> (
+            <span key={t} className="inline-flex items-center gap-1">🏷️ <span className="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800">{t}</span></span>
+          ))}
+        </div>
+      </Link>
+    </article>
+  )
+}
+
+// =========================
+// lib/posts.ts  —— 读取 /content/posts 下的 Markdown
+// =========================
+import fs from 'node:fs'
+import path from 'node:path'
+import matter from 'gray-matter'
+import { remark } from 'remark'
+import html from 'remark-html'
+import gfm from 'remark-gfm'
+
+const postsDir = path.join(process.cwd(), 'content', 'posts')
+
+export type PostMeta = { slug:string; title:string; date:string; tags?:string[]; excerpt:string; views?:number; comments?:number; pinned?:boolean }
+
+export function getAllPostSlugs(){
+  return fs.readdirSync(postsDir).filter(f=>f.endsWith('.md')).map(f=>f.replace(/\.md$/, ''))
+}
+
+export function getAllPosts(): PostMeta[]{
+  const slugs = getAllPostSlugs()
+  const posts = slugs.map(slug=>{
+    const full = fs.readFileSync(path.join(postsDir, slug + '.md'), 'utf8')
+    const { data, content } = matter(full)
+    return {
+      slug,
+      title: data.title ?? slug,
+      date: data.date ?? '',
+      tags: data.tags ?? [],
+      excerpt: data.excerpt ?? content.slice(0, 120).replace(/\n/g,' '),
+      views: data.views ?? 0,
+      comments: data.comments ?? 0,
+      pinned: data.pinned ?? false,
     }
-    openMenu?.addEventListener('click', () => toggleDrawer(true));
-    closeMenu?.addEventListener('click', () => toggleDrawer(false));
-    drawerMask?.addEventListener('click', () => toggleDrawer(false));
-  </script>
-</body>
-</html>
+  })
+  posts.sort((a,b)=> (a.pinned===b.pinned ? 0 : a.pinned? -1:1) || (a.date>b.date? -1:1))
+  return posts
+}
+
+export async function getPostHtmlBySlug(slug:string){
+  const full = fs.readFileSync(path.join(postsDir, slug + '.md'), 'utf8')
+  const { data, content } = matter(full)
+  const processed = await remark().use(gfm).use(html).process(content)
+  return { meta: {
+    slug,
+    title: data.title ?? slug,
+    date: data.date ?? '',
+    tags: data.tags ?? [],
+  }, html: processed.toString() }
+}
+
+// =========================
+// app/layout.tsx
+// =========================
+import './globals.css'
+import NavBar from '@/components/NavBar'
+import Footer from '@/components/Footer'
+export const metadata = {
+  title: '柳若汐的小窝 — 清爽极简主题',
+  description: '柳若汐的小窝：一个清爽、极简、Halo/WordPress/Hexo皆可复用的博客主题。',
+  metadataBase: new URL('https://taozhiruo.com'),
+  alternates: { canonical: '/' },
+  openGraph: { type: 'website', title: '柳若汐的小窝', url: 'https://taozhiruo.com' }
+}
+export default function RootLayout({ children }:{ children: React.ReactNode }){
+  return (
+    <html lang="zh-CN" className="scroll-smooth">
+      <body className="bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-200">
+        <div className="bg-gradient-to-r from-brand-800 to-brand-600 text-white text-sm">
+          <div className="mx-auto max-w-5xl px-4 py-2 flex items-center justify-between">
+            <div className="truncate">上班多摸鱼，老板骑电驴 · 把平凡的日常写成不凡的记录</div>
+            {/* 右上角夜间在 Nav 内 */}
+          </div>
+        </div>
+        <NavBar />
+        <main className="mx-auto max-w-5xl px-4">{children}</main>
+        <Footer />
+      </body>
+    </html>
+  )
+}
+
+// =========================
+// app/page.tsx  —— 首页（列表 + 分页示例）
+// =========================
+import PostCard from '@/components/PostCard'
+import { getAllPosts } from '@/lib/posts'
+export const revalidate = 60
+export default function Home(){
+  const posts = getAllPosts()
+  return (
+    <section className="py-8 md:py-10">
+      <h2 className="text-2xl font-bold">最新文章</h2>
+      <p className="text-zinc-500 dark:text-zinc-400 mt-1 text-sm">支持置顶、标签、阅读数与发布日期样式。</p>
+      <div className="grid gap-6 mt-6">
+        {posts.map(p=> <PostCard key={p.slug} post={p} />)}
+      </div>
+      {/* 这里可接入真正分页：读取 query 参数 page/size 并 slice */}
+      <div className="flex items-center justify-center gap-2 py-6">
+        <a className="px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900">1</a>
+        <a className="px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900">2</a>
+        <a className="px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900">3</a>
+      </div>
+    </section>
+  )
+}
+
+// =========================
+// app/posts/[slug]/page.tsx  —— 文章详情
+// =========================
+import { getAllPostSlugs, getPostHtmlBySlug } from '@/lib/posts'
+export async function generateStaticParams(){
+  return getAllPostSlugs().map(slug=>({ slug }))
+}
+export default async function PostPage({ params }:{ params:{ slug:string } }){
+  const { meta, html } = await getPostHtmlBySlug(params.slug)
+  return (
+    <article className="prose prose-zinc dark:prose-invert max-w-none py-8">
+      <h1 className="bg-gradient-to-r from-fuchsia-500 to-sky-500 bg-clip-text text-transparent font-bold text-3xl">{meta.title}</h1>
+      <div className="text-sm text-zinc-500 dark:text-zinc-400">📅 {meta.date} {meta.tags?.length? ' · '+meta.tags.join(' / '): ''}</div>
+      <div className="mt-6" dangerouslySetInnerHTML={{ __html: html }} />
+    </article>
+  )
+}
+
+// =========================
+// app/archive/page.tsx  —— 归档
+// =========================
+import { getAllPosts } from '@/lib/posts'
+export default function Archive(){
+  const posts = getAllPosts()
+  const groups = posts.reduce((acc:any,p)=>{ const y=m(p.date); (acc[y]=acc[y]||[]).push(p); return acc },{})
+  function m(d:string){ return d?.slice(0,7) || '未知' }
+  return (
+    <section className="pt-10 pb-6">
+      <h2 className="text-2xl font-bold">归档</h2>
+      <div className="mt-4 grid gap-5">
+        {Object.keys(groups).sort((a,b)=>a>b?-1:1).map(k=> (
+          <div key={k}>
+            <div className="font-medium mb-2">{k}</div>
+            <ul className="grid gap-2 text-sm text-zinc-600 dark:text-zinc-300">
+              {groups[k].map((p:any)=> (
+                <li key={p.slug} className="flex items-center gap-2"><a className="hover:underline" href={`/posts/${p.slug}`}>{p.title}</a> <span className="text-xs">{p.date}</span></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+// =========================
+// 其它页：相册 / 瞬间 / 友链 / 关于（可自填内容）
+// =========================
+export function Section({title, children}:{title:string, children:React.ReactNode}){
+  return <section className="pt-10 pb-12"><h2 className="text-2xl font-bold">{title}</h2><div className="mt-4 text-zinc-600 dark:text-zinc-300 leading-relaxed">{children}</div></section>
+}
+
+// app/albums/page.tsx
+import { Section } from '../archive/page'
+export default function Albums(){
+  return <Section title="相册">在这里展示你的图集（以后可接入相册数据源）。</Section>
+}
+
+// app/moments/page.tsx
+import { Section } from '../archive/page'
+export default function Moments(){
+  return <Section title="瞬间">发布简短想法或日常（可做为 micro-posts）。</Section>
+}
+
+// app/links/page.tsx
+import { Section } from '../archive/page'
+export default function Links(){
+  return <Section title="友链">把友链放成卡片或列表，支持描述与外链。</Section>
+}
+
+// app/about/page.tsx
+import { Section } from '../archive/page'
+export default function About(){
+  return <Section title="关于">这里是你的个人博客。热爱记录、分享与创造，希望每一次发布都带来一点小小的价值。</Section>
+}
+
+// =========================
+// public/admin/index.html  —— Decap CMS（原 Netlify CMS）后台入口
+// =========================
+<!doctype html>
+<html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CMS · 柳若汐的小窝</title></head>
+<body>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+</body></html>
+
+// =========================
+// public/admin/config.yml  —— CMS 配置（Git 后端）
+// （请把 YOUR_GITHUB_USER 与 REPO 改成你的仓库。若部署在 Netlify，可换用 git-gateway 后端。）
+// =========================
+backend:
+  name: github
+  repo: YOUR_GITHUB_USER/YOUR_REPO
+  branch: main
+  base_url: https://api.github.com
+media_folder: "public/uploads"
+public_folder: "/uploads"
+locale: "zh_Hans"
+site_url: "https://taozhiruo.com"
+collections:
+  - name: "posts"
+    label: "文章"
+    folder: "content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "标题", name: "title", widget: "string"}
+      - {label: "发布日期", name: "date", widget: "datetime"}
+      - {label: "标签", name: "tags", widget: "list", default: []}
+      - {label: "置顶", name: "pinned", widget: "boolean", default: false}
+      - {label: "摘要", name: "excerpt", widget: "text"}
+      - {label: "正文", name: "body", widget: "markdown"}
+
+// =========================
+// content/posts/2025-10-18-linux-commands.md  —— 示例文章
+// =========================
+---
+title: Linux 常用命令与镜像合集（持续更新）
+date: 2025-10-18
+tags: ["运维"]
+views: 55
+comments: 1
+pinned: true
+excerpt: 收录 Docker、Caddy 安装、Swap 配置、镜像源设置，以及 screen 会话管理等速查清单。
+---
+
+这里写正文内容。可以使用 **Markdown**、表格、代码块等。
+
+// =========================
+// README.md（部署说明摘录）
+// =========================
+# 柳若汐的小窝（Next.js 可发布版）
+
+- **编辑/删除/新建文章**：进入 `/admin`（Decap CMS），登录后直接管理 `content/posts/*.md`。
+- **文章详情页**：访问 `/posts/[slug]`。
+- **导航分页**：`/archive` `/albums` `/moments` `/links` `/about` 均已就绪。
+
+## 本地运行
+```bash
+pnpm i # 或 npm i / yarn
+pnpm dev
+```
+
+## 部署
+- **Vercel**：一键连接 GitHub 仓库；构建命令 `next build`，输出自动。
+- **CMS 登录**：config.yml 使用 `github` 后端。需要在 GitHub 建 OAuth App 并在仓库设置 OAuth 回调，或改用 Netlify 的 git-gateway（无需自建 OAuth）。
+
+## 生产建议
+- 将 `uploads/` 置于 CDN；设置 OG 图与 SEO；接入统计（如 Umami）。
