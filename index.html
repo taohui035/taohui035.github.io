@@ -1,242 +1,243 @@
 <!doctype html>
 <html lang="zh-CN" class="scroll-smooth">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>柳若汐的小窝 — 个人博客</title>
-  <meta name="description" content="柳若汐的小窝的个人博客，记录、分享与思考。" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Noto Sans SC', 'ui-sans-serif', 'system-ui'] },
-          colors: {
-            brand: {
-              50:'#f7f7fb',100:'#eeeef7',200:'#dfdff0',300:'#c7c7e4',400:'#a7a7d5',500:'#7e7ec0',600:'#5b5ba2',700:'#4a4884',800:'#403f6b',900:'#37365a',
-            }
-          },
-          boxShadow: {
-            soft: '0 6px 24px rgba(0,0,0,0.06)'
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    :root { color-scheme: light dark; }
-    .container-narrow { max-width: 1024px; }
-    .prose-custom p { margin: .4rem 0; line-height: 1.8; }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>柳若汐的小窝 — 清爽极简主题</title>
+  <meta name="description" content="柳若汐的小窝：一个清爽、极简、Halo/WordPress/Hexo皆可复用的博客主题。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Noto Sans SC', 'ui-sans-serif', 'system-ui'] },
+          colors: {
+            brand: {
+              50:'#f7f7fb',100:'#eeeef7',200:'#dfdff0',300:'#c7c7e4',400:'#a7a7d5',500:'#7e7ec0',600:'#5b5ba2',700:'#4a4884',800:'#403f6b',900:'#37365a',
+            }
+          },
+          boxShadow: {
+            soft: '0 6px 24px rgba(0,0,0,0.06)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    .container-narrow { max-width: 1024px; }
+    .prose-custom p { margin: .4rem 0; line-height: 1.8; }
+  </style>
+  <link rel="canonical" href="https://taozhiruo.com" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="柳若汐的小窝" />
+  <meta property="og:description" content="柳若汐的小窝：一个清爽、极简、Halo/WordPress/Hexo皆可复用的博客主题。" />
+  <meta property="og:url" content="https://taozhiruo.com" />
+  <meta property="og:site_name" content="柳若汐的小窝" />
 </head>
 <body class="bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-200">
-    <div class="bg-gradient-to-r from-brand-800 to-brand-600 text-white text-sm">
-    <div class="mx-auto container container-narrow px-4 py-2 flex items-center justify-between">
-      <div class="truncate">上班多摸鱼，老板骑电驴 · 把平凡的日常写成不凡的记录</div>
-      <button id="themeToggle" class="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 transition">🌗 夜间</button>
-    </div>
-  </div>
+  <!-- 顶部公告条（可选） -->
+  <div class="bg-gradient-to-r from-brand-800 to-brand-600 text-white text-sm">
+    <div class="mx-auto container container-narrow px-4 py-2 flex items-center justify-between">
+      <div class="truncate">上班多摸鱼，老板骑电驴 · 把平凡的日常写成不凡的记录</div>
+      <button id="themeToggle" class="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 transition">🌗 夜间</button>
+    </div>
+  </div>
 
-    <header class="border-b border-zinc-200/70 dark:border-zinc-800/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 supports-[backdrop-filter]:dark:bg-zinc-950/40 sticky top-0 z-40">
-    <div class="mx-auto container container-narrow px-4">
-      <div class="flex items-center justify-between py-4">
-        <a href="https://taozhiruo.com" class="flex items-center gap-3 group">
-          <div class="size-10 rounded-2xl bg-brand-700 text-white grid place-content-center shadow-soft group-hover:rotate-6 transition text-xl font-medium">汐</div>
-          <div class="leading-tight">
-            <div class="text-xl font-semibold">
-                            <span class="bg-gradient-to-r from-brand-700 to-brand-500 bg-clip-text text-transparent dark:from-brand-600 dark:to-brand-400">
-                柳若汐的小窝
-              </span>
-            </div>
-            <div class="text-xs text-zinc-500 dark:text-zinc-400">taozhiruo.com</div>
-          </div>
-        </a>
-        <nav class="hidden md:flex items-center gap-6 text-sm">
-          <a class="hover:text-brand-700 dark:hover:text-brand-400" href="#home">首页</a>
-          <a class="hover:text-brand-700 dark:hover:text-brand-400" href="#archive">归档</a>
-          <a class="hover:text-brand-700 dark:hover:text-brand-400" href="#albums">相册</a>
-          <a class="hover:text-brand-700 dark:hover:text-brand-400" href="#moments">瞬间</a>
-          <a class="hover:text-brand-700 dark:hover:text-brand-400" href="#links">友链</a>
-          <a class="hover:text-brand-700 dark:hover:text-brand-400" href="#about">关于</a>
-        </nav>
-        <button class="md:hidden p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-900" id="openMenu" aria-label="菜单">☰</button>
-      </div>
-    </div>
-  </header>
+  <!-- 站点头部 -->
+  <header class="border-b border-zinc-200/70 dark:border-zinc-800/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 supports-[backdrop-filter]:dark:bg-zinc-950/40 sticky top-0 z-40">
+    <div class="mx-auto container container-narrow px-4">
+      <div class="flex items-center justify-between py-4">
+        <a href="https://taozhiruo.com" class="flex items-center gap-3 group">
+          <div class="size-10 rounded-2xl bg-brand-700 text-white grid place-content-center shadow-soft group-hover:rotate-6 transition">汐</div>
+          <div class="leading-tight">
+            <div class="text-xl font-semibold bg-gradient-to-r from-fuchsia-500 to-sky-500 bg-clip-text text-transparent">柳若汐的小窝</div>
+            <div class="text-xs text-zinc-500 dark:text-zinc-400">taozhiruo.com</div>
+          </div>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm">
+          <a class="hover:text-brand-700 dark:hover:text-brand-400" href="#home">首页</a>
+          <a class="hover:text-brand-700 dark:hover:text-brand-400" href="#archive">归档</a>
+          <a class="hover:text-brand-700 dark:hover:text-brand-400" href="#albums">相册</a>
+          <a class="hover:text-brand-700 dark:hover:text-brand-400" href="#moments">瞬间</a>
+          <a class="hover:text-brand-700 dark:hover:text-brand-400" href="#links">友链</a>
+          <a class="hover:text-brand-700 dark:hover:text-brand-400" href="#about">关于</a>
+        </nav>
+        <button class="md:hidden p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-900" id="openMenu" aria-label="菜单">☰</button>
+      </div>
+    </div>
+  </header>
 
-    <div id="drawer" class="fixed inset-0 hidden z-50">
-    <div class="absolute inset-0 bg-black/30" id="drawerMask"></div>
-    <div class="absolute right-0 top-0 h-full w-72 bg-white dark:bg-zinc-900 shadow-xl p-6 space-y-4">
-      <div class="flex items-center justify-between">
-        <div class="text-lg font-semibold">导航</div>
-        <button id="closeMenu" class="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800">✕</button>
-      </div>
-      <a class="block py-2" href="#home">首页</a>
-      <a class="block py-2" href="#archive">归档</a>
-      <a class="block py-2" href="#albums">相册</a>
-      <a class="block py-2" href="#moments">瞬间</a>
-      <a class="block py-2" href="#links">友链</a>
-      <a class="block py-2" href="#about">关于</a>
-    </div>
-  </div>
+  <!-- 移动端抽屉菜单 -->
+  <div id="drawer" class="fixed inset-0 hidden z-50">
+    <div class="absolute inset-0 bg-black/30" id="drawerMask"></div>
+    <div class="absolute right-0 top-0 h-full w-72 bg-white dark:bg-zinc-900 shadow-xl p-6 space-y-4">
+      <div class="flex items-center justify-between">
+        <div class="text-lg font-semibold">导航</div>
+        <button id="closeMenu" class="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800">✕</button>
+      </div>
+      <a class="block py-2" href="#home">首页</a>
+      <a class="block py-2" href="#archive">归档</a>
+      <a class="block py-2" href="#albums">相册</a>
+      <a class="block py-2" href="#moments">瞬间</a>
+      <a class="block py-2" href="#links">友链</a>
+      <a class="block py-2" href="#about">关于</a>
+    </div>
+  </div>
 
-    <main id="home" class="mx-auto container container-narrow px-4">
-        <section class="py-8 md:py-10">
-      <h2 class="text-2xl font-bold">最新文章</h2>
-      <p class="text-zinc-500 dark:text-zinc-400 mt-1 text-sm">支持置顶、标签、阅读数与发布日期样式。</p>
-    </section>
+  <!-- 主体 -->
+  <main id="home" class="mx-auto container container-narrow px-4">
+    <!-- 列表头 -->
+    <section class="py-8 md:py-10">
+      <h2 class="text-2xl font-bold">最新文章</h2>
+      <p class="text-zinc-500 dark:text-zinc-400 mt-1 text-sm">支持置顶、标签、阅读数与发布日期样式。</p>
+    </section>
 
-        <section class="grid gap-6">
-            <article class="relative rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden hover:shadow-soft transition">
-        <div class="absolute left-4 top-4 text-xs px-2 py-1 rounded-full bg-amber-100 text-amber-800 dark:bg-amber-300/20 dark:text-amber-300">置顶</div>
-        <a href="#" class="block p-6">
-          <h3 class="text-lg font-semibold">Linux 常用命令与镜像合集（持续更新）</h3>
-          <p class="prose-custom text-zinc-600 dark:text-zinc-300 mt-2">收录 Docker、Caddy 安装、Swap 配置、镜像源设置，以及 screen 会话管理等速查清单，帮助你快速配置服务器环境。</p>
-          <div class="mt-3 flex items-center gap-3 text-xs text-zinc-500 dark:text-zinc-400">
-            <span class="inline-flex items-center gap-1">📅 <time datetime="2025-10-18">2025-10-18</time></span>
-            <span class="inline-flex items-center gap-1">🔥 55</span>
-            <span class="inline-flex items-center gap-1">💬 1</span>
-            <span class="inline-flex items-center gap-1">🏷️ <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800">运维</span></span>
-          </div>
-        </a>
-      </article>
+    <!-- 文章卡片列表 -->
+    <section class="grid gap-6">
+      <!-- 置顶文章示例 -->
+      <article class="relative rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden hover:shadow-soft transition">
+        <div class="absolute left-4 top-4 text-xs px-2 py-1 rounded-full bg-amber-100 text-amber-800 dark:bg-amber-300/20 dark:text-amber-300">置顶</div>
+        <a href="#" class="block p-6">
+          <h3 class="text-lg font-semibold">Linux 常用命令与镜像合集（持续更新）</h3>
+          <p class="prose-custom text-zinc-600 dark:text-zinc-300 mt-2">收录 Docker、Caddy 安装、Swap 配置、镜像源设置，以及 screen 会话管理等速查清单，帮助你快速配置服务器环境。</p>
+          <div class="mt-3 flex items-center gap-3 text-xs text-zinc-500 dark:text-zinc-400">
+            <span class="inline-flex items-center gap-1">📅 <time datetime="2025-10-18">2025-10-18</time></span>
+            <span class="inline-flex items-center gap-1">🔥 55</span>
+            <span class="inline-flex items-center gap-1">💬 1</span>
+            <span class="inline-flex items-center gap-1">🏷️ <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800">运维</span></span>
+          </div>
+        </a>
+      </article>
 
-            <article class="rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden hover:shadow-soft transition">
-        <a href="#" class="block p-6">
-          <h3 class="text-lg font-semibold">告别非标端口：用 EdgeOne 安全访问家庭云</h3>
-          <p class="prose-custom text-zinc-600 dark:text-zinc-300 mt-2">通过 DNS + CDN + WAF 一体化平台隐藏源站与反代加速，示例演示 Docker 部署 DDNS、Nginx 反代、域名验证与回源配置。</p>
-          <div class="mt-3 flex items-center gap-3 text-xs text-zinc-500 dark:text-zinc-400">
-            <span>📅 2025-10-16</span>
-            <span>🔥 14</span>
-            <span>💬 0</span>
-          </div>
-        </a>
-      </article>
+      <!-- 普通文章卡片 -->
+      <article class="rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden hover:shadow-soft transition">
+        <a href="#" class="block p-6">
+          <h3 class="text-lg font-semibold">告别非标端口：用 EdgeOne 安全访问家庭云</h3>
+          <p class="prose-custom text-zinc-600 dark:text-zinc-300 mt-2">通过 DNS + CDN + WAF 一体化平台隐藏源站与反代加速，示例演示 Docker 部署 DDNS、Nginx 反代、域名验证与回源配置。</p>
+          <div class="mt-3 flex items-center gap-3 text-xs text-zinc-500 dark:text-zinc-400">
+            <span>📅 2025-10-16</span>
+            <span>🔥 14</span>
+            <span>💬 0</span>
+          </div>
+        </a>
+      </article>
 
-      <article class="rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden hover:shadow-soft transition">
-        <a href="#" class="block p-6">
-          <h3 class="text-lg font-semibold">使用 Shadowsocks 组建家庭私有网络</h3>
-          <p class="prose-custom text-zinc-600 dark:text-zinc-300 mt-2">涵盖 OPENWRT 环境、Passwall 插件安装、端口转发与 DDNS / FRP 方案，按步骤完成稳固可控的远程访问。</p>
-          <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
-            <span>📅 2025-10-11</span>
-            <span>🔥 54</span>
-            <span>💬 0</span>
-            <span class="inline-flex items-center gap-1">🏷️ <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800">内网穿透</span></span>
-            <span class="inline-flex items-center gap-1">🏷️ <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800">端口转发</span></span>
-.          <span class="inline-flex items-center gap-1">🏷️ <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800">OpenWrt</span></span>
-          </div>
-        </a>
-      </article>
+      <article class="rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden hover:shadow-soft transition">
+        <a href="#" class="block p-6">
+          <h3 class="text-lg font-semibold">使用 Shadowsocks 组建家庭私有网络</h3>
+          <p class="prose-custom text-zinc-600 dark:text-zinc-300 mt-2">涵盖 OPENWRT 环境、Passwall 插件安装、端口转发与 DDNS / FRP 方案，按步骤完成稳固可控的远程访问。</p>
+          <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
+            <span>📅 2025-10-11</span>
+            <span>🔥 54</span>
+            <span>💬 0</span>
+            <span class="inline-flex items-center gap-1">🏷️ <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800">内网穿透</span></span>
+            <span class="inline-flex items-center gap-1">🏷️ <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800">端口转发</span></span>
+            <span class="inline-flex items-center gap-1">🏷️ <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800">OpenWrt</span></span>
+          </div>
+        </a>
+      </article>
 
-      <article class="rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden hover:shadow-soft transition">
-        <a href="#" class="block p-6">
-          <h3 class="text-lg font-semibold">〖NAS 系列 1〗安装学习版 unRAID（老毛子）</h3>
-          <p class="prose-custom text-zinc-600 dark:text-zinc-300 mt-2">从硬件清单、镜像制作、U 盘启动到系统首启的完整流程，细节与注意事项一应俱全。</p>
-          <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
-            <span>📅 2025-10-11</span>
-            <span>🔥 42</span>
-            <span>💬 0</span>
-            <span class="inline-flex items-center gap-1">🏷️ <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800">NAS</span></span>
-            <span class="inline-flex items-center gap-1">🏷️ <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800">安装教程</span></span>
-          </div>
-        </a>
-      </article>
+      <article class="rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden hover:shadow-soft transition">
+        <a href="#" class="block p-6">
+          <h3 class="text-lg font-semibold">〖NAS 系列 1〗安装学习版 unRAID（老毛子）</h3>
+          <p class="prose-custom text-zinc-600 dark:text-zinc-300 mt-2">从硬件清单、镜像制作、U 盘启动到系统首启的完整流程，细节与注意事项一应俱全。</p>
+          <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
+            <span>📅 2025-10-11</span>
+            <span>🔥 42</span>
+            <span>💬 0</span>
+            <span class="inline-flex items-center gap-1">🏷️ <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800">NAS</span></span>
+            <span class="inline-flex items-center gap-1">🏷️ <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800">安装教程</span></span>
+          </div>
+        </a>
+      </article>
 
-            <div class="flex items-center justify-center gap-2 py-6">
-        <a href="#" class="px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900">« 上一页</a>
-        <a href="#" class="px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900">1</a>
-        <a href="#" class="px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900">2</a>
-        <a href="#" class="px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900">3</a>
-        <a href="#" class="px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900">下一页 »</a>
-Route::group(['prefix' => 'api'], function() {
-    Route::post('register', 'AuthController@register');
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout')->middleware('auth:api');
+      <!-- 分页（示意） -->
+      <div class="flex items-center justify-center gap-2 py-6">
+        <a href="#" class="px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900">« 上一页</a>
+        <a href="#" class="px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900">1</a>
+        <a href="#" class="px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900">2</a>
+        <a href="#" class="px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900">3</a>
+        <a href="#" class="px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900">下一页 »</a>
+      </div>
+    </section>
 
-    Route::group(['middleware' => 'auth:api'], function() {
-        // ... (其他 API 路由)
-        Route::apiResource('articles', 'ArticleController');
+    <!-- 归档（锚点区块示意） -->
+    <section id="archive" class="pt-10">
+      <h2 class="text-2xl font-bold">归档</h2>
+      <div class="mt-4 grid gap-2 text-sm text-zinc-600 dark:text-zinc-300">
+        <a href="#" class="hover:underline">2025 / 10（3）</a>
+        <a href="#" class="hover:underline">2025 / 09（6）</a>
+        <a href="#" class="hover:underline">2025 / 08（4）</a>
+      </div>
+    </section>
+
+    <!-- 友链（锚点区块示意） -->
+    <section id="links" class="pt-10">
+      <h2 class="text-2xl font-bold">友链</h2>
+      <ul class="mt-4 grid sm:grid-cols-2 gap-4">
+        <li class="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:shadow-soft transition">
+          <a href="https://example.com" target="_blank" class="font-medium hover:underline">示例友链 A</a>
+          <p class="text-sm text-zinc-500 dark:text-zinc-400">专注前端与可视化</p>
+        </li>
+        <li class="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:shadow-soft transition">
+          <a href="https://example.com" target="_blank" class="font-medium hover:underline">示例友链 B</a>
+          <p class="text-sm text-zinc-500 dark:text-zinc-400">Linux 运维与自动化</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 关于（锚点区块示意） -->
+    <section id="about" class="pt-10 pb-12">
+      <h2 class="text-2xl font-bold">关于</h2>
+      <div class="mt-4 text-zinc-600 dark:text-zinc-300 leading-relaxed">
+        <p>这里是你的个人博客。热爱记录、分享与创造，希望每一次发布都带来一点小小的价值。</p>
+        <p>本主题力求“克制、清晰、顺手”。如需后台系统（Halo/WordPress/Hexo/Next.js），均能无缝适配。</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="border-t border-zinc-200/70 dark:border-zinc-800/80">
+    <div class="mx-auto container container-narrow px-4 py-8 text-sm text-zinc-500 dark:text-zinc-400">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div>© <span id="year"></span> 柳若汐的小窝 · 使用自研主题（支持 Halo Walker 风格）</div>
+        <div class="flex items-center gap-3">
+          <a class="hover:underline" href="https://beian.miit.gov.cn/" target="_blank">备案号：示例ICP备 xxxxxx 号</a>
+          <span class="hidden sm:inline">|</span>
+          <span class="inline-flex items-center gap-1" title="CDN/保护">腾讯云 EdgeOne</span>
+        </div>
+      </div>
+      <div class="mt-2 text-xs">为防范电信网络诈骗，如接到 96110 来电请及时接听。</div>
+    </div>
+  </footer>
+
+  <script>
+    // 年份 & 夜间模式
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle?.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('prefers-dark', document.documentElement.classList.contains('dark'));
     });
-});
-      </div>
-    </section>
+    if (localStorage.getItem('prefers-dark') === 'true') {
+      document.documentElement.classList.add('dark');
+    }
 
-        <section id="archive" class="pt-10">
-      <h2 class="text-2xl font-bold">归档</h2>
-      <div class="mt-4 grid gap-2 text-sm text-zinc-600 dark:text-zinc-300">
-        <a href="#" class="hover:underline">2025 / 10（3）</a>
-        <a href="#" class="hover:underline">2025 / 09（6）</a>
-        <a href="#" class="hover:underline">2025 / 08（4）</a>
-      </div>
-    </section>
-
-        <section id="links" class="pt-10">
-      <h2 class="text-2xl font-bold">友链</h2>
-      <ul class="mt-4 grid sm:grid-cols-2 gap-4">
-        <li class="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:shadow-soft transition">
-          <a href="https://example.com" target="_blank" class="font-medium hover:underline">示例友链 A</a>
-          <p class="text-sm text-zinc-500 dark:text-zinc-400">专注前端与可视化</p>
-        </li>
-        <li class="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:shadow-soft transition">
-          <a href="https://example.com" target="_blank" class="font-medium hover:underline">示例友链 B</a>
-          <p class="text-sm text-zinc-500 dark:text-zinc-400">Linux 运维与自动化</p>
-        </li>
-      </ul>
-    </section>
-
-        <section id="about" class="pt-10 pb-12">
-      <h2 class="text-2xl font-bold">关于</h2>
-      <div class="mt-4 text-zinc-600 dark:text-zinc-300 leading-relaxed">
-        <p>这里是柳若汐的小窝。热爱记录、分享与创造，希望每一次发布都带来一点小小的价值。</p>
-        <p>本主题力求“克制、清晰、顺手”。如需后台系统（Halo/WordPress/Hexo/Next.js），均能无缝适配。</p>
-      </div>
-    </section>
-  </main>
-
-    <footer class="border-t border-zinc-200/70 dark:border-zinc-800/80">
-    <div class="mx-auto container container-narrow px-4 py-8 text-sm text-zinc-500 dark:text-zinc-400">
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-        <div>
-          © <span id="year"></span> 
-          <a href="https://taozhiruo.com" class="font-semibold hover:text-brand-700 dark:hover:text-brand-400">柳若汐的小窝</a> 
-          · 使用自研主题（支持 Halo Walker 风格）
-        </div>
-        <div class="flex items-center gap-3">
-          <a class="hover:underline" href="https://taozhiruo.com" target="_blank">taozhiruo.com</a>
-          <span class="hidden sm:inline">|</span>
-          <a class="hover:underline" href="https://beian.miit.gov.cn/" target="_blank">（在此填写备案号）</a>
-        </div>
-      </div>
-      <div class="mt-2 text-xs">为防范电信网络诈骗，如接到 96110 来电请及时接听。</div>
-    </div>
-  </footer>
-
-  <script>
-    // 年份 & 夜间模式
-    document.getElementById('year').textContent = new Date().getFullYear();
-    const themeToggle = document.getElementById('themeToggle');
-    themeToggle?.addEventListener('click', () => {
-      document.documentElement.classList.toggle('dark');
-      localStorage.setItem('prefers-dark', document.documentElement.classList.contains('dark'));
-    });
-    if (localStorage.getItem('prefers-dark') === 'true') {
-      document.documentElement.classList.add('dark');
-    }
-
-    // 移动端抽屉
-    const drawer = document.getElementById('drawer');
-    const openMenu = document.getElementById('openMenu');
-    const closeMenu = document.getElementById('closeMenu');
-    const drawerMask = document.getElementById('drawerMask');
-    const toggleDrawer = (show) => {
-      drawer.classList.toggle('hidden', !show);
-    }
-    openMenu?.addEventListener('click', () => toggleDrawer(true));
-    closeMenu?.addEventListener('click', () => toggleDrawer(false));
-    drawerMask?.addEventListener('click', () => toggleDrawer(false));
-  </script>
+    // 移动端抽屉
+    const drawer = document.getElementById('drawer');
+    const openMenu = document.getElementById('openMenu');
+    const closeMenu = document.getElementById('closeMenu');
+    const drawerMask = document.getElementById('drawerMask');
+    const toggleDrawer = (show) => {
+      drawer.classList.toggle('hidden', !show);
+    }
+    openMenu?.addEventListener('click', () => toggleDrawer(true));
+    closeMenu?.addEventListener('click', () => toggleDrawer(false));
+    drawerMask?.addEventListener('click', () => toggleDrawer(false));
+  </script>
 </body>
 </html>
